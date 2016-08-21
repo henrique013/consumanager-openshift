@@ -1,2 +1,3 @@
 .idea/
-www/.env.example
+www/.env
+www/.env.production
