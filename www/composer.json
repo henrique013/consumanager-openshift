@@ -1,0 +1,21 @@
+{
+  "authors": [
+    {
+      "name": "Henrique Alves",
+      "email": "henrique013.a@gmail.com"
+    }
+  ],
+  "require": {
+    "php": ">=5.5.0",
+    "slim/slim": "^3.1",
+    "filp/whoops": "^2.1",
+    "vlucas/phpdotenv": "^2.3"
+  },
+  "autoload": {
+    "psr-4": {
+      "App\\Middleware\\": "src/middlewares",
+      "App\\Route\\": "src/routes",
+      "App\\Util\\": "src/util"
+    }
+  }
+}
