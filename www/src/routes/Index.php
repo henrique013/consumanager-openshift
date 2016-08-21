@@ -25,8 +25,6 @@ class Index extends Handle
 
         phpinfo();
 
-        //$response = $response->write(phpinfo());
-
         return $response;
     }
 }
