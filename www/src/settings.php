@@ -8,10 +8,10 @@ return [
         // Application settings
         'APP' => [
             'api' => [
-                'url' => getenv("APP_API_URL")
+                'host' => getenv("APP_API_HOST")
             ],
             'server' => [
-                'url' => getenv("APP_SERVER_URL")
+                'host' => getenv("APP_SERVER_HOST")
             ]
         ],
 
@@ -21,6 +21,11 @@ return [
             'user' => getenv("DB_USER"),
             'password' => getenv("DB_PASS"),
             'dbname' => getenv("DB_NAME"),
+        ],
+
+        // Database settings
+        'JWT' => [
+            'secret' => getenv("JWT_SECRET")
         ],
     ],
 ];

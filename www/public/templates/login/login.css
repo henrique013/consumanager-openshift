@@ -1,0 +1,45 @@
+* {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+html,
+body {
+    height: 100%;
+}
+
+.row {
+    width: 100%;
+    margin: 0;
+
+    min-height: calc(100% - 50px);
+
+    /* wraper para centralizar a coluna */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+footer {
+    height: 50px;
+    background-color: #311b92;
+    color: #eeeeee;
+    padding: 15px 0 0;
+}
+
+.box {
+    height: 400px;
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
+
+img {
+    display: block;
+    margin: auto;
+    max-width: 100%;
+}
+
+button {
+    float: right;
+}

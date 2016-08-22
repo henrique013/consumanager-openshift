@@ -5,7 +5,6 @@
 $container = $app->getContainer();
 
 
-// database
 $container['PDO'] =
     function (\Slim\Container $c)
     {
@@ -15,6 +14,15 @@ $container['PDO'] =
         $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         $conn->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
 
-
         return $conn;
     };
+
+
+$container['twig'] = function () {
+
+    $loader = new Twig_Loader_Filesystem(__DIR__ . '/../templates');
+
+    $twig = new Twig_Environment($loader);
+
+    return $twig;
+};

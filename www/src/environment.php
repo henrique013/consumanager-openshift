@@ -10,6 +10,7 @@ $dotenv->required([
     'DB_USER',
     'DB_PASS',
     'DB_NAME',
-    'APP_API_URL',
-    'APP_SERVER_URL',
+    'APP_API_HOST',
+    'APP_SERVER_HOST',
+    'JWT_SECRET',
 ]);
