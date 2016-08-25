@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- As 3 meta tags acima *devem* vir em primeiro lugar dentro do `head`; qualquer outro conteúdo deve vir *após* essas tags -->
+
+    <title>ConsuManager</title>
+
+    <!-- Bootstrap -->
+    <link href="/bower/bootstrap/dist/css/bootstrap.css" rel="stylesheet">
+
+    <link href="/bower/font-awesome/css/font-awesome.css" rel="stylesheet">
+    <link href="/templates/layouts/sistema/sistema.css" rel="stylesheet">
+
+    {% block head %}{% endblock %}
+
+</head>
+<body>
+
+
+<nav class="menu-principal navbar navbar-default">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="#">
+                <img alt="Brand" src="/templates/layouts/sistema/logo-una-branco.png">
+            </a>
+        </div>
+        <div>
+            <form class="navbar-form navbar-right" role="search">
+                <div class="form-group">
+                    <select class="form-control" id="exampleInputEmail1" title="Tipo de Busca">
+                        <option selected>Tipo de busca</option>
+                        <option>Paciente</option>
+                        <option>Consulta</option>
+                        <option>Usuário</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <select class="form-control" id="exampleInputEmail1" title="Critério">
+                        <option selected>Critério</option>
+                        <option>Nome</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <input type="text" class="form-control" placeholder="Digite aqui a sua busca">
+                </div>
+                <button type="submit" class="btn btn-default">Buscar</button>
+            </form>
+        </div>
+    </div>
+</nav>
+
+
+<nav class="sub-menu-principal navbar navbar-default">
+    <div class="container-fluid">
+        <div>
+            <ul class="nav navbar-nav">
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                        <i class="fa fa-list-ul" aria-hidden="true"></i>
+                        Cadastros
+                        <i class="fa fa-caret-down"></i>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a href="#"><i class="fa fa-user" aria-hidden="true"></i>Paciente</a></li>
+                        <li><a href="#"><i class="fa fa-calendar-check-o" aria-hidden="true"></i>Consulta</a></li>
+                        <li><a href="#"><i class="fa fa-user-plus" aria-hidden="true"></i>Usuário</a></li>
+                    </ul>
+                </li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                        <i class="fa fa-bar-chart"></i>
+                        Relatórios
+                        <i class="fa fa-caret-down"></i>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a href="#"><i class="fa fa-line-chart" aria-hidden="true"></i>Consultas - Mês</a></li>
+                        <li><a href="#"><i class="fa fa-line-chart" aria-hidden="true"></i>Acessos</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+
+<main class="container-fluid">
+
+    {% block content %}{% endblock %}
+
+</main>
+
+<footer class="text-center">
+    © {{ "now"|date('Y') }} Copyright Text
+</footer>
+
+
+<!-- jQuery (obrigatório para plugins JavaScript do Bootstrap) -->
+<script src="/bower/jquery/dist/jquery.js"></script>
+<!-- Inclui todos os plugins compilados (abaixo), ou inclua arquivos separadados se necessário -->
+<script src="/bower/bootstrap/dist/js/bootstrap.js"></script>
+
+{% block footer %}{% endblock %}
+
+</body>
+</html>

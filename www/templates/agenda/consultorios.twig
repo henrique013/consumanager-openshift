@@ -1,0 +1,46 @@
+{% extends "layouts/sistema.twig" %}
+
+
+{% block head %}
+    <link href="/bower/bootcards/dist/css/bootcards-desktop.css" rel="stylesheet">
+    <link href="/templates/agenda/consultorios/consultorios.css" rel="stylesheet">
+{% endblock %}
+
+
+{% block footer %}
+    <script src="/bower/bootcards/dist/js/bootcards.js"></script>
+{% endblock %}
+
+
+{% block content %}
+    <div class="row">
+        <div class="col-xs-12">
+            <h2>CONSULTÓRIOS</h2>
+        </div>
+    </div>
+    <div class="row">
+
+        {% for resumo in resumos %}
+
+            <div class="col-xs-12 col-sm-4 col-md-3 bootcards-cards">
+                <div class="panel panel-default">
+                    <div class="panel-heading clearfix">
+                        <h3 class="panel-title pull-left truncate text-uppercase">{{ resumo.consultorio.nome }}</h3>
+                    </div>
+                    <div class="panel-body">
+                        <p class="text-center">
+                            {{ resumo.horarios.ocupados }}/{{ resumo.horarios.total }}
+                        </p>
+                    </div>
+                    <div class="panel-footer">
+                        <a class="btn btn-primary btn-sm pull-right text-uppercase" href="#">
+                            Acessar
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+        {% endfor %}
+
+    </div>
+{% endblock %}

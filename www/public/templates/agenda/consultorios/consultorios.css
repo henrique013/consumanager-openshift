@@ -1,0 +1,17 @@
+body {
+    padding: 0;
+    background-color: #ffffff;
+}
+
+.bootcards-cards .btn {
+    font-weight: bold;
+}
+
+.bootcards-cards .panel-body p {
+    font-size: 28px;
+    color: #d9534f;
+}
+
+h2{
+    margin: 0 0 15px;
+}

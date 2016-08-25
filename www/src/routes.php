@@ -7,6 +7,8 @@
 $app->get('[/]', 'App\Route\Login:get');
 $app->get('/login', 'App\Route\Login:get');
 
+$app->get('/agenda/consultorios[/{data:\d\d\d\d-\d\d-\d\d}]', 'App\Route\Agenda\Consultorios:get');
+
 
 // API
 
