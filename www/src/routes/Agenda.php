@@ -28,52 +28,51 @@ class Agenda extends Handle {
         /** @var \Twig_Environment $twig */
         $twig = $this->ci->get('twig');
 
-        $context = [
-            'resumos' => [
-                [
-                    'consultorio' => [
-                        'nome' => 'Brinquedoteca'
-                    ],
-                    'horarios' => [
-                        'total' => rand(8, 12),
-                        'ocupados' => rand(0, 8)
-                    ]
+        $context = $context = $this->ci->get('settings')['Twig']['context']['sistema'];
+        $context['resumos'] = [
+            [
+                'consultorio' => [
+                    'nome' => 'Brinquedoteca'
                 ],
-                [
-                    'consultorio' => [
-                        'nome' => 'Consultório 1'
-                    ],
-                    'horarios' => [
-                        'total' => rand(8, 12),
-                        'ocupados' => rand(0, 8)
-                    ]
+                'horarios' => [
+                    'total' => rand(8, 12),
+                    'ocupados' => rand(0, 8)
+                ]
+            ],
+            [
+                'consultorio' => [
+                    'nome' => 'Consultório 1'
                 ],
-                [
-                    'consultorio' => [
-                        'nome' => 'Consultório 2'
-                    ],
-                    'horarios' => [
-                        'total' => rand(8, 12),
-                        'ocupados' => rand(0, 8)
-                    ]
+                'horarios' => [
+                    'total' => rand(8, 12),
+                    'ocupados' => rand(0, 8)
+                ]
+            ],
+            [
+                'consultorio' => [
+                    'nome' => 'Consultório 2'
                 ],
-                [
-                    'consultorio' => [
-                        'nome' => 'Consultório 3'
-                    ],
-                    'horarios' => [
-                        'total' => rand(8, 12),
-                        'ocupados' => rand(0, 8)
-                    ]
+                'horarios' => [
+                    'total' => rand(8, 12),
+                    'ocupados' => rand(0, 8)
+                ]
+            ],
+            [
+                'consultorio' => [
+                    'nome' => 'Consultório 3'
                 ],
-                [
-                    'consultorio' => [
-                        'nome' => 'Consultório 4'
-                    ],
-                    'horarios' => [
-                        'total' => rand(8, 12),
-                        'ocupados' => rand(0, 8)
-                    ]
+                'horarios' => [
+                    'total' => rand(8, 12),
+                    'ocupados' => rand(0, 8)
+                ]
+            ],
+            [
+                'consultorio' => [
+                    'nome' => 'Consultório 4'
+                ],
+                'horarios' => [
+                    'total' => rand(8, 12),
+                    'ocupados' => rand(0, 8)
                 ]
             ]
         ];

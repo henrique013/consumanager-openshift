@@ -9,6 +9,7 @@ $(document).ready(function () {
 
 
         var form = $(this);
+        var btn = form.find('.btn-login');
 
         $.ajax({
             url: form.attr('action'),
@@ -16,7 +17,7 @@ $(document).ready(function () {
             data: form.serialize(),
             success: function () {
 
-                window.location.href = '/agenda';
+                window.location.href = btn.data('redirect');
             },
             error: function () {
 
