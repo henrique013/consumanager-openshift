@@ -3,37 +3,36 @@ return [
     'settings' => [
 
         // Slim settings
-        'displayErrorDetails' => getenv("ENV") === 'development' ? true : false,
-        'addContentLengthHeader' => false, // Allow the web server to send the content-length header
+        'displayErrorDetails' => getenv("MY_ENV") !== 'production' ? true : false,
 
 
         'APP' => [
             'api' => [
-                'host' => getenv("APP_API_HOST")
+                'host' => getenv("OPENSHIFT_APP_DNS") . '/api-v1'
             ],
             'server' => [
-                'host' => getenv("APP_SERVER_HOST")
+                'host' => getenv("OPENSHIFT_APP_DNS")
             ]
         ],
 
         'PDO' => [
-            'host' => getenv("DB_HOST"),
-            'user' => getenv("DB_USER"),
-            'password' => getenv("DB_PASS"),
-            'dbname' => getenv("DB_NAME"),
+            'host' => getenv("OPENSHIFT_MYSQL_DB_HOST"),
+            'user' => getenv("OPENSHIFT_MYSQL_DB_USERNAME"),
+            'password' => getenv("OPENSHIFT_MYSQL_DB_PASSWORD"),
+            'dbname' => 'clinica2',
         ],
 
         'JWT' => [
-            'secret' => getenv("JWT_SECRET")
+            'secret' => 'houfbufuobfdbdfubvufdyuvbdf'
         ],
 
         'Twig' => [
             'context' => [
                 'login' => [
-                    'api_host' => getenv("APP_API_HOST")
+                    'api_host' => getenv("OPENSHIFT_APP_DNS") . '/api-v1'
                 ],
                 'sistema' => [
-                    'api_host' => getenv("APP_API_HOST")
+                    'api_host' => getenv("OPENSHIFT_APP_DNS") . '/api-v1'
                 ],
             ]
         ],

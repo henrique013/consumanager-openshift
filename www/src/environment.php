@@ -2,15 +2,15 @@
 // Environment variable settings
 
 
-$dotenv = new \Dotenv\Dotenv(dirname(__DIR__));
-$dotenv->overload();
-$dotenv->required('ENV')->allowedValues(['development', 'production']);
-$dotenv->required([
-    'DB_HOST',
-    'DB_USER',
-    'DB_PASS',
-    'DB_NAME',
-    'APP_API_HOST',
-    'APP_SERVER_HOST',
-    'JWT_SECRET',
-]);
+if (in_array(getenv("MY_ENV"), [false, 'development'])) {
+
+    $dotenv = new \Dotenv\Dotenv(dirname(__DIR__));
+    $dotenv->overload();
+    $dotenv->required('MY_ENV')->allowedValues(['development', 'staging', 'production']);
+    $dotenv->required([
+        'OPENSHIFT_MYSQL_DB_HOST',
+        'OPENSHIFT_MYSQL_DB_USERNAME',
+        'OPENSHIFT_MYSQL_DB_PASSWORD',
+        'OPENSHIFT_APP_DNS',
+    ]);
+}
