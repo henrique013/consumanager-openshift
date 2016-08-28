@@ -1,0 +1,29 @@
+@import "vars-not";
+
+.mx-init-app() {
+
+  * {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+  }
+
+  html,
+  body {
+    height: 100%;
+    padding: 0;
+    margin: 0;
+    border: none;
+    background-color: @bgBody;
+  }
+
+  body {
+
+    & > footer {
+      height: 50px;
+      background-color: @bgDefault;
+      color: @colDefault;
+      padding: 15px 0 0;
+    }
+  }
+}

@@ -16,7 +16,7 @@ $(document).ready(function () {
             data: form.serialize(),
             success: function () {
 
-                window.location.href = '/agenda/consultorios';
+                window.location.href = '/agenda';
             },
             error: function () {
 

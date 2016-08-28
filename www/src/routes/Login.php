@@ -27,7 +27,7 @@ class Login extends Handle {
 
         $context['api_host'] = $this->ci->get('settings')['APP']['api']['host'];
 
-        $view = $twig->render('login.twig', $context);
+        $view = $twig->render('login/login.twig', $context);
 
         $response->getBody()->write($view);
 
