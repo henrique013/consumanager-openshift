@@ -4,6 +4,14 @@
   text-overflow: ellipsis;
   max-width: 100%;
 }
+h1.titulo,
+h2.titulo,
+h3.titulo,
+h4.titulo,
+h5.titulo,
+h6.titulo {
+  margin: 0 0 15px;
+}
 * {
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
@@ -127,7 +135,4 @@ body > main {
   overflow: hidden;
   text-overflow: ellipsis;
   max-width: 100%;
-}
-h2 {
-  margin: 0 0 15px;
 }

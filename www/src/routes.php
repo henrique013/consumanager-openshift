@@ -9,7 +9,8 @@ $app->get('/login', 'App\Route\Login:get');
 
 $app->get('/logout', 'App\Route\Logout:get');
 
-$app->get('/agenda[/{data:\d\d\d\d-\d\d-\d\d}]', 'App\Route\Agenda:get');
+$app->get('/agenda[/data/{dt:\d\d\d\d-\d\d-\d\d}]', 'App\Route\Agenda:get');
+$app->get('/agenda/consultorio/{id:\d+}/data/{dt:\d\d\d\d-\d\d-\d\d}', 'App\Route\Agenda\Consultorio:get');
 
 
 // API

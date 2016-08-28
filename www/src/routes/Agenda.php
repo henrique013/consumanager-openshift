@@ -11,6 +11,7 @@ namespace App\Route;
 
 use App\Util\Handle;
 use App\Util\Handle\GET;
+use DateTime;
 use Slim\Http\Request;
 use Slim\Http\Response;
 
@@ -22,16 +23,18 @@ class Agenda extends Handle {
 
     function get(Request $request, Response $response) {
 
-        $data = $request->getAttribute('data', date('Y-m-d'));
+        $data = $request->getAttribute('dt', new DateTime());
 
 
         /** @var \Twig_Environment $twig */
         $twig = $this->ci->get('twig');
 
         $context = $context = $this->ci->get('settings')['Twig']['context']['sistema'];
+        $context['data'] = $data;
         $context['resumos'] = [
             [
                 'consultorio' => [
+                    'id' => 10,
                     'nome' => 'Brinquedoteca'
                 ],
                 'horarios' => [
@@ -41,6 +44,7 @@ class Agenda extends Handle {
             ],
             [
                 'consultorio' => [
+                    'id' => 20,
                     'nome' => 'Consultório 1'
                 ],
                 'horarios' => [
@@ -50,6 +54,7 @@ class Agenda extends Handle {
             ],
             [
                 'consultorio' => [
+                    'id' => 30,
                     'nome' => 'Consultório 2'
                 ],
                 'horarios' => [
@@ -59,6 +64,7 @@ class Agenda extends Handle {
             ],
             [
                 'consultorio' => [
+                    'id' => 40,
                     'nome' => 'Consultório 3'
                 ],
                 'horarios' => [
@@ -68,6 +74,7 @@ class Agenda extends Handle {
             ],
             [
                 'consultorio' => [
+                    'id' => 50,
                     'nome' => 'Consultório 4'
                 ],
                 'horarios' => [
