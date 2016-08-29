@@ -54,6 +54,10 @@ body > main {
   padding-top: 15px;
   padding-bottom: 15px;
 }
+textarea {
+  resize: none;
+  overflow: auto;
+}
 @import-once "../../vars-not";
 .navbar-default {
   background-color: #311b92;

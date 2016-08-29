@@ -1,5 +1,6 @@
 @import "../../functions-not";
 @import "../../classes-not";
+@import "../../../public/bower/bootstrap/less/mixins/resize";
 
 .mx-init-app();
 
@@ -33,6 +34,10 @@ body {
     padding-top: 15px;
     padding-bottom: 15px;
   }
+}
+
+textarea {
+  .resizable(none);
 }
 
 @import "navbar-color-not";

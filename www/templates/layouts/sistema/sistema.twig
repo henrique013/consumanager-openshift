@@ -11,6 +11,7 @@
 
     <link href="/bower/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="/bower/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+    <link href="/bower/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css" rel="stylesheet">
 
     {% block head %}{% endblock %}
 
@@ -43,17 +44,17 @@
                     </a>
                     <ul class="dropdown-menu">
                         <li>
-                            <a href="#">
+                            <a href="" data-toggle="modal" data-target="#md-paciente">
                                 <i class="fa fa-user" aria-hidden="true"></i> Paciente
                             </a>
                         </li>
                         <li>
-                            <a href="#">
+                            <a href="" data-toggle="modal" data-target="#md-consulta">
                                 <i class="fa fa-medkit" aria-hidden="true"></i> Consulta
                             </a>
                         </li>
                         <li>
-                            <a href="#">
+                            <a href="" data-toggle="modal" data-target="#md-usuario">
                                 <i class="fa fa-user-plus" aria-hidden="true"></i> Usuário
                             </a>
                         </li>
@@ -89,12 +90,152 @@
 </footer>
 
 
+<!-- Modal - Usuário -->
+<div class="modal fade" id="md-usuario" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title">Usuário</h4>
+            </div>
+            <div class="modal-body">
+                <form action="{{ api_host }}/usuario">
+                    <div class="row">
+                        <div class="form-group col-xs-12 col-sm-6">
+                            <label for="ipt-usr-nome">Nome</label>
+                            <input type="text" class="form-control" id="ipt-usr-nome">
+                        </div>
+                        <div class="form-group col-xs-12 col-sm-6">
+                            <label for="ipt-usr-email">E-mail</label>
+                            <input type="email" class="form-control" id="ipt-usr-email">
+                        </div>
+                        <div class="form-group col-xs-12 col-sm-6">
+                            <label for="ipt-usr-senha">Senha</label>
+                            <input type="password" class="form-control" id="ipt-usr-senha">
+                        </div>
+                        <div class="form-group col-xs-12 col-sm-6">
+                            <label for="ipt-usr-senha2">Repita sua Senha</label>
+                            <input type="password" class="form-control" id="ipt-usr-senha2">
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary">
+                    <i class="fa fa-floppy-o" aria-hidden="true"></i> Salvar
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal - Paciente -->
+<div class="modal fade" id="md-paciente" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title">Paciente</h4>
+            </div>
+            <div class="modal-body">
+                <form action="{{ api_host }}/paciente">
+                    <div class="row">
+                        <div class="form-group col-xs-12 col-sm-4">
+                            <label for="ipt-pac-tipo">Tipo</label>
+                            <select id="ipt-pac-tipo" class="form-control">
+                                <option>Aluno</option>
+                                <option>Funcionário</option>
+                                <option>Externo</option>
+                            </select>
+                        </div>
+                        <div class="form-group col-xs-12 col-sm-4">
+                            <label for="ipt-pac-nome">Nome</label>
+                            <input type="text" class="form-control" id="ipt-pac-nome">
+                        </div>
+                        <div class="form-group col-xs-12 col-sm-4">
+                            <label for="ipt-pac-nascimento">Data de Nascimento</label>
+                            <div class='input-group date'>
+                            <span class="input-group-addon">
+                                <i class="fa fa-calendar" aria-hidden="true"></i>
+                            </span>
+                                <input type="text" class="form-control" id="ipt-pac-nascimento">
+                            </div>
+                        </div>
+                        <div class="form-group col-xs-12 col-sm-4">
+                            <label for="ipt-pac-telefone">Telefone</label>
+                            <input type="text" class="form-control" id="ipt-pac-telefone">
+                        </div>
+                        <div class="form-group col-xs-12 col-sm-4">
+                            <label for="ipt-pac-telefone2">Telefone 2</label>
+                            <input type="text" class="form-control" id="ipt-pac-telefone2" placeholder="OPCIONAL">
+                        </div>
+                        <div class="form-group col-xs-12 col-sm-4">
+                            <label for="ipt-pac-uf">Tipo</label>
+                            <select id="ipt-pac-uf" class="form-control">
+                                <option>Minas Gerais</option>
+                                <option>São Paulo</option>
+                                <option>Rio de Janeiro</option>
+                            </select>
+                        </div>
+                        <div class="form-group col-xs-12 col-sm-4">
+                            <label for="ipt-pac-cidade">Cidade</label>
+                            <input type="text" class="form-control" id="ipt-pac-cidade">
+                        </div>
+                        <div class="form-group col-xs-12 col-sm-4">
+                            <label for="ipt-pac-bairro">Bairro</label>
+                            <input type="text" class="form-control" id="ipt-pac-bairro">
+                        </div>
+                        <div class="form-group col-xs-12 col-sm-4">
+                            <label for="ipt-pac-logradouro">Logradouro</label>
+                            <input type="text" class="form-control" id="ipt-pac-logradouro">
+                        </div>
+                        <div class="form-group col-xs-12 col-sm-4">
+                            <label for="ipt-pac-numero">Número</label>
+                            <input type="number" class="form-control" id="ipt-pac-numero">
+                        </div>
+                        <div class="form-group col-xs-12 col-sm-4">
+                            <label for="ipt-pac-complemento">Complemento</label>
+                            <input type="text" class="form-control" id="ipt-pac-complemento">
+                        </div>
+                        <div class="form-group col-xs-12 col-sm-4">
+                            <label for="ipt-pac-responsavel">Nome do Responsável</label>
+                            <input type="text" class="form-control" id="ipt-pac-responsavel" placeholder="OPCIONAL">
+                        </div>
+                        <div class="form-group col-xs-12 col-sm-4">
+                            <label for="ipt-pac-encaminhamento">Encaminhamento</label>
+                            <input type="text" class="form-control" id="ipt-pac-encaminhamento" placeholder="OPCIONAL">
+                        </div>
+                        <div class="form-group col-xs-12 col-sm-8">
+                            <label for="ipt-pac-motivo">Motivo</label>
+                            <textarea id="ipt-pac-motivo" class="form-control" rows="5" placeholder="OPCIONAL"></textarea>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary">
+                    <i class="fa fa-floppy-o" aria-hidden="true"></i> Salvar
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
 <script src="/bower/jquery/dist/jquery.min.js"></script>
 <script src="/bower/bootstrap/dist/js/bootstrap.min.js"></script>
+<script src="/bower/moment/min/moment-with-locales.min.js"></script>
+<script src="/bower/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js"></script>
 <script src="/templates/settings.js"></script>
 <script src="/templates/layouts/sistema/sistema.js"></script>
 
+
 {% block footer %}{% endblock %}
+
 
 </body>
 </html>

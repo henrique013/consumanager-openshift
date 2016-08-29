@@ -5,7 +5,7 @@ var gulp = require('gulp')
 // LESS
 gulp.task('less', function () {
 
-    gulp.src(['templates/**/*.less', '!templates/**/*-not.less'])
+    gulp.src(['templates/**/*.less', '!templates/**/*-not.less', '!public/**/*.less'])
         .pipe(less())
         .pipe(gulp.dest('public/templates'))
     ;

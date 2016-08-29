@@ -13,7 +13,7 @@ $(document).ready(function () {
 
         $.ajax({
             url: form.attr('action'),
-            method: form.attr('method'),
+            method: 'POST',
             data: form.serialize(),
             success: function () {
 
