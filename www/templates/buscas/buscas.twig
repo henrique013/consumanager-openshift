@@ -1,0 +1,72 @@
+{% extends "layouts/sistema/sistema.twig" %}
+
+
+{% block head %}
+    <link href="/templates/buscas/buscas.css" rel="stylesheet">
+{% endblock %}
+
+
+{% block content %}
+    <div class="row">
+        <div class="col-xs-12">
+            <h2 class="titulo text-uppercase text-center">buscas</h2>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-12 col-sm-8 col-sm-offset-2">
+            <div class="row">
+                <form>
+                    <div class="form-group col-xs-12 col-md-3">
+                        <label for="ipt-pac-uf">Tipo</label>
+                        <select id="ipt-pac-uf" class="form-control">
+                            <option>Aluno</option>
+                        </select>
+                    </div>
+                    <div class="form-group col-xs-12 col-md-3">
+                        <label for="ipt-pac-uf">Critério</label>
+                        <select id="ipt-pac-uf" class="form-control">
+                            <option>Nome</option>
+                        </select>
+                    </div>
+                    <div class="form-group col-xs-12 col-md-6">
+                        <label for="ipt-pac-cidade">Busca</label>
+                        <div class='input-group'>
+                            <input type="text" class="form-control" id="ipt-pac-cidade">
+                        <span class="input-group-addon">
+                            <i class="fa fa-search" aria-hidden="true"></i>
+                        </span>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="row">
+                <div class="col-xs-12">
+                    <table class="table table-bordered table-striped">
+                        <thead>
+                        <tr>
+                            <th>Nome</th>
+                            <th>Dt. Nascimento</th>
+                            <th>Telefone</th>
+                            <th>Ações</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td>Luana Correa Braga</td>
+                            <td>14/11/1996</td>
+                            <td>(31) 9595-4711</td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>Maria de Souza Laura</td>
+                            <td>07/01/1995</td>
+                            <td>(31) 9777-4731</td>
+                            <td></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

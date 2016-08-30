@@ -1,6 +1,6 @@
 $(function () {
 
-    $('main .input-group.date').datetimepicker({
+    $('main .dt').datetimepicker({
         locale: 'pt-br',
         tooltips: window.settings.datepicker.tooltips,
         format: 'DD/MM/YYYY',

@@ -12,6 +12,14 @@ $app->get('/logout', 'App\Route\Logout:get');
 $app->get('/agenda[/data/{dt:\d\d\d\d-\d\d-\d\d}]', 'App\Route\Agenda:get');
 $app->get('/agenda/consultorio/{id:\d+}/data/{dt:\d\d\d\d-\d\d-\d\d}', 'App\Route\Agenda\Consultorio:get');
 
+$app->get('/usuario[/{id:\d+}]', 'App\Route\Usuario:get');
+
+$app->get('/paciente[/{id:\d+}]', 'App\Route\Paciente:get');
+
+$app->get('/consulta[/{id:\d+}]', 'App\Route\Consulta:get');
+
+$app->get('/buscas', 'App\Route\Buscas:get');
+
 
 // API
 

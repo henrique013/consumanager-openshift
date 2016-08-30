@@ -4,14 +4,6 @@
   text-overflow: ellipsis;
   max-width: 100%;
 }
-h1.titulo,
-h2.titulo,
-h3.titulo,
-h4.titulo,
-h5.titulo,
-h6.titulo {
-  margin: 0 0 15px;
-}
 * {
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
@@ -58,7 +50,17 @@ textarea {
   resize: none;
   overflow: auto;
 }
-@import-once "../../vars-not";
+h1.titulo,
+h2.titulo,
+h3.titulo,
+h4.titulo,
+h5.titulo,
+h6.titulo {
+  margin: 5px 0 20px;
+}
+.btn {
+  margin-top: 5px;
+}
 .navbar-default {
   background-color: #311b92;
   border-color: #4841ac;
@@ -126,6 +128,9 @@ textarea {
     color: #ffffff;
     background-color: #4841ac;
   }
+}
+.dt {
+  margin: 0 0 5px;
 }
 .bootcards-cards .btn {
   font-weight: bold;

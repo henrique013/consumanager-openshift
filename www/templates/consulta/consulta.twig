@@ -1,0 +1,100 @@
+{% extends "layouts/sistema/sistema.twig" %}
+
+
+{% block head %}
+    <link href="/bower/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css" rel="stylesheet">
+    <link href="/templates/consulta/consulta.css" rel="stylesheet">
+{% endblock %}
+
+
+{% block footer %}
+    <script src="/bower/moment/min/moment-with-locales.min.js"></script>
+    <script src="/bower/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js"></script>
+    <script src="/templates/consulta/consulta.js"></script>
+{% endblock %}
+
+
+{% block content %}
+    <div class="row">
+        <div class="col-xs-12">
+            <h2 class="titulo text-uppercase text-center">consulta</h2>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-12 col-md-6 col-md-offset-3">
+            <form action="{{ api_host }}/consulta">
+                <fieldset>
+                    <legend>Paciente</legend>
+                    <div class="nome-pac form-group col-xs-12 col-sm-8 col-sm-offset-2">
+                        <div class="form-group">
+                            <input type="text" class="form-control" id="ipt-pac-nome" placeholder="NOME DO PACIENTE">
+                        </div>
+                    </div>
+                    <div class="form-group col-xs-12">
+                        <dl>
+                            <dt>Nome</dt>
+                            <dd>Ronaldo Nazário de Lima</dd>
+                            <dt>Endereço</dt>
+                            <dd>Rua Vigário Geral - 123, Betim (MG)</dd>
+                            <dt>Contato</dt>
+                            <dd><abbr title="Telefone">Tel</abbr>: (31) 99955-9955</dd>
+                        </dl>
+                    </div>
+                </fieldset>
+                <fieldset>
+                    <legend>Consulta</legend>
+                    <div class="form-group col-xs-12 col-sm-6">
+                        <label for="ipt-con-consultorio" class="control-label">Consultório</label>
+                        <select id="ipt-con-consultorio" class="form-control">
+                            <option>Brinquedoteca</option>
+                            <option>Consultório 1</option>
+                            <option>Consultório 2</option>
+                            <option>Consultório 3</option>
+                        </select>
+                    </div>
+                    <div class="form-group col-xs-12 col-sm-6">
+                        <label for="ipt-con-data" class="control-label">Data</label>
+                        <div class='input-group date dt'>
+                            <span class="input-group-addon">
+                                <i class="fa fa-calendar" aria-hidden="true"></i>
+                            </span>
+                            <input type="text" class="form-control" id="ipt-con-data">
+                        </div>
+                    </div>
+                    <div class="form-group col-xs-12 col-sm-6">
+                        <label for="ipt-con-horario" class="control-label">Horário</label>
+                        <select id="ipt-con-horario" class="form-control">
+                            <option>08:30</option>
+                            <option>10:30</option>
+                            <option>11:00</option>
+                        </select>
+                    </div>
+                    <div class="form-group col-xs-12 col-sm-6">
+                        <label for="ipt-con-tipo" class="control-label">Tipo</label>
+                        <select id="ipt-con-tipo" class="form-control">
+                            <option>Aluno</option>
+                            <option>Funcionário</option>
+                            <option>Externo</option>
+                        </select>
+                    </div>
+                    <div class="form-group col-xs-12 col-sm-6">
+                        <label for="ipt-con-status" class="control-label">Status</label>
+                        <select id="ipt-con-status" class="form-control">
+                            <option>Finalizado</option>
+                            <option>Agendado</option>
+                        </select>
+                    </div>
+                    <div class="form-group col-xs-12 col-sm-6">
+                        <label for="ipt-con-aluno" class="control-label">Nome Aluno(a)</label>
+                        <input id="ipt-con-aluno" type="text" class="form-control">
+                    </div>
+                </fieldset>
+                <div class="form-group col-xs-12">
+                    <button type="submit" class="btn btn-success pull-right">
+                        <i class="fa fa-floppy-o" aria-hidden="true"></i> Salvar
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+{% endblock %}
