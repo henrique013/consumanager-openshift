@@ -25,3 +25,5 @@ $app->get('/buscas', 'App\Route\Buscas:get');
 
 $app->post('/api-v1/auth/login', 'App\Route\API\Auth\Login:post');
 $app->get('/api-v1/auth/logout', 'App\Route\API\Auth\Logout:get');
+
+$app->get('/api-v1/pacientes[/page/{page:\d+}]', 'App\Route\API\Pacientes:get');

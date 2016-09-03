@@ -132,3 +132,12 @@ h6.titulo {
 .nome-pac {
   margin-bottom: 0;
 }
+.typeahead.dropdown-menu a {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+}
+dd {
+  min-height: 20px;
+}

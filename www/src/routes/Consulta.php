@@ -27,7 +27,7 @@ class Consulta extends Handle {
         /** @var \Twig_Environment $twig */
         $twig = $this->ci->get('twig');
 
-        $context = $context = $this->ci->get('settings')['Twig']['context']['sistema'];
+        $context = $this->ci->get('settings')['Twig']['context']['sistema'];
 
         $view = $twig->render('consulta/consulta.twig', $context);
 
