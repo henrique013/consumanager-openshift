@@ -12,11 +12,12 @@ $app->get('/auth/logout', 'App\Route\Auth\Logout:get');
 
 $app->get('/agenda[/{data:\d\d\d\d-\d\d-\d\d}]', 'App\Route\Agenda:get');
 $app->get('/agenda/{data:\d\d\d\d-\d\d-\d\d}/consultorio/{co_id:\d+}', 'App\Route\Agenda\Consultorio:get');
-//
-//$app->get('/usuario[/{id:\d+}]', 'App\Route\Usuario:get');
-//
-//$app->get('/paciente[/{id:\d+}]', 'App\Route\Paciente:get');
-//
-//$app->get('/consulta[/{id:\d+}]', 'App\Route\Consulta:get');
-//
-//$app->get('/buscas', 'App\Route\Buscas:get');
+
+$app->get('/cadastro/usuario[/{id:\d+}]', 'App\Route\Cadastro\Usuario:get');
+$app->post('/cadastro/usuario[/{id:\d+}]', 'App\Route\Cadastro\Usuario:post');
+
+$app->get('/cadastro/paciente[/{id:\d+}]', 'App\Route\Cadastro\Paciente:get');
+
+$app->get('/cadastro/consulta[/{id:\d+}]', 'App\Route\Cadastro\Consulta:get');
+
+$app->get('/buscas', 'App\Route\Buscas:get');

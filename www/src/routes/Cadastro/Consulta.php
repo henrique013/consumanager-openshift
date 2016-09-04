@@ -6,7 +6,7 @@
  * Time: 20:41
  */
 
-namespace App\Route;
+namespace App\Route\Cadastro;
 
 
 use App\Util\Handle;
@@ -15,21 +15,19 @@ use Slim\Http\Request;
 use Slim\Http\Response;
 
 
-class Usuario extends Handle {
+class Consulta extends Handle {
 
     use GET;
 
 
     function get(Request $request, Response $response) {
 
-        $usrID = $request->getAttribute('id');
+        $conID = $request->getAttribute('id');
 
         /** @var \Twig_Environment $twig */
         $twig = $this->ci->get('twig');
 
-        $context = $context = $this->ci->get('settings')['Twig']['context']['sistema'];
-
-        $view = $twig->render('usuario/usuario.twig', $context);
+        $view = $twig->render('cadastro/consulta/consulta.twig');
 
         $response->getBody()->write($view);
 

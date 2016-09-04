@@ -5,6 +5,14 @@
 $container = $app->getContainer();
 
 
+// ATENÇÃO: ao usar essa dependência a sessão já deve ter sido startada.
+$container['flash'] =
+    function ()
+    {
+        return new \Slim\Flash\Messages();
+    };
+
+
 $container['twig'] =
     function ()
     {
