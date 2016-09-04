@@ -19,5 +19,5 @@ trait PUT
      * @param \Slim\Http\Response $response
      * @return \Slim\Http\Response
      */
-    abstract function put(Request $request, Response $response);
+    public abstract function put(Request $request, Response $response);
 }

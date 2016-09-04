@@ -11,59 +11,50 @@ namespace App\Route\Agenda;
 
 use App\Util\Handle;
 use App\Util\Handle\GET;
-use DateTime;
+use GuzzleHttp\Exception\TransferException;
 use Slim\Http\Request;
 use Slim\Http\Response;
 
 
-class Consultorio extends Handle {
-
+class Consultorio extends Handle
+{
     use GET;
 
 
-    function get(Request $request, Response $response) {
-
-        $conID = $request->getAttribute('id');
-        $data = $request->getAttribute('dt');
-
-
+    function get(Request $request, Response $response)
+    {
         /** @var \Twig_Environment $twig */
-        $twig = $this->ci->get('twig');
+        /** @var \GuzzleHttp\Client $api */
 
-        $context = $this->ci->get('settings')['Twig']['context']['sistema'];
-        $context['data'] = new DateTime($data);
-        $context['consultorio'] = [
-            'id' => 10,
-            'nome' => 'Brinquedoteca'
+
+        $coID = $request->getAttribute('co_id');
+        $data = $data = $request->getAttribute('data');
+
+        $query = [
+            'consultorios' => $coID
         ];
-        $context['consultas'] = [
-            [
-                'horario' => '08:00',
-                'resumo' => null
-            ],
-            [
-                'horario' => '09:00',
-                'resumo' => [
-                    'paciente' => 'GUSTAVO IAN GIORI',
-                    'aluno' => 'Pedro José',
-                ]
-            ],
-            [
-                'horario' => '10:00',
-                'resumo' => null
-            ],
-            [
-                'horario' => '11:00',
-                'resumo' => null
-            ],
-            [
-                'horario' => '12:00',
-                'resumo' => [
-                    'paciente' => 'Ronaldo Nazário de Lima',
-                    'aluno' => 'Romário dos Santos',
-                ]
-            ]
-        ];
+
+        $api = $this->ci->get('API');
+
+        try
+        {
+            $resp = $api->get("agenda/resumos/{$data}", ['query' => $query]);
+
+            $json = json_decode($resp->getBody(), true);
+
+            $context['resumo'] = $json[0];
+        }
+        catch (TransferException $e)
+        {
+            //TODO: implementar!
+            throw $e;
+        }
+
+
+        $context['data'] = $data;
+
+
+        $twig = $this->ci->get('twig');
 
         $view = $twig->render('agenda/consultorio/consultorio.twig', $context);
 

@@ -19,5 +19,5 @@ trait GET
      * @param \Slim\Http\Response $response
      * @return \Slim\Http\Response
      */
-    abstract function get(Request $request, Response $response);
+    public abstract function get(Request $request, Response $response);
 }

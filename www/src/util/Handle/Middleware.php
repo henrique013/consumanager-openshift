@@ -21,5 +21,5 @@ trait Middleware
      * @param callable $next
      * @return \Slim\Http\Response
      */
-    abstract public function __invoke(Request $request, Response $response, callable $next);
+    public abstract function __invoke(Request $request, Response $response, callable $next);
 }

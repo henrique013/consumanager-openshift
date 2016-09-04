@@ -19,5 +19,5 @@ trait POST
      * @param \Slim\Http\Response $response
      * @return \Slim\Http\Response
      */
-    abstract function post(Request $request, Response $response);
+    public abstract function post(Request $request, Response $response);
 }

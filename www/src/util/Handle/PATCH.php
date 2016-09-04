@@ -19,5 +19,5 @@ trait PATCH
      * @param \Slim\Http\Response $response
      * @return \Slim\Http\Response
      */
-    abstract function patch(Request $request, Response $response);
+    public abstract function patch(Request $request, Response $response);
 }

@@ -5,48 +5,48 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- As 3 meta tags acima *devem* vir em primeiro lugar dentro do `head`; qualquer outro conteúdo deve vir *após* essas tags -->
 
     <title>ConsuManager</title>
 
-    <!-- Bootstrap -->
     <link href="/bower/bootstrap/dist/css/bootstrap.css" rel="stylesheet">
     <link href="/templates/login/login.css" rel="stylesheet">
 
 </head>
 <body>
 
-
 <div class="row">
-    <div class="box col-xs-offset-1 col-xs-10 col-sm-offset-3 col-sm-6 col-md-offset-4 col-md-4">
+    <div class="{{ login_fail ? 'fail' : '' }} box col-xs-offset-1 col-xs-10 col-sm-offset-3 col-sm-6 col-md-offset-4 col-md-4">
 
         <img src="/templates/login/logo_una.png" alt="Logo UNA">
 
-        <form id="form-login" action="//{{ api_host }}/auth/login">
-            <div class="form-group">
+        <form id="form-login" action="/auth/login" method="POST">
+            <div class="form-group col-xs-12">
                 <label for="ipt-user">E-mail</label>
                 <input type="email" class="form-control" name="user" id="ipt-user">
             </div>
-            <div class="form-group">
+            <div class="form-group col-xs-12">
                 <label for="ipt-password">Senha</label>
                 <input type="password" class="form-control" name="password" id="ipt-password">
             </div>
-            <button type="submit" class="btn-login btn btn-default" data-redirect="/agenda">Login</button>
+            <div class="form-group col-xs-12">
+                <button type="submit" class="btn-login btn btn-default" data-redirect="/agenda">Login</button>
+            </div>
+            <div class="form-group col-xs-12 fail-message">
+                <div class="alert alert-danger" role="alert">
+                    Dados de acesso inválidos.
+                </div>
+            </div>
         </form>
+
 
     </div>
 </div>
-
 <footer class="text-center">
     © {{ "now"|date('Y') }} Copyright Text
 </footer>
 
-
-<!-- jQuery (obrigatório para plugins JavaScript do Bootstrap) -->
 <script src="/bower/jquery/dist/jquery.js"></script>
-<!-- Inclui todos os plugins compilados (abaixo), ou inclua arquivos separadados se necessário -->
 <script src="/bower/bootstrap/dist/js/bootstrap.js"></script>
-<script src="/templates/login/login.js"></script>
 
 </body>
 </html>

@@ -19,5 +19,5 @@ trait DELETE
      * @param \Slim\Http\Response $response
      * @return \Slim\Http\Response
      */
-    abstract function delete(Request $request, Response $response);
+    public abstract function delete(Request $request, Response $response);
 }

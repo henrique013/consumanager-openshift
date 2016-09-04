@@ -12,80 +12,45 @@ namespace App\Route;
 use App\Util\Handle;
 use App\Util\Handle\GET;
 use DateTime;
+use GuzzleHttp\Exception\TransferException;
 use Slim\Http\Request;
 use Slim\Http\Response;
 
 
-class Agenda extends Handle {
+class Agenda extends Handle
+{
 
     use GET;
 
 
-    function get(Request $request, Response $response) {
-
-        $data = $request->getAttribute('dt', new DateTime());
-
-
+    function get(Request $request, Response $response)
+    {
         /** @var \Twig_Environment $twig */
-        $twig = $this->ci->get('twig');
+        /** @var \GuzzleHttp\Client $api */
 
-        $context = $this->ci->get('settings')['Twig']['context']['sistema'];
+
+        $data = $data = $request->getAttribute('data', date('Y-m-d'));
+
+        $api = $this->ci->get('API');
+
+        try
+        {
+            $resp = $api->get("agenda/resumos/{$data}");
+
+            $context['resumos'] = json_decode($resp->getBody(), true);
+        }
+        catch (TransferException $e)
+        {
+            //TODO: implementar!
+            throw $e;
+        }
+
+
         $context['data'] = $data;
-        $context['resumos'] = [
-            [
-                'consultorio' => [
-                    'id' => 10,
-                    'nome' => 'Brinquedoteca'
-                ],
-                'horarios' => [
-                    'total' => rand(8, 12),
-                    'ocupados' => rand(0, 8)
-                ]
-            ],
-            [
-                'consultorio' => [
-                    'id' => 20,
-                    'nome' => 'Consultório 1'
-                ],
-                'horarios' => [
-                    'total' => rand(8, 12),
-                    'ocupados' => rand(0, 8)
-                ]
-            ],
-            [
-                'consultorio' => [
-                    'id' => 30,
-                    'nome' => 'Consultório 2'
-                ],
-                'horarios' => [
-                    'total' => rand(8, 12),
-                    'ocupados' => rand(0, 8)
-                ]
-            ],
-            [
-                'consultorio' => [
-                    'id' => 40,
-                    'nome' => 'Consultório 3'
-                ],
-                'horarios' => [
-                    'total' => rand(8, 12),
-                    'ocupados' => rand(0, 8)
-                ]
-            ],
-            [
-                'consultorio' => [
-                    'id' => 50,
-                    'nome' => 'Consultório 4'
-                ],
-                'horarios' => [
-                    'total' => rand(8, 12),
-                    'ocupados' => rand(0, 8)
-                ]
-            ]
-        ];
 
+
+        $twig = $this->ci->get('twig');
         $view = $twig->render('agenda/agenda.twig', $context);
-
         $response->getBody()->write($view);
 
 

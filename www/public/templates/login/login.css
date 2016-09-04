@@ -30,6 +30,15 @@ body > footer {
   margin-top: 15px;
   margin-bottom: 15px;
 }
+.box.fail {
+  height: 475px;
+}
+.box.fail .fail-message {
+  display: block;
+}
+.fail-message {
+  display: none;
+}
 img {
   display: block;
   margin: auto;

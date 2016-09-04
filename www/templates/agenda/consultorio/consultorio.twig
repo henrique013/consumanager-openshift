@@ -20,39 +20,41 @@
         <div class="col-xs-12">
             <h2 class="titulo text-uppercase text-center truncate">
                 consultas
-                <small> - {{ consultorio.nome }}</small>
+                <small> - {{ resumo.consultorio.nome }}</small>
             </h2>
         </div>
     </div>
     <div class="row">
-        <div class="form-group col-xs-12 col-sm-offset-3 col-sm-6 col-md-offset-4 col-md-4">
-            <div class='input-group date dt'>
+        <div class="col-xs-12 col-sm-offset-3 col-sm-6 col-md-offset-4 col-md-4">
+            <div class="form-group">
+                <div class='input-group date dt'>
                 <span class="input-group-addon">
                     <i class="fa fa-calendar" aria-hidden="true"></i>
                 </span>
-                <input name="ipt-data" type='text' value="{{ data|date('d/m/Y') }}" class="form-control" title="Data"/>
+                    <input name="ipt-data" type='text' value="{{ data|date('d/m/Y') }}" class="form-control" title="Data"/>
+                </div>
             </div>
         </div>
     </div>
     <div class="row">
 
-        {% for consulta in consultas %}
+        {% for horas, horario in resumo.agenda %}
 
             <div class="col-xs-12 col-sm-4 col-md-3 bootcards-cards">
                 <div class="panel panel-default">
 
                     <div class="panel-heading clearfix">
-                        <h3 class="panel-title pull-left truncate text-uppercase">{{ consulta.horario }}</h3>
+                        <h3 class="panel-title pull-left truncate text-uppercase">{{ horas }}</h3>
                     </div>
 
-                    {% if consulta.resumo %}
+                    {% if horario %}
 
                         <div class="panel-body">
                             <dl>
                                 <dt>Paciente</dt>
-                                <dd>{{ consulta.resumo.paciente }}</dd>
+                                <dd>{{ horario.paciente.nome }}</dd>
                                 <dt>Aluno</dt>
-                                <dd>{{ consulta.resumo.aluno }}</dd>
+                                <dd>{{ horario.consulta.responsavel }}</dd>
                             </dl>
                         </div>
                         <div class="panel-footer">
@@ -78,4 +80,7 @@
         {% endfor %}
 
     </div>
+
+    <input id="ipt-consultorio-id" type="hidden" value="{{ resumo.consultorio.id }}">
+
 {% endblock %}

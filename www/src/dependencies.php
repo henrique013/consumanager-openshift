@@ -5,24 +5,36 @@
 $container = $app->getContainer();
 
 
-$container['PDO'] =
-    function (\Slim\Container $c)
+$container['twig'] =
+    function ()
     {
-        $settings = $c->get('settings')['PDO'];
-        $dsn = "mysql:host={$settings['host']};dbname={$settings['dbname']};charset=utf8";
-        $conn = new PDO($dsn, $settings['user'], $settings['password']);
-        $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        $conn->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
+        $loader = new Twig_Loader_Filesystem(__DIR__ . '/../templates');
 
-        return $conn;
+        $twig = new Twig_Environment($loader);
+
+        return $twig;
     };
 
 
-$container['twig'] = function () {
+$container['API'] =
+    function (Slim\Container $c)
+    {
+        $debug = $c->get('settings')['displayErrorDetails'];
+        $api_settings = $c->get('settings')['API'];
 
-    $loader = new Twig_Loader_Filesystem(__DIR__ . '/../templates');
 
-    $twig = new Twig_Environment($loader);
+        $options = [
+            'base_uri' => $api_settings['host_url']
+        ];
 
-    return $twig;
-};
+        if ($debug && isset($_COOKIE['XDEBUG_SESSION']))
+        {
+            $options['headers'] = [
+                'Cookie' => 'XDEBUG_SESSION=XDEBUG_ECLIPSE'
+            ];
+        }
+
+        $client = new GuzzleHttp\Client($options);
+
+        return $client;
+    };

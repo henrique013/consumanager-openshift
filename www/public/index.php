@@ -1,7 +1,5 @@
 <?php
 
-echo file_get_contents('http://teste-subz3r0.rhcloud.com/');exit;
-
 if (PHP_SAPI == 'cli-server')
 {
     // To help the built-in PHP dev server, check if the request was actually for
