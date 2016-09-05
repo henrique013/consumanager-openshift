@@ -10,8 +10,10 @@ namespace App\Route\Cadastro;
 
 
 use App\Util\Handle;
+use App\Util\Handle\DELETE;
 use App\Util\Handle\GET;
 use App\Util\Handle\POST;
+use App\Util\Handle\PUT;
 use GuzzleHttp\Exception\TransferException;
 use Slim\Http\Request;
 use Slim\Http\Response;
@@ -21,9 +23,11 @@ class Usuario extends Handle
 {
     use GET;
     use POST;
+    use PUT;
+    use DELETE;
 
 
-    function get(Request $request, Response $response)
+    public function get(Request $request, Response $response)
     {
         /** @var \Twig_Environment $twig */
         /** @var \GuzzleHttp\Client $api */
@@ -74,7 +78,6 @@ class Usuario extends Handle
         /** @var \Slim\Flash\Messages $flash */
 
 
-        $usrID = $request->getAttribute('id');
         $json = $request->getParsedBody();
 
         $api = $this->ci->get('API');
@@ -82,14 +85,7 @@ class Usuario extends Handle
 
         try
         {
-            if ($usrID)
-            {
-                $api->put("usuarios/{$usrID}", ['json' => $json]);
-            }
-            else
-            {
-                $api->post("usuarios", ['json' => $json]);
-            }
+            $api->post("usuarios", ['json' => $json]);
 
             $status = 'success';
         }
@@ -102,6 +98,72 @@ class Usuario extends Handle
         $flash->addMessage('cad_usuario_status', $status);
 
         $response = $response->withRedirect('/cadastro/usuario');
+
+
+        return $response;
+    }
+
+
+    public function delete(Request $request, Response $response)
+    {
+        /** @var \GuzzleHttp\Client $api */
+        /** @var \Slim\Flash\Messages $flash */
+
+
+        $usrID = $request->getAttribute('id');
+        $json = $request->getParsedBody();
+
+        $api = $this->ci->get('API');
+        $flash = $this->ci->get('flash');
+
+        try
+        {
+            $api->delete("usuarios/{$usrID}", ['json' => $json]);
+
+            $status = 'success';
+        }
+        catch (TransferException $e)
+        {
+            $status = 'error';
+        }
+
+
+        $flash->addMessage('cad_usuario_status', $status);
+
+        $response = $response->withRedirect("/cadastro/usuario");
+
+
+        return $response;
+    }
+
+
+    public function put(Request $request, Response $response)
+    {
+        /** @var \GuzzleHttp\Client $api */
+        /** @var \Slim\Flash\Messages $flash */
+
+
+        $usrID = $request->getAttribute('id');
+        $json = $request->getParsedBody();
+
+        $api = $this->ci->get('API');
+        $flash = $this->ci->get('flash');
+
+        try
+        {
+            $api->put("usuarios/{$usrID}", ['json' => $json]);
+
+            $status = 'success';
+        }
+        catch (TransferException $e)
+        {
+            $status = 'error';
+        }
+
+
+        $flash->addMessage('cad_usuario_status', $status);
+
+        $response = $response->withRedirect("/cadastro/usuario/{$usrID}");
 
 
         return $response;

@@ -10,6 +10,7 @@
 {% block footer %}
     <script src="/bower/moment/min/moment-with-locales.min.js"></script>
     <script src="/bower/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js"></script>
+    <script src="/templates/cadastro/usuario/usuario.js"></script>
 {% endblock %}
 
 
@@ -44,7 +45,7 @@
 
             {% endif %}
 
-            <form action="/cadastro/usuario{{ usuario ? '/' ~ usuario.id : '' }}" method="POST">
+            <form class="usuario" data-usuario_id="{{ usuario.id }}">
                 <div class="form-group">
                     <label for="usr_nome" class="control-label">Nome</label>
                     <input type="text" class="form-control" name="nome" id="usr_nome" value="{{ usuario.nome }}" required>
@@ -62,9 +63,24 @@
                     <input type="password" class="form-control" name="senha2" id="usr_senha2" required>
                 </div>
                 <div class="form-group">
-                    <button type="submit" class="btn btn-{{ usuario ? 'primary' : 'success' }} pull-right">
-                        <i class="fa fa-floppy-o" aria-hidden="true"></i> Salvar
-                    </button>
+
+                    {% if usuario %}
+
+                        <button type="button" class="btn btn-danger remover">
+                            <i class="fa fa-trash-o" aria-hidden="true"></i> Remover
+                        </button>
+                        <button type="button" class="btn btn-primary pull-right atualizar">
+                            <i class="fa fa-pencil-square-o" aria-hidden="true"></i> Salvar
+                        </button>
+
+                    {% else %}
+
+                        <button type="button" class="btn btn-success pull-right novo">
+                            <i class="fa fa-floppy-o" aria-hidden="true"></i> Salvar
+                        </button>
+
+                    {% endif %}
+
                 </div>
             </form>
         </div>

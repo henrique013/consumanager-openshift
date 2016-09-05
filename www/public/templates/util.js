@@ -1,4 +1,5 @@
-window.settings = {
+window.util = {
+
     datepicker: {
         tooltips: {
             today: 'Ir para Hoje',
