@@ -14,10 +14,5 @@ use Slim\Http\Response;
 
 trait POST
 {
-    /**
-     * @param \Slim\Http\Request $request
-     * @param \Slim\Http\Response $response
-     * @return \Slim\Http\Response
-     */
     public abstract function post(Request $request, Response $response);
 }

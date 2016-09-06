@@ -14,10 +14,5 @@ use Slim\Http\Response;
 
 trait DELETE
 {
-    /**
-     * @param \Slim\Http\Request $request
-     * @param \Slim\Http\Response $response
-     * @return \Slim\Http\Response
-     */
     public abstract function delete(Request $request, Response $response);
 }

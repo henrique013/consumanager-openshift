@@ -35,26 +35,10 @@ class Session extends Handle
 
         else // sessão válida
         {
-            $t = time();
-
-            if ($_SESSION['ultimo_acesso'] < $t - (60 * 5)) // atualiza o id da sessão de tempos em tempos
-            {
-                session_regenerate_id(true);
-            }
-
-            $_SESSION['ultimo_acesso'] = $t;
+            $_SESSION['ultimo_acesso'] = time();
 
             $response = $next($request, $response);
         }
-
-
-        // cria uma sessão com um cookie 'httpOnly'
-
-        $host = $this->ci->get('settings')['SERVER']['host'];
-        $sess_name = session_name();
-        $sess_id = session_id();
-
-        header("Set-Cookie: {$sess_name}={$sess_id}; path=/; domain={$host}; httpOnly");
 
 
         return $response;

@@ -14,10 +14,5 @@ use Slim\Http\Response;
 
 trait PATCH
 {
-    /**
-     * @param \Slim\Http\Request $request
-     * @param \Slim\Http\Response $response
-     * @return \Slim\Http\Response
-     */
     public abstract function patch(Request $request, Response $response);
 }

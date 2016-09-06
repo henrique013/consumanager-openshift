@@ -11,8 +11,7 @@
     "filp/whoops": "~2.1",
     "vlucas/phpdotenv": "^2.3",
     "twig/twig": "~1.24",
-    "guzzlehttp/guzzle": "^6.2",
-    "slim/flash": "^0.1.0"
+    "guzzlehttp/guzzle": "^6.2"
   },
   "autoload": {
     "psr-4": {

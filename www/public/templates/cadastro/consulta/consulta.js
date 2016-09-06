@@ -1,13 +1,9 @@
 $(function () {
 
-    var inputTH = $('.typeahead');
-
-
-    //var pacientes;
-    inputTH.typeahead({
+    $('.typeahead').typeahead({
         items: 10,
         ajax: {
-            url: inputTH.data('action'),
+            url: '/cadastro/consulta/pacientes',
             timeout: 300,
             triggerLength: 1,
             method: "get",
@@ -15,21 +11,6 @@ $(function () {
                 return {
                     nome: query
                 }
-            },
-            preProcess: function (json) {
-
-                if (!json) return false;
-
-                var itens = [];
-                $.each(json, function (i, pac) {
-
-                    itens.push({
-                        id: JSON.stringify(pac),
-                        name: pac.nome
-                    });
-                });
-
-                return itens;
             }
         },
         onSelect: function (item) {

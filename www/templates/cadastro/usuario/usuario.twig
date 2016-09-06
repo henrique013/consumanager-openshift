@@ -48,34 +48,34 @@
             <form class="usuario" data-usuario_id="{{ usuario.id }}">
                 <div class="form-group">
                     <label for="usr_nome" class="control-label">Nome</label>
-                    <input type="text" class="form-control" name="nome" id="usr_nome" value="{{ usuario.nome }}" required>
+                    <input type="text" class="form-control" name="nome" id="usr_nome" value="{{ usuario.nome }}">
                 </div>
                 <div class="form-group">
                     <label for="usr_email" class="control-label">E-mail</label>
-                    <input type="email" class="form-control" name="email" id="usr_email" value="{{ usuario.email }}" required>
+                    <input type="email" class="form-control" name="email" id="usr_email" value="{{ usuario.email }}">
                 </div>
                 <div class="form-group">
                     <label for="usr_senha" class="control-label">Senha</label>
-                    <input type="password" class="form-control" name="senha" id="usr_senha" required>
+                    <input type="password" class="form-control" name="senha" id="usr_senha">
                 </div>
                 <div class="form-group">
                     <label for="usr_senha2" class="control-label">Repita sua senha</label>
-                    <input type="password" class="form-control" name="senha2" id="usr_senha2" required>
+                    <input type="password" class="form-control" name="senha2" id="usr_senha2">
                 </div>
                 <div class="form-group">
 
                     {% if usuario %}
 
-                        <button type="button" class="btn btn-danger remover">
+                        <button type="button" class="remover btn btn-danger">
                             <i class="fa fa-trash-o" aria-hidden="true"></i> Remover
                         </button>
-                        <button type="button" class="btn btn-primary pull-right atualizar">
+                        <button type="button" class="atualizar btn btn-primary pull-right">
                             <i class="fa fa-pencil-square-o" aria-hidden="true"></i> Salvar
                         </button>
 
                     {% else %}
 
-                        <button type="button" class="btn btn-success pull-right novo">
+                        <button type="button" class="novo btn btn-success pull-right">
                             <i class="fa fa-floppy-o" aria-hidden="true"></i> Salvar
                         </button>
 
@@ -85,4 +85,9 @@
             </form>
         </div>
     </div>
+
+    {% include 'modals/default/atencao.twig' %}
+    {% include 'modals/default/sucesso.twig' %}
+    {% include 'modals/default/erro.twig' %}
+
 {% endblock %}

@@ -21,27 +21,22 @@ class Main extends Handle
 
     public function __invoke(Request $request, Response $response, callable $next)
     {
+        /* @var \Slim\Http\Response $response */
+
+        $response = $response->withHeader('Access-Control-Allow-Headers', 'Content-Type');
+        $response = $response->withHeader('Access-Control-Allow-Methods', 'POST, GET, OPTIONS, DELETE, PUT, PATCH');
+
         if ($request->isOptions())
         {
             return $response->withStatus(204);
         }
 
-
-        /* @var \Slim\Http\Response $response */
         $response = $next($request, $response);
 
-
-        if (!$response->getBody()->getSize())
+        if (!$response->getBody()->getSize() && $response->isOk())
         {
             $response = $response->withStatus(204);
         }
-
-
-        // CORS
-        $response = $response->withHeader('Access-Control-Allow-Origin', '*');
-        $response = $response->withHeader('Access-Control-Allow-Headers', 'X-Api-Token, Content-Type');
-        $response = $response->withHeader('Access-Control-Allow-Methods', 'POST, GET, OPTIONS, DELETE, PUT, PATCH');
-
 
         return $response;
     }

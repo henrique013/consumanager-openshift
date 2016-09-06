@@ -31,15 +31,10 @@ class Usuario extends Handle
     {
         /** @var \Twig_Environment $twig */
         /** @var \GuzzleHttp\Client $api */
-        /** @var \Slim\Flash\Messages $flash */
 
 
         $usrID = $request->getAttribute('id');
-
-        $flash = $this->ci->get('flash');
-        $status = $flash->getMessage('cad_usuario_status');
-        $context['status'] = is_array($status) ? array_shift($status) : false;
-
+        $context = [];
 
         if ($usrID)
         {
@@ -62,9 +57,7 @@ class Usuario extends Handle
 
 
         $twig = $this->ci->get('twig');
-
         $view = $twig->render('cadastro/usuario/usuario.twig', $context);
-
         $response->getBody()->write($view);
 
 
@@ -75,30 +68,20 @@ class Usuario extends Handle
     public function post(Request $request, Response $response)
     {
         /** @var \GuzzleHttp\Client $api */
-        /** @var \Slim\Flash\Messages $flash */
 
 
         $json = $request->getParsedBody();
 
         $api = $this->ci->get('API');
-        $flash = $this->ci->get('flash');
 
         try
         {
             $api->post("usuarios", ['json' => $json]);
-
-            $status = 'success';
         }
         catch (TransferException $e)
         {
-            $status = 'error';
+            return $response->withStatus($e->getCode());
         }
-
-
-        $flash->addMessage('cad_usuario_status', $status);
-
-        $response = $response->withRedirect('/cadastro/usuario');
-
 
         return $response;
     }
@@ -107,31 +90,20 @@ class Usuario extends Handle
     public function delete(Request $request, Response $response)
     {
         /** @var \GuzzleHttp\Client $api */
-        /** @var \Slim\Flash\Messages $flash */
 
 
         $usrID = $request->getAttribute('id');
-        $json = $request->getParsedBody();
 
         $api = $this->ci->get('API');
-        $flash = $this->ci->get('flash');
 
         try
         {
-            $api->delete("usuarios/{$usrID}", ['json' => $json]);
-
-            $status = 'success';
+            $api->delete("usuarios/{$usrID}");
         }
         catch (TransferException $e)
         {
-            $status = 'error';
+            return $response->withStatus($e->getCode());
         }
-
-
-        $flash->addMessage('cad_usuario_status', $status);
-
-        $response = $response->withRedirect("/cadastro/usuario");
-
 
         return $response;
     }
@@ -140,31 +112,21 @@ class Usuario extends Handle
     public function put(Request $request, Response $response)
     {
         /** @var \GuzzleHttp\Client $api */
-        /** @var \Slim\Flash\Messages $flash */
 
 
         $usrID = $request->getAttribute('id');
         $json = $request->getParsedBody();
 
         $api = $this->ci->get('API');
-        $flash = $this->ci->get('flash');
 
         try
         {
             $api->put("usuarios/{$usrID}", ['json' => $json]);
-
-            $status = 'success';
         }
         catch (TransferException $e)
         {
-            $status = 'error';
+            return $response->withStatus($e->getCode());
         }
-
-
-        $flash->addMessage('cad_usuario_status', $status);
-
-        $response = $response->withRedirect("/cadastro/usuario/{$usrID}");
-
 
         return $response;
     }

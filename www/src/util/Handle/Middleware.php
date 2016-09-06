@@ -15,11 +15,5 @@ use Slim\Http\Response;
 
 trait Middleware
 {
-    /**
-     * @param \Slim\Http\Request $request
-     * @param \Slim\Http\Response $response
-     * @param callable $next
-     * @return \Slim\Http\Response
-     */
     public abstract function __invoke(Request $request, Response $response, callable $next);
 }

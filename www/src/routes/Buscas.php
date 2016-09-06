@@ -25,9 +25,7 @@ class Buscas extends Handle {
         /** @var \Twig_Environment $twig */
         $twig = $this->ci->get('twig');
 
-        $context = $context = $this->ci->get('settings')['Twig']['context']['sistema'];
-
-        $view = $twig->render('buscas/buscas.twig', $context);
+        $view = $twig->render('buscas/buscas.twig');
 
         $response->getBody()->write($view);
 

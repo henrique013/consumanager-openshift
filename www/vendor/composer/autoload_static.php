@@ -20,7 +20,6 @@ class ComposerStaticInit95d8dac42a027984e633f702170c7cc0
         ),
         'S' => 
         array (
-            'Slim\\Flash\\' => 11,
             'Slim\\' => 5,
         ),
         'P' => 
@@ -57,10 +56,6 @@ class ComposerStaticInit95d8dac42a027984e633f702170c7cc0
         'Whoops\\' => 
         array (
             0 => __DIR__ . '/..' . '/filp/whoops/src/Whoops',
-        ),
-        'Slim\\Flash\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/slim/flash/src',
         ),
         'Slim\\' => 
         array (
