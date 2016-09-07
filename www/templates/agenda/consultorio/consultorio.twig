@@ -3,7 +3,6 @@
 
 {% block head %}
     <link href="/bower/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css" rel="stylesheet">
-    <link href="/bower/bootcards/dist/css/bootcards-desktop.min.css" rel="stylesheet">
     <link href="/templates/agenda/consultorio/consultorio.css" rel="stylesheet">
 {% endblock %}
 
@@ -26,12 +25,12 @@
     </div>
     <div class="row">
         <div class="col-xs-12 col-sm-offset-3 col-sm-6 col-md-offset-4 col-md-4">
-            <div class="form-group">
-                <div class='input-group date dt'>
-                <span class="input-group-addon">
-                    <i class="fa fa-calendar" aria-hidden="true"></i>
-                </span>
-                    <input name="ipt-data" type='text' value="{{ data|date('d/m/Y') }}" class="form-control" title="Data"/>
+            <div class="form-group dt-selecionada">
+                <div class='input-group date'>
+                    <span class="input-group-addon">
+                        <i class="fa fa-calendar" aria-hidden="true"></i>
+                    </span>
+                    <input type='text' value="{{ data|date('d/m/Y') }}" class="form-control" title="Data"/>
                 </div>
             </div>
         </div>
@@ -40,7 +39,7 @@
 
         {% for horas, horario in resumo.agenda %}
 
-            <div class="col-xs-12 col-sm-4 col-md-3 bootcards-cards">
+            <div class="col-xs-12 col-sm-4 col-md-3">
                 <div class="panel panel-default">
 
                     <div class="panel-heading clearfix">
@@ -58,18 +57,20 @@
                             </dl>
                         </div>
                         <div class="panel-footer">
-                            <a class="btn btn-primary btn-sm pull-right text-uppercase" href="">
+                            <a class="btn btn-primary btn-sm pull-right text-uppercase" href="/cadastro/consulta/{{ horario.consulta.id }}">
                                 <i class="fa fa-pencil" aria-hidden="true"></i> Editar
                             </a>
+                            <div class="clear"></div>
                         </div>
 
                     {% else %}
 
                         <div class="panel-body"></div>
                         <div class="panel-footer">
-                            <a class="btn btn-default btn-sm pull-right text-uppercase" href="">
+                            <a class="btn btn-default btn-sm pull-right text-uppercase" href="/cadastro/consulta/consultorio/{{ resumo.consultorio.id }}/{{ data }}/{{ horas|replace({':' : '-'}) }}">
                                 <i class="fa fa-plus" aria-hidden="true"></i> Nova
                             </a>
+                            <div class="clear"></div>
                         </div>
 
                     {% endif %}

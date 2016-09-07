@@ -24,8 +24,11 @@
     <div class="row">
         <div class="col-xs-12 col-md-6 col-md-offset-3">
             <form>
+
                 <fieldset>
-                    <legend>Paciente</legend>
+                    <legend>
+                        <i class="fa fa-user" aria-hidden="true"></i> Paciente
+                    </legend>
                     <div class="nome-pac form-group col-xs-12 col-sm-8 col-sm-offset-2">
                         <div class="form-group">
                             <input type="text" class="typeahead form-control" autocomplete="off" placeholder="NOME DO PACIENTE">
@@ -44,8 +47,11 @@
                         </dl>
                     </div>
                 </fieldset>
+
                 <fieldset>
-                    <legend>Consulta</legend>
+                    <legend>
+                        <i class="fa fa-stethoscope" aria-hidden="true"></i> Consulta
+                    </legend>
                     <div class="form-group col-xs-12 col-sm-6">
                         <label for="ipt-con-consultorio" class="control-label">Consultório</label>
                         <select id="ipt-con-consultorio" class="form-control">
@@ -57,7 +63,7 @@
                     </div>
                     <div class="form-group col-xs-12 col-sm-6">
                         <label for="ipt-con-data" class="control-label">Data</label>
-                        <div class='input-group date dt'>
+                        <div class='input-group date'>
                             <span class="input-group-addon">
                                 <i class="fa fa-calendar" aria-hidden="true"></i>
                             </span>
@@ -92,11 +98,13 @@
                         <input id="ipt-con-aluno" type="text" class="form-control">
                     </div>
                 </fieldset>
+
                 <div class="form-group col-xs-12">
                     <button type="submit" class="btn btn-success pull-right" disabled="disabled">
                         <i class="fa fa-floppy-o" aria-hidden="true"></i> Salvar
                     </button>
                 </div>
+
             </form>
         </div>
     </div>

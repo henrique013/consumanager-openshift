@@ -3,7 +3,6 @@
 
 {% block head %}
     <link href="/bower/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css" rel="stylesheet">
-    <link href="/bower/bootcards/dist/css/bootcards-desktop.min.css" rel="stylesheet">
     <link href="/templates/agenda/agenda.css" rel="stylesheet">
 {% endblock %}
 
@@ -23,12 +22,12 @@
     </div>
     <div class="row">
         <div class="col-xs-12 col-sm-offset-3 col-sm-6 col-md-offset-4 col-md-4">
-            <div class="form-group">
-                <div class='input-group date dt'>
+            <div class="form-group dt-selecionada">
+                <div class='input-group date'>
                     <span class="input-group-addon">
                         <i class="fa fa-calendar" aria-hidden="true"></i>
                     </span>
-                    <input name="ipt-data" type='text' value="{{ data|date('d/m/Y') }}" class="form-control" title="Data"/>
+                    <input type='text' value="{{ data|date('d/m/Y') }}" class="form-control" title="Data"/>
                 </div>
             </div>
         </div>
@@ -37,7 +36,7 @@
 
         {% for resumo in resumos %}
 
-            <div class="col-xs-12 col-sm-4 col-md-3 bootcards-cards">
+            <div class="col-xs-12 col-sm-4 col-md-3">
                 <div class="panel panel-default">
                     <div class="panel-heading clearfix">
                         <h3 class="panel-title pull-left truncate text-uppercase">{{ resumo.consultorio.nome }}</h3>
@@ -49,8 +48,9 @@
                     </div>
                     <div class="panel-footer">
                         <a class="btn btn-primary btn-sm pull-right text-uppercase" href="/agenda/{{ data|date('Y-m-d') }}/consultorio/{{ resumo.consultorio.id }}">
-                            Acessar
+                            <i class="fa fa-sign-in" aria-hidden="true"></i> Acessar
                         </a>
+                        <div class="clear"></div>
                     </div>
                 </div>
             </div>

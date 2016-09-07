@@ -10,6 +10,7 @@
 {% block footer %}
     <script src="/bower/moment/min/moment-with-locales.min.js"></script>
     <script src="/bower/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js"></script>
+    <script src="/bower/jquery-mask-plugin/dist/jquery.mask.min.js"></script>
     <script src="/templates/cadastro/usuario/usuario.js"></script>
 {% endblock %}
 
@@ -24,64 +25,51 @@
     </div>
     <div class="row">
         <div class="col-xs-12 col-sm-6 col-sm-offset-3 col-md-4 col-md-offset-4">
-
-            {% if status == 'success' %}
-
-                <div class="alert alert-success alert-dismissible" role="alert">
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                    Operação realizada com sucesso!
-                </div>
-
-            {% elseif status == 'error' %}
-
-                <div class="alert alert-danger alert-dismissible" role="alert">
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                    Dados inválidos.
-                </div>
-
-            {% endif %}
-
             <form class="usuario" data-usuario_id="{{ usuario.id }}">
-                <div class="form-group">
-                    <label for="usr_nome" class="control-label">Nome</label>
-                    <input type="text" class="form-control" name="nome" id="usr_nome" value="{{ usuario.nome }}">
-                </div>
-                <div class="form-group">
-                    <label for="usr_email" class="control-label">E-mail</label>
-                    <input type="email" class="form-control" name="email" id="usr_email" value="{{ usuario.email }}">
-                </div>
-                <div class="form-group">
-                    <label for="usr_senha" class="control-label">Senha</label>
-                    <input type="password" class="form-control" name="senha" id="usr_senha">
-                </div>
-                <div class="form-group">
-                    <label for="usr_senha2" class="control-label">Repita sua senha</label>
-                    <input type="password" class="form-control" name="senha2" id="usr_senha2">
-                </div>
+
+                <fieldset>
+                    <legend>
+                        <i class="fa fa-ticket" aria-hidden="true"></i> Credenciais
+                    </legend>
+                    <div class="form-group">
+                        <label for="usr_nome" class="control-label">Nome</label>
+                        <input required type="text" class="form-control" name="nome" id="usr_nome" value="{{ usuario.nome }}">
+                    </div>
+                    <div class="form-group">
+                        <label for="usr_email" class="control-label">E-mail</label>
+                        <input required type="email" class="form-control" name="email" id="usr_email" value="{{ usuario.email }}">
+                    </div>
+                    <div class="form-group">
+                        <label for="usr_senha" class="control-label">Senha</label>
+                        <input required type="password" class="form-control" name="senha" id="usr_senha">
+                    </div>
+                    <div class="form-group">
+                        <label for="usr_senha2" class="control-label">Repita sua senha</label>
+                        <input required type="password" class="form-control" name="senha2" id="usr_senha2">
+                    </div>
+                </fieldset>
+
                 <div class="form-group">
 
                     {% if usuario %}
 
-                        <button type="button" class="remover btn btn-danger">
+                        <button type="submit" class="remover btn btn-danger">
                             <i class="fa fa-trash-o" aria-hidden="true"></i> Remover
                         </button>
-                        <button type="button" class="atualizar btn btn-primary pull-right">
+                        <button type="submit" class="atualizar btn btn-primary pull-right">
                             <i class="fa fa-pencil-square-o" aria-hidden="true"></i> Salvar
                         </button>
 
                     {% else %}
 
-                        <button type="button" class="novo btn btn-success pull-right">
+                        <button type="submit" class="novo btn btn-success pull-right">
                             <i class="fa fa-floppy-o" aria-hidden="true"></i> Salvar
                         </button>
 
                     {% endif %}
 
                 </div>
+
             </form>
         </div>
     </div>

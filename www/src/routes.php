@@ -23,6 +23,7 @@ $app->post('/cadastro/paciente', 'App\Route\Cadastro\Paciente:post');
 $app->put('/cadastro/paciente/{id:\d+}', 'App\Route\Cadastro\Paciente:put');
 $app->delete('/cadastro/paciente/{id:\d+}', 'App\Route\Cadastro\Paciente:delete');
 
+$app->get('/cadastro/consulta/consultorio/{co_id:\d+}/{data:\d\d\d\d-\d\d-\d\d}/{horario:\d\d-\d\d}', 'App\Route\Cadastro\Consulta:get');
 $app->get('/cadastro/consulta[/{id:\d+}]', 'App\Route\Cadastro\Consulta:get');
 $app->post('/cadastro/consulta', 'App\Route\Cadastro\Consulta:post');
 $app->put('/cadastro/consulta/{id:\d+}', 'App\Route\Cadastro\Consulta:put');

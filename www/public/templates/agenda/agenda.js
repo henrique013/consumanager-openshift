@@ -1,6 +1,6 @@
 $(function () {
 
-    $('main .dt')
+    $('.input-group.date')
         .datetimepicker({
             locale: 'pt-br',
             tooltips: window.util.datepicker.tooltips,
@@ -14,5 +14,4 @@ $(function () {
             window.location.href = '/agenda/' + e.date.format('YYYY-MM-DD');
         })
     ;
-
 });

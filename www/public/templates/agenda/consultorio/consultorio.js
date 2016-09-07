@@ -3,7 +3,7 @@ $(function () {
     var coID = $('#ipt-consultorio-id').val();
 
 
-    $('main .dt')
+    $('.input-group.date')
         .datetimepicker({
             locale: 'pt-br',
             tooltips: window.util.datepicker.tooltips,

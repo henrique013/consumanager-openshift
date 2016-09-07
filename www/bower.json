@@ -18,10 +18,11 @@
   ],
   "dependencies": {
     "bootstrap": "^3.3.7",
-    "bootcards": "^1.1.2",
     "font-awesome": "fontawesome#^4.6.3",
     "jquery": "^2.2.4",
     "eonasdan-bootstrap-datetimepicker": "^4.17.37",
-    "bs-typeahead": "^0.0.5"
+    "bs-typeahead": "^0.0.5",
+    "jquery-mask-plugin": "^1.14.0",
+    "bottlejs": "^1.4.0"
   }
 }
