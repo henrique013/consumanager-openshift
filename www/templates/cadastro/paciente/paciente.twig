@@ -10,6 +10,7 @@
 {% block footer %}
     <script src="/bower/moment/min/moment-with-locales.min.js"></script>
     <script src="/bower/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js"></script>
+    <script src="/bower/jquery-mask-plugin/dist/jquery.mask.min.js"></script>
     <script src="/templates/cadastro/paciente/paciente.js"></script>
 {% endblock %}
 
@@ -17,48 +18,54 @@
 {% block content %}
     <div class="row">
         <div class="col-xs-12">
-            <h2 class="titulo text-uppercase text-center">paciente</h2>
+            <h2 class="titulo text-uppercase text-center">
+                <strong>{{ paciente ? 'editar' : 'novo' }}</strong> paciente
+            </h2>
         </div>
     </div>
     <div class="row">
         <div class="col-xs-12 col-md-8 col-md-offset-2">
-            <form action="{{ api_host }}/paciente">
+            <form class="paciente" data-paciente_id="{{ paciente.id }}">
 
                 <fieldset class="col-xs-12">
                     <legend>
                         <i class="fa fa-list-ul" aria-hidden="true"></i> Prontuário
                     </legend>
                     <div class="form-group col-xs-12 col-sm-4">
-                        <label for="ipt-pac-nome">Nome</label>
-                        <input type="text" class="form-control" id="ipt-pac-nome">
+                        <label for="ipt-pac-nome" class="control-label">Nome</label>
+                        <input required type="text" class="form-control" id="ipt-pac-nome">
                     </div>
                     <div class="form-group col-xs-12 col-sm-4">
-                        <label for="ipt-pac-nascimento">Data de Nascimento</label>
+                        <label for="ipt-pac-nascimento" class="control-label">Data de Nascimento</label>
                         <div class='input-group date'>
-                        <span class="input-group-addon">
-                            <i class="fa fa-calendar" aria-hidden="true"></i>
-                        </span>
-                            <input type="text" class="form-control" id="ipt-pac-nascimento">
+                            <span class="input-group-addon">
+                                <i class="fa fa-calendar" aria-hidden="true"></i>
+                            </span>
+                            <input required type="text" class="form-control" id="ipt-pac-nascimento">
                         </div>
                     </div>
                     <div class="form-group col-xs-12 col-sm-4">
-                        <label for="ipt-pac-tipo">Tipo</label>
-                        <select id="ipt-pac-tipo" class="form-control">
-                            <option>Aluno</option>
-                            <option>Funcionário</option>
-                            <option>Externo</option>
+                        <label for="ipt-pac-tipo" class="control-label">Tipo</label>
+                        <select required id="ipt-pac-tipo" class="form-control">
+
+                            {% for tipo in tipos %}
+
+                                <option {{ paciente.tipo.id == tipo.id ? 'selected' : '' }} value="{{ tipo.id }}">{{ tipo.nome }}</option>
+
+                            {% endfor %}
+
                         </select>
                     </div>
                     <div class="form-group col-xs-12 col-sm-4">
-                        <label for="ipt-pac-responsavel">Nome do Responsável</label>
+                        <label for="ipt-pac-responsavel" class="control-label">Nome do Responsável</label>
                         <input type="text" class="form-control" id="ipt-pac-responsavel" placeholder="OPCIONAL">
                     </div>
                     <div class="form-group col-xs-12 col-sm-4">
-                        <label for="ipt-pac-encaminhamento">Encaminhamento</label>
+                        <label for="ipt-pac-encaminhamento" class="control-label">Encaminhamento</label>
                         <input type="text" class="form-control" id="ipt-pac-encaminhamento" placeholder="OPCIONAL">
                     </div>
                     <div class="form-group col-xs-12 col-sm-12">
-                        <label for="ipt-pac-motivo">Motivo</label>
+                        <label for="ipt-pac-motivo" class="control-label">Motivo</label>
                         <textarea id="ipt-pac-motivo" class="form-control" rows="3" placeholder="OPCIONAL"></textarea>
                     </div>
                 </fieldset>
@@ -68,11 +75,11 @@
                         <i class="fa fa-phone" aria-hidden="true"></i> Contato
                     </legend>
                     <div class="form-group col-xs-12 col-sm-4">
-                        <label for="ipt-pac-telefone">Telefone</label>
-                        <input type="text" class="form-control" id="ipt-pac-telefone">
+                        <label for="ipt-pac-telefone" class="control-label">Telefone</label>
+                        <input required type="text" class="form-control" id="ipt-pac-telefone">
                     </div>
                     <div class="form-group col-xs-12 col-sm-4">
-                        <label for="ipt-pac-telefone2">Telefone 2</label>
+                        <label for="ipt-pac-telefone2" class="control-label">Telefone 2</label>
                         <input type="text" class="form-control" id="ipt-pac-telefone2" placeholder="OPCIONAL">
                     </div>
                 </fieldset>
@@ -82,41 +89,66 @@
                         <i class="fa fa-map-signs" aria-hidden="true"></i> Endereço
                     </legend>
                     <div class="form-group col-xs-12 col-sm-4">
-                        <label for="ipt-pac-uf">Estado</label>
-                        <select id="ipt-pac-uf" class="form-control">
-                            <option>Minas Gerais</option>
-                            <option>São Paulo</option>
-                            <option>Rio de Janeiro</option>
+                        <label for="ipt-pac-uf" class="control-label">Estado</label>
+                        <select required id="ipt-pac-uf" class="form-control">
+
+                            {% for uf in estados %}
+
+                                <option {{ paciente.uf.id == uf.id ? 'selected' : '' }} value="{{ uf.id }}">{{ uf.nome }}</option>
+
+                            {% endfor %}
+
                         </select>
                     </div>
                     <div class="form-group col-xs-12 col-sm-4">
-                        <label for="ipt-pac-cidade">Cidade</label>
-                        <input type="text" class="form-control" id="ipt-pac-cidade">
+                        <label for="ipt-pac-cidade" class="control-label">Cidade</label>
+                        <input required type="text" class="form-control" id="ipt-pac-cidade">
                     </div>
                     <div class="form-group col-xs-12 col-sm-4">
-                        <label for="ipt-pac-bairro">Bairro</label>
-                        <input type="text" class="form-control" id="ipt-pac-bairro">
+                        <label for="ipt-pac-bairro" class="control-label">Bairro</label>
+                        <input required type="text" class="form-control" id="ipt-pac-bairro">
                     </div>
                     <div class="form-group col-xs-12 col-sm-4">
-                        <label for="ipt-pac-logradouro">Logradouro</label>
-                        <input type="text" class="form-control" id="ipt-pac-logradouro">
+                        <label for="ipt-pac-logradouro" class="control-label">Logradouro</label>
+                        <input required type="text" class="form-control" id="ipt-pac-logradouro">
                     </div>
                     <div class="form-group col-xs-12 col-sm-4">
-                        <label for="ipt-pac-numero">Número</label>
-                        <input type="number" class="form-control" id="ipt-pac-numero">
+                        <label for="ipt-pac-numero" class="control-label">Número</label>
+                        <input required data-mask="099999" type="text" class="form-control" id="ipt-pac-numero">
                     </div>
                     <div class="form-group col-xs-12 col-sm-4">
-                        <label for="ipt-pac-complemento">Complemento</label>
-                        <input type="text" class="form-control" id="ipt-pac-complemento">
+                        <label for="ipt-pac-complemento" class="control-label">Complemento</label>
+                        <input type="text" class="form-control" id="ipt-pac-complemento" placeholder="OPCIONAL">
                     </div>
                 </fieldset>
 
-                <div class="form-group col-xs-12">
-                    <button type="submit" class="btn btn-success pull-right">
-                        <i class="fa fa-floppy-o" aria-hidden="true"></i> Salvar
-                    </button>
+                <div class="form-group">
+
+                    {% if paciente %}
+
+                        <button type="button" class="remover btn btn-danger">
+                            <i class="fa fa-trash-o" aria-hidden="true"></i> Remover
+                        </button>
+                        <button type="submit" class="atualizar btn btn-primary pull-right">
+                            <i class="fa fa-pencil-square-o" aria-hidden="true"></i> Salvar
+                        </button>
+
+                    {% else %}
+
+                        <button type="submit" class="novo btn btn-success pull-right">
+                            <i class="fa fa-floppy-o" aria-hidden="true"></i> Salvar
+                        </button>
+
+                    {% endif %}
+
                 </div>
+
             </form>
         </div>
     </div>
+
+    {% include 'modals/default/atencao.twig' %}
+    {% include 'modals/default/sucesso.twig' %}
+    {% include 'modals/default/erro.twig' %}
+
 {% endblock %}

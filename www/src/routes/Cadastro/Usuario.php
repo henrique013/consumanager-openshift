@@ -36,23 +36,13 @@ class Usuario extends Handle
         $usrID = $request->getAttribute('id');
         $context = [];
 
+
         if ($usrID)
         {
             $api = $this->ci->get('API');
-
-            try
-            {
-                $resp = $api->get("usuarios/{$usrID}");
-
-                if ($resp->getStatusCode() === 204) return $response->withRedirect('/cadastro/usuario');
-
-                $context['usuario'] = json_decode($resp->getBody(), true);
-            }
-            catch (TransferException $e)
-            {
-                //TODO: implementar!
-                throw $e;
-            }
+            $resp = $api->get("usuarios/{$usrID}");
+            if ($resp->getStatusCode() === 204) return $response->withRedirect('/cadastro/usuario');
+            $context['usuario'] = json_decode($resp->getBody(), true);
         }
 
 
@@ -71,8 +61,8 @@ class Usuario extends Handle
 
 
         $json = $request->getParsedBody();
-
         $api = $this->ci->get('API');
+
 
         try
         {
@@ -82,6 +72,7 @@ class Usuario extends Handle
         {
             return $response->withStatus($e->getCode());
         }
+
 
         return $response;
     }
@@ -93,8 +84,8 @@ class Usuario extends Handle
 
 
         $usrID = $request->getAttribute('id');
-
         $api = $this->ci->get('API');
+
 
         try
         {
@@ -104,6 +95,7 @@ class Usuario extends Handle
         {
             return $response->withStatus($e->getCode());
         }
+
 
         return $response;
     }
@@ -116,8 +108,8 @@ class Usuario extends Handle
 
         $usrID = $request->getAttribute('id');
         $json = $request->getParsedBody();
-
         $api = $this->ci->get('API');
+
 
         try
         {
@@ -127,6 +119,7 @@ class Usuario extends Handle
         {
             return $response->withStatus($e->getCode());
         }
+
 
         return $response;
     }

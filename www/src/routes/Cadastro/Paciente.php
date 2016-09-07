@@ -28,13 +28,33 @@ class Paciente extends Handle
 
     function get(Request $request, Response $response)
     {
-        $pacID = $request->getAttribute('id');
-
         /** @var \Twig_Environment $twig */
+        /** @var \GuzzleHttp\Client $api */
+
+
+        $pacID = $request->getAttribute('id');
+        $api = $this->ci->get('API');
+        $context = [];
+
+
+        $resp = $api->get("pacientes/tipos");
+        $context['tipos'] = ($resp->getStatusCode() === 204) ? [] : json_decode($resp->getBody(), true);
+
+
+        $resp = $api->get("uf");
+        $context['estados'] = ($resp->getStatusCode() === 204) ? [] : json_decode($resp->getBody(), true);
+
+
+        if ($pacID)
+        {
+            $resp = $api->get("pacientes/{$pacID}");
+            if ($resp->getStatusCode() === 204) return $response->withRedirect('/cadastro/pacientes');
+            $context['paciente'] = json_decode($resp->getBody(), true);
+        }
+
+
         $twig = $this->ci->get('twig');
-
-        $view = $twig->render('cadastro/paciente/paciente.twig');
-
+        $view = $twig->render('cadastro/paciente/paciente.twig', $context);
         $response->getBody()->write($view);
 
 

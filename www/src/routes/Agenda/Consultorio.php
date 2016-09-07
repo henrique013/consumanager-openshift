@@ -38,7 +38,7 @@ class Consultorio extends Handle
 
         try
         {
-            $resp = $api->get("agenda/resumos/{$data}", ['query' => $query]);
+            $resp = $api->get("consultas/resumos/{$data}", ['query' => $query]);
 
             $json = json_decode($resp->getBody(), true);
 

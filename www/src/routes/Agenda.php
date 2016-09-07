@@ -35,7 +35,7 @@ class Agenda extends Handle
 
         try
         {
-            $resp = $api->get("agenda/resumos/{$data}");
+            $resp = $api->get("consultas/resumos/{$data}");
 
             $context['resumos'] = json_decode($resp->getBody(), true);
         }

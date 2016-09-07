@@ -35,7 +35,7 @@ $(function () {
                 }
             });
         })
-        .on('click', '.remover:submit', function () {
+        .on('click', '.remover:button', function () {
 
             $modalAten.modal('show');
         })
