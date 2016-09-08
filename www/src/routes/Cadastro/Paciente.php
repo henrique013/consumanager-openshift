@@ -14,6 +14,7 @@ use App\Util\Handle\DELETE;
 use App\Util\Handle\GET;
 use App\Util\Handle\POST;
 use App\Util\Handle\PUT;
+use GuzzleHttp\Exception\TransferException;
 use Slim\Http\Request;
 use Slim\Http\Response;
 
@@ -48,7 +49,7 @@ class Paciente extends Handle
         if ($pacID)
         {
             $resp = $api->get("pacientes/{$pacID}");
-            if ($resp->getStatusCode() === 204) return $response->withRedirect('/cadastro/pacientes');
+            if ($resp->getStatusCode() === 204) return $response->withRedirect('/cadastro/paciente');
             $context['paciente'] = json_decode($resp->getBody(), true);
         }
 
@@ -62,20 +63,72 @@ class Paciente extends Handle
     }
 
 
-    public function delete(Request $request, Response $response)
+    public function post(Request $request, Response $response)
     {
-        return $response->withStatus(501);
+        /** @var \GuzzleHttp\Client $api */
+
+
+        $json = $request->getParsedBody();
+        $api = $this->ci->get('API');
+
+
+        try
+        {
+            $api->post("pacientes", ['json' => $json]);
+        }
+        catch (TransferException $e)
+        {
+            return $response->withStatus($e->getCode());
+        }
+
+
+        return $response;
     }
 
 
-    public function post(Request $request, Response $response)
+    public function delete(Request $request, Response $response)
     {
-        return $response->withStatus(501);
+        /** @var \GuzzleHttp\Client $api */
+
+
+        $pacID = $request->getAttribute('id');
+        $api = $this->ci->get('API');
+
+
+        try
+        {
+            $api->delete("pacientes/{$pacID}");
+        }
+        catch (TransferException $e)
+        {
+            return $response->withStatus($e->getCode());
+        }
+
+
+        return $response;
     }
 
 
     public function put(Request $request, Response $response)
     {
-        return $response->withStatus(501);
+        /** @var \GuzzleHttp\Client $api */
+
+
+        $pacID = $request->getAttribute('id');
+        $json = $request->getParsedBody();
+        $api = $this->ci->get('API');
+
+
+        try
+        {
+            $api->put("pacientes/{$pacID}", ['json' => $json]);
+        }
+        catch (TransferException $e)
+        {
+            return $response->withStatus($e->getCode());
+        }
+
+
+        return $response;
     }
 }

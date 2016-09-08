@@ -2,7 +2,7 @@ $(function () {
 
     $('.input-group.date').datetimepicker({
         locale: 'pt-br',
-        tooltips: window.util.datepicker.tooltips,
+        tooltips: bottle.container.datepicker_tooltips,
         format: 'DD/MM/YYYY',
         focusOnShow: false,
         showClose: true,
@@ -27,15 +27,15 @@ $(function () {
 
             var pac = JSON.parse(item.value);
 
-            var endereco = pac.endereco.logradouro;
-            endereco += ', n° ' + pac.endereco.numero;
-            endereco += ', ' + pac.endereco.bairro;
-            endereco += ', ' + pac.endereco.cidade;
-            endereco += ' (' + pac.endereco.uf + ')';
+            var endereco = pac.logradouro;
+            endereco += ', n° ' + pac.num_residencia;
+            endereco += ', ' + pac.bairro;
+            endereco += ', ' + pac.cidade;
+            endereco += ' (' + pac.uf.nome + ')';
 
             $('.pac-nome').text(pac.nome);
             $('.pac-endereco').text(endereco);
-            $('.pac-telefone').text(pac.contato.telefone);
+            $('.pac-telefone').text(pac.telefone);
         }
     });
 

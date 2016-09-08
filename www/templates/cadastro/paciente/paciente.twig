@@ -33,7 +33,7 @@
                     </legend>
                     <div class="form-group col-xs-12 col-sm-4">
                         <label for="ipt-pac-nome" class="control-label">Nome</label>
-                        <input required type="text" class="form-control" id="ipt-pac-nome">
+                        <input required name="nome" value="{{ paciente.nome }}" type="text" class="form-control" id="ipt-pac-nome">
                     </div>
                     <div class="form-group col-xs-12 col-sm-4">
                         <label for="ipt-pac-nascimento" class="control-label">Data de Nascimento</label>
@@ -41,12 +41,12 @@
                             <span class="input-group-addon">
                                 <i class="fa fa-calendar" aria-hidden="true"></i>
                             </span>
-                            <input required type="text" class="form-control" id="ipt-pac-nascimento">
+                            <input required name="dt_nascimento" value="{{ paciente.dt_nascimento }}" type="text" class="form-control" id="ipt-pac-nascimento">
                         </div>
                     </div>
                     <div class="form-group col-xs-12 col-sm-4">
                         <label for="ipt-pac-tipo" class="control-label">Tipo</label>
-                        <select required id="ipt-pac-tipo" class="form-control">
+                        <select required name="tipo" id="ipt-pac-tipo" class="form-control">
 
                             {% for tipo in tipos %}
 
@@ -58,15 +58,15 @@
                     </div>
                     <div class="form-group col-xs-12 col-sm-4">
                         <label for="ipt-pac-responsavel" class="control-label">Nome do Responsável</label>
-                        <input type="text" class="form-control" id="ipt-pac-responsavel" placeholder="OPCIONAL">
+                        <input name="responsavel" value="{{ paciente.responsavel }}" type="text" class="form-control" id="ipt-pac-responsavel" placeholder="OPCIONAL">
                     </div>
                     <div class="form-group col-xs-12 col-sm-4">
                         <label for="ipt-pac-encaminhamento" class="control-label">Encaminhamento</label>
-                        <input type="text" class="form-control" id="ipt-pac-encaminhamento" placeholder="OPCIONAL">
+                        <input name="encaminhamento" value="{{ paciente.encaminhamento }}" type="text" class="form-control" id="ipt-pac-encaminhamento" placeholder="OPCIONAL">
                     </div>
                     <div class="form-group col-xs-12 col-sm-12">
                         <label for="ipt-pac-motivo" class="control-label">Motivo</label>
-                        <textarea id="ipt-pac-motivo" class="form-control" rows="3" placeholder="OPCIONAL"></textarea>
+                        <textarea name="motivo" required id="ipt-pac-motivo" class="form-control" rows="3">{{ paciente.motivo }}</textarea>
                     </div>
                 </fieldset>
 
@@ -76,11 +76,11 @@
                     </legend>
                     <div class="form-group col-xs-12 col-sm-4">
                         <label for="ipt-pac-telefone" class="control-label">Telefone</label>
-                        <input required type="text" class="form-control" id="ipt-pac-telefone">
+                        <input name="tel" value="{{ paciente.telefone }}" required type="text" class="form-control" id="ipt-pac-telefone">
                     </div>
                     <div class="form-group col-xs-12 col-sm-4">
                         <label for="ipt-pac-telefone2" class="control-label">Telefone 2</label>
-                        <input type="text" class="form-control" id="ipt-pac-telefone2" placeholder="OPCIONAL">
+                        <input name="tel2" value="{{ paciente.telefone_2 }}" type="text" class="form-control" id="ipt-pac-telefone2" placeholder="OPCIONAL">
                     </div>
                 </fieldset>
 
@@ -90,7 +90,7 @@
                     </legend>
                     <div class="form-group col-xs-12 col-sm-4">
                         <label for="ipt-pac-uf" class="control-label">Estado</label>
-                        <select required id="ipt-pac-uf" class="form-control">
+                        <select name="uf" required id="ipt-pac-uf" class="form-control">
 
                             {% for uf in estados %}
 
@@ -102,23 +102,23 @@
                     </div>
                     <div class="form-group col-xs-12 col-sm-4">
                         <label for="ipt-pac-cidade" class="control-label">Cidade</label>
-                        <input required type="text" class="form-control" id="ipt-pac-cidade">
+                        <input name="cidade" value="{{ paciente.cidade }}" required type="text" class="form-control" id="ipt-pac-cidade">
                     </div>
                     <div class="form-group col-xs-12 col-sm-4">
                         <label for="ipt-pac-bairro" class="control-label">Bairro</label>
-                        <input required type="text" class="form-control" id="ipt-pac-bairro">
+                        <input name="bairro" value="{{ paciente.bairro }}" required type="text" class="form-control" id="ipt-pac-bairro">
                     </div>
                     <div class="form-group col-xs-12 col-sm-4">
                         <label for="ipt-pac-logradouro" class="control-label">Logradouro</label>
-                        <input required type="text" class="form-control" id="ipt-pac-logradouro">
+                        <input name="logradouro" value="{{ paciente.logradouro }}" required type="text" class="form-control" id="ipt-pac-logradouro">
                     </div>
                     <div class="form-group col-xs-12 col-sm-4">
                         <label for="ipt-pac-numero" class="control-label">Número</label>
-                        <input required data-mask="099999" type="text" class="form-control" id="ipt-pac-numero">
+                        <input name="num_residencia" value="{{ paciente.num_residencia }}" required data-mask="099999" type="text" class="form-control" id="ipt-pac-numero">
                     </div>
                     <div class="form-group col-xs-12 col-sm-4">
                         <label for="ipt-pac-complemento" class="control-label">Complemento</label>
-                        <input type="text" class="form-control" id="ipt-pac-complemento" placeholder="OPCIONAL">
+                        <input name="complemento" value="{{ paciente.complemento }}" type="text" class="form-control" id="ipt-pac-complemento" placeholder="OPCIONAL">
                     </div>
                 </fieldset>
 

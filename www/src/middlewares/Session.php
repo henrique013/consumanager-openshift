@@ -35,7 +35,14 @@ class Session extends Handle
 
         else // sessão válida
         {
-            $_SESSION['ultimo_acesso'] = time();
+            $t = time();
+
+            if ($_SESSION['ultimo_acesso'] < $t - (60 * 5)) // atualiza o id da sessão de tempos em tempos
+            {
+                session_regenerate_id(true);
+            }
+
+            $_SESSION['ultimo_acesso'] = $t;
 
             $response = $next($request, $response);
         }
