@@ -16,6 +16,7 @@ use App\Util\Handle\GET;
 use App\Util\Handle\POST;
 use App\Util\Handle\PUT;
 use DateTime;
+use Respect\Validation\Validator as v;
 use Slim\Http\Request;
 use Slim\Http\Response;
 
@@ -125,18 +126,138 @@ class Consulta extends Handle
 
     public function delete(Request $request, Response $response)
     {
-        return $response->withStatus(501);
+        /** @var \PDO $conn */
+
+        $id = $request->getAttribute('id');
+
+
+        $sql = "DELETE FROM TB_CONSULTA WHERE ID = :ID";
+        $conn = $this->ci->get('PDO');
+        $stmt = $conn->prepare($sql);
+        $stmt->bindValue('ID', $id);
+        $stmt->execute();
+
+
+        return $response;
     }
 
 
     public function post(Request $request, Response $response)
     {
-        return $response->withStatus(501);
+        /** @var \PDO $conn */
+
+        $p = $this->prepareParams($request);
+        if (!$p) return $response->withStatus(400);
+
+
+        $sql = "
+            INSERT INTO TB_CONSULTA
+            SET
+                ID_STATUS_CONSULTA = :ID_STATUS_CONSULTA
+                ,ID_TIPO_CONSULTA = :ID_TIPO_CONSULTA
+                ,ID_PACIENTE = :ID_PACIENTE
+                ,ID_HORARIO = :ID_HORARIO
+                ,DT_CONSULTA = :DT_CONSULTA
+                ,RESPONSAVEL = :RESPONSAVEL
+        ";
+        $conn = $this->ci->get('PDO');
+        $stmt = $conn->prepare($sql);
+        $stmt->bindValue('ID_STATUS_CONSULTA', $p['status']);
+        $stmt->bindValue('ID_TIPO_CONSULTA', $p['tipo']);
+        $stmt->bindValue('ID_PACIENTE', $p['paciente']);
+        $stmt->bindValue('ID_HORARIO', $p['horario']);
+        $stmt->bindValue('DT_CONSULTA', $p['data']);
+        $stmt->bindValue('RESPONSAVEL', $p['responsavel']);
+        $stmt->execute();
+
+
+        return $response->withStatus(201);
     }
 
 
     public function put(Request $request, Response $response)
     {
-        return $response->withStatus(501);
+        /** @var \PDO $conn */
+
+        $id = $request->getAttribute('id');
+        $p = $this->prepareParams($request);
+        if (!$p) return $response->withStatus(400);
+
+
+        $sql = "
+            UPDATE TB_CONSULTA
+            SET
+                ID_STATUS_CONSULTA = :ID_STATUS_CONSULTA
+                ,ID_TIPO_CONSULTA = :ID_TIPO_CONSULTA
+                ,ID_PACIENTE = :ID_PACIENTE
+                ,ID_HORARIO = :ID_HORARIO
+                ,DT_CONSULTA = :DT_CONSULTA
+                ,RESPONSAVEL = :RESPONSAVEL
+            WHERE
+                ID = :ID
+        ";
+        $conn = $this->ci->get('PDO');
+        $stmt = $conn->prepare($sql);
+        $stmt->bindValue('ID_STATUS_CONSULTA', $p['status']);
+        $stmt->bindValue('ID_TIPO_CONSULTA', $p['tipo']);
+        $stmt->bindValue('ID_PACIENTE', $p['paciente']);
+        $stmt->bindValue('ID_HORARIO', $p['horario']);
+        $stmt->bindValue('DT_CONSULTA', $p['data']);
+        $stmt->bindValue('RESPONSAVEL', $p['responsavel']);
+        $stmt->bindValue('ID', $id);
+        $stmt->execute();
+
+
+        return $response;
+    }
+
+
+    private function prepareParams(Request $request)
+    {
+        /** @var \PDO $conn */
+
+        $consultorio = $request->getParsedBodyParam('consultorio');
+        $horario = $request->getParsedBodyParam('horario');
+        $data = $request->getParsedBodyParam('data');
+        $paciente = $request->getParsedBodyParam('paciente');
+        $tipo = $request->getParsedBodyParam('tipo');
+        $status = $request->getParsedBodyParam('status');
+        $responsavel = $request->getParsedBodyParam('responsavel');
+
+        $v[] = v::intVal()->validate($consultorio);
+        $v[] = (bool)preg_match("/^\d\d:\d\d$/", $horario);
+        $v[] = v::date('Y-m-d')->validate($data);
+        $v[] = v::intVal()->validate($paciente);
+        $v[] = v::intVal()->validate($tipo);
+        $v[] = v::intVal()->validate($status);
+        $v[] = v::notEmpty()->validate($responsavel);
+
+        if (in_array(false, $v))
+        {
+            return false;
+        }
+
+        $sql = "SELECT ID FROM TB_HORARIO WHERE HORAS = :HORAS AND ID_CONSULTORIO = :ID_CONSULTORIO";
+        $conn = $this->ci->get('PDO');
+        $stmt = $conn->prepare($sql);
+        $stmt->bindValue('HORAS', $horario . ':00');
+        $stmt->bindValue('ID_CONSULTORIO', $consultorio);
+        $stmt->execute();
+
+        $row = $stmt->fetch();
+        if (!$row)
+        {
+            return false;
+        }
+
+        $params['consultorio'] = $consultorio;
+        $params['horario'] = $row['ID'];
+        $params['data'] = $data;
+        $params['paciente'] = $paciente;
+        $params['tipo'] = $tipo;
+        $params['status'] = $status;
+        $params['responsavel'] = $responsavel;
+
+        return $params;
     }
 }

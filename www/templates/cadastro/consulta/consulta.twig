@@ -23,12 +23,12 @@
     </div>
     <div class="row">
         <div class="col-xs-12 col-md-6 col-md-offset-3">
-            <form>
+            <form class="consulta" data-consulta_id="{{ consulta.id }}">
 
-                <input type="hidden" name="consultorio" value="{{ consultorio.id }}">
-                <input type="hidden" name="horario" value="{{ horario }}">
-                <input type="hidden" name="data" value="{{ data|date('Y-m-d') }}">
-                <input type="hidden" name="paciente" value="{{ consulta.paciente_id }}">
+                <input type="hidden" name="consultorio" id="ipt-co-id" value="{{ consultorio.id }}">
+                <input type="hidden" name="horario" id="ipt-con-horario" value="{{ horario }}">
+                <input type="hidden" name="data" id="ipt-con-data" value="{{ data|date('Y-m-d') }}">
+                <input type="hidden" name="paciente" id="ipt-pac-id" value="{{ consulta.paciente.id }}">
 
                 <fieldset>
                     <legend>
@@ -36,7 +36,7 @@
                     </legend>
                     <div class="nome-pac form-group col-xs-12 col-sm-8 col-sm-offset-2">
                         <div class="form-group">
-                            <input type="text" class="typeahead form-control" autocomplete="off" placeholder="NOME DO PACIENTE" value="{{ consulta.paciente.nome }}">
+                            <input required type="text" id="ipt-pac-nome" class="typeahead form-control" autocomplete="off" placeholder="NOME DO PACIENTE" value="{{ consulta.paciente.nome }}">
                         </div>
                     </div>
                     <div class="form-group col-xs-12">
@@ -67,7 +67,7 @@
                     </div>
                     <div class="form-group col-xs-12 col-sm-6">
                         <label for="ipt-con-tipo" class="control-label">Tipo Consulta</label>
-                        <select required id="ipt-con-tipo" class="form-control">
+                        <select required name="tipo" id="ipt-con-tipo" class="form-control">
 
                             {% for tipo in tipos %}
 
@@ -79,7 +79,7 @@
                     </div>
                     <div class="form-group col-xs-12 col-sm-6">
                         <label for="ipt-con-status" class="control-label">Status Consulta</label>
-                        <select required id="ipt-con-status" class="form-control">
+                        <select required name="status" id="ipt-con-status" class="form-control">
 
                             {% for st in status %}
 
@@ -91,7 +91,7 @@
                     </div>
                     <div class="form-group col-xs-12 col-sm-6">
                         <label for="ipt-con-aluno" class="control-label">Nome Aluno(a)</label>
-                        <input required id="ipt-con-aluno" type="text" class="form-control" value="{{ consulta.responsavel }}">
+                        <input required name="responsavel" id="ipt-con-aluno" type="text" class="form-control" value="{{ consulta.responsavel }}">
                     </div>
                 </fieldset>
 
@@ -115,4 +115,9 @@
             </form>
         </div>
     </div>
+
+    {% include 'modals/default/atencao.twig' %}
+    {% include 'modals/default/sucesso.twig' %}
+    {% include 'modals/default/erro.twig' %}
+
 {% endblock %}
