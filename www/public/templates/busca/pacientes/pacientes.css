@@ -1,0 +1,148 @@
+.hide {
+  display: none;
+}
+.clear:before,
+.clear:after {
+  content: " ";
+  display: table;
+}
+.clear:after {
+  clear: both;
+}
+.truncate {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+}
+.footer-default {
+  height: 50px;
+  background-color: #311b92;
+  color: #dddddd;
+  padding: 15px 0 0;
+}
+* {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+html,
+body {
+  height: 100%;
+  padding: 0;
+  margin: 0;
+  border: none;
+  background-color: #ffffff;
+}
+.navbar-default {
+  background-color: #311b92;
+  border-color: #4841ac;
+}
+.navbar-default .navbar-brand {
+  color: #dddddd;
+}
+.navbar-default .navbar-brand:hover,
+.navbar-default .navbar-brand:focus {
+  color: #ffffff;
+}
+.navbar-default .navbar-text {
+  color: #dddddd;
+}
+.navbar-default .navbar-nav > li > a {
+  color: #dddddd;
+}
+.navbar-default .navbar-nav > li > a:hover,
+.navbar-default .navbar-nav > li > a:focus {
+  color: #ffffff;
+}
+.navbar-default .navbar-nav > .active > a,
+.navbar-default .navbar-nav > .active > a:hover,
+.navbar-default .navbar-nav > .active > a:focus {
+  color: #ffffff;
+  background-color: #4841ac;
+}
+.navbar-default .navbar-nav > .open > a,
+.navbar-default .navbar-nav > .open > a:hover,
+.navbar-default .navbar-nav > .open > a:focus {
+  color: #ffffff;
+  background-color: #4841ac;
+}
+.navbar-default .navbar-toggle {
+  border-color: #4841ac;
+}
+.navbar-default .navbar-toggle:hover,
+.navbar-default .navbar-toggle:focus {
+  background-color: #4841ac;
+}
+.navbar-default .navbar-toggle .icon-bar {
+  background-color: #dddddd;
+}
+.navbar-default .navbar-collapse,
+.navbar-default .navbar-form {
+  border-color: #dddddd;
+}
+.navbar-default .navbar-link {
+  color: #dddddd;
+}
+.navbar-default .navbar-link:hover {
+  color: #ffffff;
+}
+@media (max-width: 767px) {
+  .navbar-default .navbar-nav .open .dropdown-menu > li > a {
+    color: #dddddd;
+  }
+  .navbar-default .navbar-nav .open .dropdown-menu > li > a:hover,
+  .navbar-default .navbar-nav .open .dropdown-menu > li > a:focus {
+    color: #ffffff;
+  }
+  .navbar-default .navbar-nav .open .dropdown-menu > .active > a,
+  .navbar-default .navbar-nav .open .dropdown-menu > .active > a:hover,
+  .navbar-default .navbar-nav .open .dropdown-menu > .active > a:focus {
+    color: #ffffff;
+    background-color: #4841ac;
+  }
+}
+.menu-principal {
+  margin: 0;
+  border: 0;
+  border-radius: 0;
+}
+.menu-principal .navbar-brand {
+  padding: 10px 15px;
+}
+.menu-principal .navbar-brand img {
+  max-height: 100%;
+}
+.menu-principal .navbar-collapse {
+  border: none;
+}
+.menu-principal i {
+  min-width: 25px;
+  text-align: center;
+}
+body > main {
+  min-height: calc(100% - 100px);
+  padding-top: 15px;
+  padding-bottom: 15px;
+}
+textarea {
+  resize: none;
+  overflow: auto;
+}
+h1.titulo,
+h2.titulo,
+h3.titulo,
+h4.titulo,
+h5.titulo,
+h6.titulo {
+  margin: 5px 0 20px;
+}
+fieldset {
+  margin-bottom: 10px;
+}
+.input-group-addon {
+  cursor: pointer;
+}
+.table-hover tbody tr {
+  cursor: pointer;
+}
