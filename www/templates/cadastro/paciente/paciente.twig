@@ -50,7 +50,7 @@
 
                             {% for tipo in tipos %}
 
-                                <option {{ paciente.tipo.id == tipo.id ? 'selected' : '' }} value="{{ tipo.id }}">{{ tipo.nome }}</option>
+                                <option {{ paciente.tipo_id == tipo.id ? 'selected' : '' }} value="{{ tipo.id }}">{{ tipo.nome }}</option>
 
                             {% endfor %}
 
@@ -94,7 +94,7 @@
 
                             {% for uf in estados %}
 
-                                <option {{ paciente.uf.id == uf.id ? 'selected' : '' }} value="{{ uf.id }}">{{ uf.nome }}</option>
+                                <option {{ paciente.uf_id == uf.id ? 'selected' : '' }} value="{{ uf.id }}">{{ uf.nome }}</option>
 
                             {% endfor %}
 

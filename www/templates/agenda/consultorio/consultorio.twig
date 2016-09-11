@@ -19,7 +19,7 @@
         <div class="col-xs-12">
             <h2 class="titulo text-uppercase text-center truncate">
                 consultas
-                <small> - {{ resumo.consultorio.nome }}</small>
+                <small> - {{ consultorio.nome }}</small>
             </h2>
         </div>
     </div>
@@ -37,27 +37,27 @@
     </div>
     <div class="row">
 
-        {% for horas, horario in resumo.agenda %}
+        {% for hr in horarios %}
 
             <div class="col-xs-12 col-sm-4 col-md-3">
                 <div class="panel panel-default">
 
                     <div class="panel-heading clearfix">
-                        <h3 class="panel-title pull-left truncate text-uppercase">{{ horas }}</h3>
+                        <h3 class="panel-title pull-left truncate text-uppercase">{{ hr.horas }}</h3>
                     </div>
 
-                    {% if horario %}
+                    {% if hr.paciente_nome %}
 
                         <div class="panel-body">
                             <dl>
                                 <dt>Paciente</dt>
-                                <dd>{{ horario.paciente.nome }}</dd>
+                                <dd>{{ hr.paciente_nome }}</dd>
                                 <dt>Aluno</dt>
-                                <dd>{{ horario.consulta.responsavel }}</dd>
+                                <dd>{{ hr.consulta_responsavel }}</dd>
                             </dl>
                         </div>
                         <div class="panel-footer">
-                            <a class="btn btn-primary btn-sm pull-right text-uppercase" href="/cadastro/consulta/{{ horario.consulta.id }}">
+                            <a class="btn btn-primary btn-sm pull-right text-uppercase" href="/cadastro/consulta/consultorio/{{ consultorio.id }}/{{ data|date('Y-m-d') }}/{{ hr.horas|replace({':' : '-'}) }}">
                                 <i class="fa fa-pencil" aria-hidden="true"></i> Editar
                             </a>
                             <div class="clear"></div>
@@ -67,7 +67,7 @@
 
                         <div class="panel-body"></div>
                         <div class="panel-footer">
-                            <a class="btn btn-default btn-sm pull-right text-uppercase" href="/cadastro/consulta/consultorio/{{ resumo.consultorio.id }}/{{ data }}/{{ horas|replace({':' : '-'}) }}">
+                            <a class="btn btn-default btn-sm pull-right text-uppercase" href="/cadastro/consulta/consultorio/{{ consultorio.id }}/{{ data|date('Y-m-d') }}/{{ hr.horas|replace({':' : '-'}) }}">
                                 <i class="fa fa-plus" aria-hidden="true"></i> Nova
                             </a>
                             <div class="clear"></div>
@@ -82,6 +82,6 @@
 
     </div>
 
-    <input id="ipt-consultorio-id" type="hidden" value="{{ resumo.consultorio.id }}">
+    <input id="ipt-consultorio-id" type="hidden" value="{{ consultorio.id }}">
 
 {% endblock %}

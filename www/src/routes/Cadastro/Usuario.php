@@ -14,7 +14,7 @@ use App\Util\Handle\DELETE;
 use App\Util\Handle\GET;
 use App\Util\Handle\POST;
 use App\Util\Handle\PUT;
-use GuzzleHttp\Exception\TransferException;
+use Respect\Validation\Validator as v;
 use Slim\Http\Request;
 use Slim\Http\Response;
 
@@ -30,7 +30,7 @@ class Usuario extends Handle
     public function get(Request $request, Response $response)
     {
         /** @var \Twig_Environment $twig */
-        /** @var \GuzzleHttp\Client $api */
+        /** @var \PDO $conn */
 
 
         $usrID = $request->getAttribute('id');
@@ -39,10 +39,27 @@ class Usuario extends Handle
 
         if ($usrID)
         {
-            $api = $this->ci->get('API');
-            $resp = $api->get("usuarios/{$usrID}");
-            if ($resp->getStatusCode() === 204) return $response->withRedirect('/cadastro/usuario');
-            $context['usuario'] = json_decode($resp->getBody(), true);
+            $sql = "
+                SELECT
+                  u.ID AS id
+                  ,u.NOME AS nome
+                  ,u.EMAIL AS email
+                FROM TB_USUARIO u
+                WHERE
+                  u.ID = :ID
+            ";
+            $conn = $this->ci->get('PDO');
+            $stmt = $conn->prepare($sql);
+            $stmt->bindValue('ID', $usrID);
+            $stmt->execute();
+
+
+            $row = $stmt->fetch();
+            if (!$row)
+            {
+                return $response->withRedirect('/cadastro/usuario');
+            }
+            $context['usuario'] = $row;
         }
 
 
@@ -57,44 +74,47 @@ class Usuario extends Handle
 
     public function post(Request $request, Response $response)
     {
-        /** @var \GuzzleHttp\Client $api */
+        /** @var \PDO $conn */
 
 
-        $json = $request->getParsedBody();
-        $api = $this->ci->get('API');
+        $p = $this->prepareParams($request);
+        if (!$p) return $response->withStatus(400);
 
 
-        try
-        {
-            $api->post("usuarios", ['json' => $json]);
-        }
-        catch (TransferException $e)
-        {
-            return $response->withStatus($e->getCode());
-        }
+        $sql = "
+            INSERT INTO TB_USUARIO
+            SET
+                NOME = :NOME
+                ,EMAIL = :EMAIL
+                ,HASH_SENHA = :HASH_SENHA
+        ";
+        $conn = $this->ci->get('PDO');
+        $stmt = $conn->prepare($sql);
+        $stmt->bindValue('NOME', $p['nome']);
+        $stmt->bindValue('EMAIL', $p['email']);
+        $stmt->bindValue('HASH_SENHA', $p['senha']);
+        $stmt->execute();
 
 
-        return $response;
+        return $response->withStatus(201);
     }
 
 
     public function delete(Request $request, Response $response)
     {
-        /** @var \GuzzleHttp\Client $api */
+        /** @var \PDO $conn */
 
 
-        $usrID = $request->getAttribute('id');
-        $api = $this->ci->get('API');
+        $uID = $request->getAttribute('id');
 
 
-        try
-        {
-            $api->delete("usuarios/{$usrID}");
-        }
-        catch (TransferException $e)
-        {
-            return $response->withStatus($e->getCode());
-        }
+        $sql = "
+            DELETE FROM TB_USUARIO WHERE ID = :ID
+        ";
+        $conn = $this->ci->get('PDO');
+        $stmt = $conn->prepare($sql);
+        $stmt->bindValue('ID', $uID);
+        $stmt->execute();
 
 
         return $response;
@@ -103,24 +123,56 @@ class Usuario extends Handle
 
     public function put(Request $request, Response $response)
     {
-        /** @var \GuzzleHttp\Client $api */
+        /** @var \PDO $conn */
 
 
-        $usrID = $request->getAttribute('id');
-        $json = $request->getParsedBody();
-        $api = $this->ci->get('API');
+        $id = $request->getAttribute('id');
+        $p = $this->prepareParams($request);
+        if (!$p) return $response->withStatus(400);
 
 
-        try
-        {
-            $api->put("usuarios/{$usrID}", ['json' => $json]);
-        }
-        catch (TransferException $e)
-        {
-            return $response->withStatus($e->getCode());
-        }
+        $sql = '
+            UPDATE TB_USUARIO
+            SET
+                NOME = :NOME
+                ,EMAIL = :EMAIL
+                ,HASH_SENHA = :HASH_SENHA
+            WHERE
+                ID = :ID
+        ';
+        $conn = $this->ci->get('PDO');
+        $stmt = $conn->prepare($sql);
+        $stmt->bindValue('NOME', $p['nome']);
+        $stmt->bindValue('EMAIL', $p['email']);
+        $stmt->bindValue('HASH_SENHA', $p['senha']);
+        $stmt->bindValue('ID', $id);
+        $stmt->execute();
 
 
         return $response;
+    }
+
+
+    private function prepareParams(Request $request)
+    {
+        $nome = $request->getParsedBodyParam('nome');
+        $email = $request->getParsedBodyParam('email');
+        $senha = $request->getParsedBodyParam('senha');
+        $senha2 = $request->getParsedBodyParam('senha2');
+
+        $v[] = v::notEmpty()->validate($nome);
+        $v[] = v::email()->validate($email);
+        $v[] = v::notEmpty()->noWhitespace()->equals($senha2)->validate($senha);
+
+        if (in_array(false, $v))
+        {
+            return false;
+        }
+
+        $params['nome'] = $nome;
+        $params['email'] = $email;
+        $params['senha'] = md5($senha);
+
+        return $params;
     }
 }

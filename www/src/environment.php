@@ -8,6 +8,8 @@ if (in_array(getenv("MY_ENV"), [false, 'development']))
     $dotenv->overload();
     $dotenv->required('MY_ENV')->allowedValues(['development', 'staging', 'production']);
     $dotenv->required([
-        'MY_API_HOST'
+        'OPENSHIFT_MYSQL_DB_HOST',
+        'OPENSHIFT_MYSQL_DB_USERNAME',
+        'OPENSHIFT_MYSQL_DB_PASSWORD',
     ]);
 }

@@ -22,44 +22,71 @@ class Pacientes extends Handle
 
     function get(Request $request, Response $response)
     {
-        /** @var \GuzzleHttp\Client $api */
+        /** @var \PDO $conn */
 
 
         $pNome = $request->getParam('nome');
 
-        $api = $this->ci->get('API');
+
+        $sql = "
+            SELECT
+                p.ID
+                ,p.NOME
+                ,p.CIDADE
+                ,p.BAIRRO
+                ,p.LOGRADOURO
+                ,p.COMPLEMENTO
+                ,p.NUM_RESIDENCIA
+                ,p.TELEFONE
+                ,p.TELEFONE_2
+                ,uf.SIGLA AS UF_SIGLA
+            FROM TB_PACIENTE p
+            JOIN TB_UF uf ON(uf.ID = p.ID_UF)
+            WHERE
+                p.NOME LIKE :NOME
+            ORDER BY
+                p.NOME
+        ";
+        $conn = $this->ci->get('PDO');
+        $stmt = $conn->prepare($sql);
+        $stmt->bindValue('NOME', "%{$pNome}%");
+        $stmt->execute();
 
 
-        $resp = $api->get('pacientes', ['query' => ['nome' => $pNome]]);
-
-        if ($resp->getStatusCode() === 204) return $response;
-
-
-        $pessoas = json_decode($resp->getBody(), true);
-
-        $json = $this->geraJSON($pessoas);
-
-        $response = $response->withJson($json);
-
-
-        return $response;
-    }
-
-
-    private function geraJSON(array $pessoas)
-    {
         $json = [];
-
-        foreach ($pessoas as $pessoa)
+        while ($row = $stmt->fetch())
         {
+            $dados = [
+                'id' => (int)$row['ID'],
+                'nome' => $row['NOME'],
+                'endereco' => self::mascaraEndereco($row['LOGRADOURO'], $row['NUM_RESIDENCIA'], $row['BAIRRO'], $row['CIDADE'], $row['UF_SIGLA']),
+                'telefones' => self::mascaraTelefones($row['TELEFONE'], $row['TELEFONE_2']),
+            ];
+
             $p = [
-                'id' => json_encode($pessoa),
-                'name' => $pessoa['nome'],
+                'id' => json_encode($dados),
+                'name' => $row['NOME']
             ];
 
             $json[] = $p;
         }
 
-        return $json;
+
+        if (!$json) return $response->withStatus(204);
+
+
+        return $response->withJson($json);
+    }
+
+
+    public static function mascaraEndereco($logradouro, $num_residencia, $bairro, $cidade, $uf_sigla)
+    {
+        return "{$logradouro} n° {$num_residencia}, {$bairro}, {$cidade} - {$uf_sigla}";
+    }
+
+
+    public static function mascaraTelefones($telefone, $telefone2)
+    {
+        return ($telefone2) ? "{$telefone} | {$telefone2}" : $telefone;
     }
 }

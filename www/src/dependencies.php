@@ -16,25 +16,14 @@ $container['twig'] =
     };
 
 
-$container['API'] =
-    function (Slim\Container $c)
+$container['PDO'] =
+    function (\Slim\Container $c)
     {
-        $debug = $c->get('settings')['displayErrorDetails'];
-        $api_settings = $c->get('settings')['API'];
+        $settings = $c->get('settings')['PDO'];
+        $dsn = "mysql:host={$settings['host']};dbname={$settings['dbname']};charset=utf8";
+        $conn = new PDO($dsn, $settings['user'], $settings['password']);
+        $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        $conn->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
 
-
-        $options = [
-            'base_uri' => $api_settings['host_url']
-        ];
-
-        if ($debug && isset($_COOKIE['XDEBUG_SESSION']))
-        {
-            $options['headers'] = [
-                'Cookie' => 'XDEBUG_SESSION=XDEBUG_ECLIPSE'
-            ];
-        }
-
-        $client = new GuzzleHttp\Client($options);
-
-        return $client;
+        return $conn;
     };

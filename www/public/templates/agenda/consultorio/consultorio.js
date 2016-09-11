@@ -1,8 +1,5 @@
 $(function () {
 
-    var coID = $('#ipt-consultorio-id').val();
-
-
     $('.input-group.date')
         .datetimepicker({
             locale: 'pt-br',
@@ -16,7 +13,7 @@ $(function () {
 
             var dt = e.date.format('YYYY-MM-DD');
 
-            window.location.href = '/agenda/' + dt + '/consultorio/' + coID;
+            window.location.href = '/agenda/' + dt + '/consultorio/' + $('#ipt-consultorio-id').val();
         })
     ;
 });

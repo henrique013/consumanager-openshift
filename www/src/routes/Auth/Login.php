@@ -11,7 +11,6 @@ namespace App\Route\Auth;
 use App\Util\Handle;
 use App\Util\Handle\GET;
 use App\Util\Handle\POST;
-use GuzzleHttp\Exception\TransferException;
 use Slim\Http\Request;
 use Slim\Http\Response;
 
@@ -28,7 +27,7 @@ class Login extends Handle
 
         $twig = $this->ci->get('twig');
 
-        $view = $twig->render('login/login.twig');
+        $view = $twig->render('auth/login/login.twig');
 
         $response->getBody()->write($view);
 
@@ -39,52 +38,51 @@ class Login extends Handle
     public function post(Request $request, Response $response)
     {
         /** @var \Twig_Environment $twig */
-        /** @var \GuzzleHttp\Client $api */
+        /** @var \PDO $conn */
 
 
-        $json = [
-            'user' => $request->getParsedBodyParam('user'),
-            'password' => $request->getParsedBodyParam('password'),
-        ];
+        $user = $request->getParsedBodyParam('user');
+        $pass = md5($request->getParsedBodyParam('password'));
 
-        $context = [];
-        $api = $this->ci->get('API');
 
-        try
+        $sql = "
+            SELECT
+                u.ID
+            FROM TB_USUARIO u
+            WHERE
+                u.EMAIL = :EMAIL
+                AND u.HASH_SENHA = :HASH_SENHA
+        ";
+        $conn = $this->ci->get('PDO');
+        $stmt = $conn->prepare($sql);
+        $stmt->bindValue('EMAIL', $user);
+        $stmt->bindValue('HASH_SENHA', $pass);
+        $stmt->execute();
+        $row = $stmt->fetch();
+
+
+        if ($row)
         {
-            $resp = $api->post('auth/login', ['json' => $json]);
+            session_regenerate_id(true);
 
-            $json = json_decode($resp->getBody(), true);
+            $_SESSION = [
+                'ultimo_acesso' => time(),
+                'usuario' => [
+                    'id' => (int)$row['ID']
+                ],
+            ];
 
-            $this->startSession($json);
-
-            $response = $response->withRedirect('/agenda');
+            return $response->withRedirect('/agenda');
         }
-        catch (TransferException $e)
+        else
         {
             $context['login_fail'] = true;
 
             $twig = $this->ci->get('twig');
-
-            $view = $twig->render('login/login.twig', $context);
-
+            $view = $twig->render('auth/login/login.twig', $context);
             $response->getBody()->write($view);
+
+            return $response;
         }
-
-
-        return $response;
-    }
-
-
-    private function startSession(array $json)
-    {
-        session_regenerate_id(true);
-
-        $_SESSION = [
-            'ultimo_acesso' => time(),
-            'usuario' => [
-                'id' => $json['id']
-            ],
-        ];
     }
 }

@@ -6,15 +6,11 @@ return [
         'displayErrorDetails' => getenv('MY_ENV') !== 'production' ? true : false,
 
 
-        'API' => [
-            'host' => getenv('MY_API_HOST'),
-            'host_url' => 'http://' . getenv('MY_API_HOST')
-        ],
-
-
-        'SERVER' => [
-            'host' => getenv('OPENSHIFT_APP_DNS'),
-            'host_url' => 'http://' . getenv('OPENSHIFT_APP_DNS')
+        'PDO' => [
+            'host' => getenv("OPENSHIFT_MYSQL_DB_HOST"),
+            'user' => getenv("OPENSHIFT_MYSQL_DB_USERNAME"),
+            'password' => getenv("OPENSHIFT_MYSQL_DB_PASSWORD"),
+            'dbname' => 'clinica',
         ],
     ],
 ];

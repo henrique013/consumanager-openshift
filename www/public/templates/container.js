@@ -42,7 +42,13 @@ bottle.service('valida_form', function () {
         $form
             .find(':input')
             .each(function () {
-                $(this).val($(this).val().trim());
+
+                var $input = $(this);
+                var val = $input.val();
+
+                if (_.isNull(val) || _.isUndefined(val)) val = '';
+
+                $input.val(val.trim());
             })
         ;
 

@@ -137,9 +137,6 @@ h6.titulo {
 fieldset {
   margin-bottom: 10px;
 }
-.form-control:read-only {
-  background-color: #ffffff;
-}
 .form-group.dt-selecionada {
   margin-bottom: 25px;
 }

@@ -137,9 +137,6 @@ h6.titulo {
 fieldset {
   margin-bottom: 10px;
 }
-.form-control:read-only {
-  background-color: #ffffff;
-}
 .nome-pac {
   margin-bottom: 0;
 }
@@ -149,6 +146,12 @@ fieldset {
   text-overflow: ellipsis;
   max-width: 100%;
 }
-dd {
-  min-height: 20px;
+dl {
+  margin: 5px 0;
+}
+.dl-horizontal dt {
+  width: 80px;
+}
+.dl-horizontal dd {
+  margin-left: 95px;
 }

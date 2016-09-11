@@ -27,15 +27,11 @@ $(function () {
 
             var pac = JSON.parse(item.value);
 
-            var endereco = pac.logradouro;
-            endereco += ', n° ' + pac.num_residencia;
-            endereco += ', ' + pac.bairro;
-            endereco += ', ' + pac.cidade;
-            endereco += ' (' + pac.uf.nome + ')';
+            $(':hidden[name="paciente"]').val(pac.id);
 
             $('.pac-nome').text(pac.nome);
-            $('.pac-endereco').text(endereco);
-            $('.pac-telefone').text(pac.telefone);
+            $('.pac-endereco').text(pac.endereco);
+            $('.pac-telefones').text(pac.telefones);
         }
     });
 
