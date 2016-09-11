@@ -18,7 +18,9 @@
 {% block content %}
     <div class="row">
         <div class="col-xs-12">
-            <h2 class="titulo text-uppercase text-center">consulta</h2>
+            <h2 class="titulo text-uppercase text-center">
+                <strong>{{ consulta ? 'editar' : 'nova' }}</strong> consulta
+            </h2>
         </div>
     </div>
     <div class="row">
