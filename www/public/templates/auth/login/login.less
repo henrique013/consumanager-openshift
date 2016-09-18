@@ -1,49 +1,64 @@
+@bgBody: #ffffff;
+@bgDefault: #311b92;
+@colDefault: #dddddd;
+
 * {
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
   box-sizing: border-box;
 }
+
 html,
 body {
   height: 100%;
   padding: 0;
   margin: 0;
   border: none;
-  background-color: #ffffff;
+  background-color: @bgBody;
 }
+
 .row {
   margin: 0;
-  min-height: calc(100% - 50px);
+
+  min-height: ~"calc(100% - 50px)";
+
   /* wraper para centralizar a coluna */
   display: flex;
   flex-direction: column;
   justify-content: center;
 }
+
 .box {
   height: 400px;
   margin-top: 15px;
   margin-bottom: 15px;
+
+  &.fail {
+    height: 475px;
+
+    .fail-message {
+      display: block;
+    }
+  }
 }
-.box.fail {
-  height: 475px;
-}
-.box.fail .fail-message {
-  display: block;
-}
+
 .fail-message {
   display: none;
 }
+
 .footer-default {
   height: 50px;
-  background-color: #311b92;
-  color: #dddddd;
+  background-color: @bgDefault;
+  color: @colDefault;
   padding: 15px 0 0;
 }
+
 img {
   display: block;
   margin: auto;
   max-width: 100%;
 }
+
 button {
   float: right;
 }

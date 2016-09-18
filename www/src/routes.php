@@ -31,3 +31,7 @@ $app->delete('/cadastro/consulta/{id:\d+}', 'App\Route\Cadastro\Consulta:delete'
 $app->get('/cadastro/consulta/pacientes', 'App\Route\Cadastro\Consulta\Pacientes:get');
 
 $app->get('/busca/pacientes', 'App\Route\Busca\Pacientes:get');
+
+$app->get('/busca/usuarios', 'App\Route\Busca\Usuarios:get');
+
+$app->get('/busca/consultas', 'App\Route\Busca\Consultas:get');

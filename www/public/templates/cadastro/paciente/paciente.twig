@@ -1,0 +1,144 @@
+<div id="modal-paciente" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h3 class="modal-title"><strong>{{ paciente ? 'editar' : 'novo' }}</strong> paciente</h3>
+            </div>
+            <div class="modal-body">
+
+                <form class="paciente">
+
+                    <fieldset>
+                        <legend>
+                            <i class="fa fa-list-ul" aria-hidden="true"></i> Prontuário
+                        </legend>
+
+                        {% if paciente %}
+
+                            <div class="form-group col-xs-12 col-sm-4">
+                                <label for="ipt-pac-prontuario" class="control-label">N° de Prontuário</label>
+                                <input value="{{ paciente.id }}" type="text" class="form-control" id="ipt-pac-prontuario" readonly>
+                            </div>
+
+                        {% endif %}
+
+                        <div class="form-group col-xs-12 col-sm-4">
+                            <label for="ipt-pac-nome" class="control-label">Nome</label>
+                            <input required name="nome" value="{{ paciente.nome }}" type="text" class="form-control" id="ipt-pac-nome">
+                        </div>
+                        <div class="form-group col-xs-12 col-sm-4">
+                            <label for="ipt-pac-nascimento" class="control-label">Data de Nascimento</label>
+                            <div class='input-group date'>
+                            <span class="input-group-addon">
+                                <i class="fa fa-calendar" aria-hidden="true"></i>
+                            </span>
+                                <input required name="dt_nascimento" value="{{ paciente.dt_nascimento }}" type="text" class="form-control" id="ipt-pac-nascimento">
+                            </div>
+                        </div>
+                        <div class="form-group col-xs-12 col-sm-4">
+                            <label for="ipt-pac-tipo" class="control-label">Tipo</label>
+                            <select required name="tipo" id="ipt-pac-tipo" class="form-control">
+
+                                {% for tipo in tipos %}
+
+                                    <option {{ paciente.tipo_id == tipo.id ? 'selected' : '' }} value="{{ tipo.id }}">{{ tipo.nome }}</option>
+
+                                {% endfor %}
+
+                            </select>
+                        </div>
+                        <div class="form-group col-xs-12 col-sm-4">
+                            <label for="ipt-pac-responsavel" class="control-label">Nome do Responsável</label>
+                            <input name="responsavel" value="{{ paciente.responsavel }}" type="text" class="form-control" id="ipt-pac-responsavel" placeholder="OPCIONAL">
+                        </div>
+                        <div class="form-group col-xs-12 col-sm-4">
+                            <label for="ipt-pac-encaminhamento" class="control-label">Encaminhamento</label>
+                            <input name="encaminhamento" value="{{ paciente.encaminhamento }}" type="text" class="form-control" id="ipt-pac-encaminhamento" placeholder="OPCIONAL">
+                        </div>
+                        <div class="form-group col-xs-12 col-sm-12">
+                            <label for="ipt-pac-motivo" class="control-label">Motivo</label>
+                            <textarea name="motivo" required id="ipt-pac-motivo" class="form-control" rows="3">{{ paciente.motivo }}</textarea>
+                        </div>
+                    </fieldset>
+
+                    <fieldset>
+                        <legend>
+                            <i class="fa fa-phone" aria-hidden="true"></i> Contato
+                        </legend>
+                        <div class="form-group col-xs-12 col-sm-4">
+                            <label for="ipt-pac-telefone" class="control-label">Telefone</label>
+                            <input name="tel" value="{{ paciente.telefone }}" required type="text" class="form-control" id="ipt-pac-telefone">
+                        </div>
+                        <div class="form-group col-xs-12 col-sm-4">
+                            <label for="ipt-pac-telefone2" class="control-label">Telefone 2</label>
+                            <input name="tel2" value="{{ paciente.telefone_2 }}" type="text" class="form-control" id="ipt-pac-telefone2" placeholder="OPCIONAL">
+                        </div>
+                    </fieldset>
+
+                    <fieldset>
+                        <legend>
+                            <i class="fa fa-map-signs" aria-hidden="true"></i> Endereço
+                        </legend>
+                        <div class="form-group col-xs-12 col-sm-4">
+                            <label for="ipt-pac-uf" class="control-label">Estado</label>
+                            <select name="uf" required id="ipt-pac-uf" class="form-control">
+
+                                {% for uf in estados %}
+
+                                    <option {{ paciente.uf_id == uf.id ? 'selected' : '' }} value="{{ uf.id }}">{{ uf.nome }}</option>
+
+                                {% endfor %}
+
+                            </select>
+                        </div>
+                        <div class="form-group col-xs-12 col-sm-4">
+                            <label for="ipt-pac-cidade" class="control-label">Cidade</label>
+                            <input name="cidade" value="{{ paciente.cidade }}" required type="text" class="form-control" id="ipt-pac-cidade">
+                        </div>
+                        <div class="form-group col-xs-12 col-sm-4">
+                            <label for="ipt-pac-bairro" class="control-label">Bairro</label>
+                            <input name="bairro" value="{{ paciente.bairro }}" required type="text" class="form-control" id="ipt-pac-bairro">
+                        </div>
+                        <div class="form-group col-xs-12 col-sm-4">
+                            <label for="ipt-pac-logradouro" class="control-label">Logradouro</label>
+                            <input name="logradouro" value="{{ paciente.logradouro }}" required type="text" class="form-control" id="ipt-pac-logradouro">
+                        </div>
+                        <div class="form-group col-xs-12 col-sm-4">
+                            <label for="ipt-pac-numero" class="control-label">Número</label>
+                            <input name="num_residencia" value="{{ paciente.num_residencia }}" required data-mask="099999" type="text" class="form-control" id="ipt-pac-numero">
+                        </div>
+                        <div class="form-group col-xs-12 col-sm-4">
+                            <label for="ipt-pac-complemento" class="control-label">Complemento</label>
+                            <input name="complemento" value="{{ paciente.complemento }}" type="text" class="form-control" id="ipt-pac-complemento" placeholder="OPCIONAL">
+                        </div>
+                    </fieldset>
+
+                </form>
+
+            </div>
+            <div class="modal-footer">
+
+                {% if paciente %}
+
+                    <button class="remover btn btn-danger pull-left" data-action="/cadastro/paciente/{{ paciente.id }}">
+                        <i class="fa fa-trash-o" aria-hidden="true"></i> Remover
+                    </button>
+                    <button class="atualizar btn btn-primary" data-action="/cadastro/paciente/{{ paciente.id }}">
+                        <i class="fa fa-pencil-square-o" aria-hidden="true"></i> Salvar
+                    </button>
+
+                {% else %}
+
+                    <button class="novo btn btn-success" data-action="/cadastro/paciente">
+                        <i class="fa fa-floppy-o" aria-hidden="true"></i> Salvar
+                    </button>
+
+                {% endif %}
+
+            </div>
+        </div>
+    </div>
+</div>

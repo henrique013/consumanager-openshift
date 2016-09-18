@@ -8,7 +8,7 @@ $container = $app->getContainer();
 $container['twig'] =
     function ()
     {
-        $loader = new Twig_Loader_Filesystem(__DIR__ . '/../templates');
+        $loader = new Twig_Loader_Filesystem(__DIR__ . '/../public/templates');
 
         $twig = new Twig_Environment($loader);
 

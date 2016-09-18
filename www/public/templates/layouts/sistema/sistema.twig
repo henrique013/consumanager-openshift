@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    {# As 3 meta tags acima *devem* vir em primeiro lugar dentro do `head`; qualquer outro conteúdo deve vir *após* essas tags #}
+
+    <title>ConsuManager</title>
+
+    <link href="/bower/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/bower/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+    <link href="/bower/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css" rel="stylesheet">
+
+    {% block head %}{% endblock %}
+
+</head>
+<body>
+
+<nav class="menu-principal navbar navbar-default">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#nav-busca" aria-expanded="false">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#">
+                <img alt="Brand" src="/templates/layouts/sistema/img/logo-una-branco.png">
+            </a>
+        </div>
+        <div class="collapse navbar-collapse" id="nav-busca">
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <a href="/agenda">
+                        Agenda <i class="fa fa-book"></i>
+                    </a>
+                </li>
+                <li class="dropdown">
+                    <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                        Buscar <i class="fa fa-caret-down"></i>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li>
+                            <a href="/busca/pacientes">
+                                <i class="fa fa-user"></i> Pacientes
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/busca/usuarios">
+                                <i class="fa fa-user-plus"></i> Usuários
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/busca/consultas">
+                                <i class="fa fa-stethoscope"></i> Consultas
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="dropdown">
+                    <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                        Cadastrar <i class="fa fa-caret-down"></i>
+                    </a>
+                    <ul class="dropdown-menu cadastro">
+                        <li>
+                            <a href="/cadastro/paciente">
+                                <i class="fa fa-user"></i> Paciente
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/cadastro/usuario">
+                                <i class="fa fa-user-plus"></i> Usuário
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <a class="btn-logout" href="/auth/logout">
+                        Sair <i class="fa fa-power-off"></i>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+
+<main class="container-fluid">
+    {% block content %}{% endblock %}
+</main>
+
+<footer class="footer-default text-center">
+    © {{ "now"|date('Y') }} Copyright Text
+</footer>
+
+
+{# MODALS #}
+
+<div id="modal-atencao" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Atenção</h4>
+            </div>
+            <div class="modal-body">
+                <p>Esta operação <strong>não pode ser desfeita</strong>!</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="continuar btn btn-danger" data-dismiss="modal">
+                    <i class="fa fa-exclamation-triangle"></i> Continuar
+                </button>
+                <button type="button" class="cancelar btn btn-default pull-left" data-dismiss="modal">
+                    <i class="fa fa-undo"></i> Cancelar
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="modal-erro" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Ops!</h4>
+            </div>
+            <div class="modal-body">
+                <p class="text-danger">Parece que uma falha ocorreu e a operação <strong>não foi concluída</strong>.</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="ok btn btn-default" data-dismiss="modal">OK</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="modal-sucesso" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Finalizado</h4>
+            </div>
+            <div class="modal-body">
+                <p class="text-success">Operação concluída com <strong>sucesso</strong>!</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="ok btn btn-default" data-dismiss="modal">OK</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script src="/bower/jquery/dist/jquery.min.js"></script>
+<script src="/bower/bootstrap/dist/js/bootstrap.min.js"></script>
+<script src="/bower/underscore/underscore-min.js"></script>
+<script src="/bower/bottlejs/dist/bottle.min.js"></script>
+<script src="/bower/moment/min/moment-with-locales.min.js"></script>
+<script src="/bower/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js"></script>
+<script src="/bower/jquery-mask-plugin/dist/jquery.mask.min.js"></script>
+<script src="/bower/bs-typeahead/js/bootstrap-typeahead.min.js"></script>
+<script src="/templates/layouts/sistema/container.js"></script>
+<script src="/templates/layouts/sistema/sistema.js"></script>
+
+
+{% block footer %}{% endblock %}
+
+
+</body>
+</html>

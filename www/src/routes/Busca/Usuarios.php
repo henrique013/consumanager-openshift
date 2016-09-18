@@ -15,7 +15,7 @@ use Slim\Http\Request;
 use Slim\Http\Response;
 
 
-class Pacientes extends Handle
+class Usuarios extends Handle
 {
     use GET;
 
@@ -34,15 +34,14 @@ class Pacientes extends Handle
         {
             $sql = "
                 SELECT
-                    p.ID AS id
-                    ,p.NOME AS nome
-                    ,p.TELEFONE AS telefone
-                    ,DATE_FORMAT(p.DT_NASC, '%d/%m/%Y') AS dt_nascimento
-                FROM TB_PACIENTE p
+                    u.ID AS id
+                    ,u.NOME AS nome
+                    ,u.EMAIL AS email
+                FROM TB_USUARIO u
                 WHERE
-                    p.NOME LIKE :NOME
+                    u.NOME LIKE :NOME
                 ORDER BY
-                    p.NOME
+                    u.NOME
             ";
             $stmt = $conn->prepare($sql);
             $stmt->bindValue('NOME', "%{$pNome}%");
@@ -51,24 +50,23 @@ class Pacientes extends Handle
         {
             $sql = "
                 SELECT
-                    p.ID AS id
-                    ,p.NOME AS nome
-                    ,p.TELEFONE AS telefone
-                    ,DATE_FORMAT(p.DT_NASC, '%d/%m/%Y') AS dt_nascimento
-                FROM TB_PACIENTE p
+                    u.ID AS id
+                    ,u.NOME AS nome
+                    ,u.EMAIL AS email
+                FROM TB_USUARIO u
                 ORDER BY
-                    p.NOME
+                    u.NOME
             ";
             $stmt = $conn->prepare($sql);
         }
 
 
         $stmt->execute();
-        $context['pacientes'] = $stmt->fetchAll();
+        $context['usuarios'] = $stmt->fetchAll();
 
 
         $twig = $this->ci->get('twig');
-        $view = $twig->render('busca/pacientes/pacientes.twig', $context);
+        $view = $twig->render('busca/usuarios/usuarios.twig', $context);
         $response->getBody()->write($view);
 
 

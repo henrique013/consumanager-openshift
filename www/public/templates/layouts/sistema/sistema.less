@@ -1,0 +1,255 @@
+@import "../../../../public/bower/bootstrap/less/mixins/resize";
+@import "../../../../public/bower/bootstrap/less/mixins/clearfix";
+
+// ======================================================================= //
+// **************************** NAVBAR - INI ***************************** //
+// ======================================================================= //
+
+// LESS gerado em: http://work.smarchal.com/twbscolor
+
+@bgBody: #ffffff;
+@bgDefault: #311b92;
+@bgHighlight: #4841ac;
+@colDefault: #dddddd;
+@colHighlight: #ffffff;
+@dropDown: false;
+
+.ddm() when (@dropDown) {
+  > li > .dropdown-menu {
+    background-color: @bgDefault;
+    > li {
+      > a {
+        color: @colDefault;
+        &:hover, &:focus {
+          color: @colHighlight;
+          background-color: @bgHighlight;
+        }
+      }
+      > .divider {
+        background-color: @bgHighlight;
+      }
+    }
+  }
+  .open .dropdown-menu > .active {
+    > a, > a:hover, > a:focus {
+      color: @colHighlight;
+      background-color: @bgHighlight;
+    }
+  }
+}
+
+.navbar-default {
+  background-color: @bgDefault;
+  border-color: @bgHighlight;
+  .navbar-brand {
+    color: @colDefault;
+    &:hover, &:focus {
+      color: @colHighlight;
+    }
+  }
+  .navbar-text {
+    color: @colDefault;
+  }
+  .navbar-nav {
+    > li {
+      > a {
+        color: @colDefault;
+        &:hover, &:focus {
+          color: @colHighlight;
+        }
+      }
+    }
+    .ddm;
+    > .active {
+      > a, > a:hover, > a:focus {
+        color: @colHighlight;
+        background-color: @bgHighlight;
+      }
+    }
+    > .open {
+      > a, > a:hover, > a:focus {
+        color: @colHighlight;
+        background-color: @bgHighlight;
+      }
+    }
+  }
+  .navbar-toggle {
+    border-color: @bgHighlight;
+    &:hover, &:focus {
+      background-color: @bgHighlight;
+    }
+    .icon-bar {
+      background-color: @colDefault;
+    }
+  }
+  .navbar-collapse,
+  .navbar-form {
+    border-color: @colDefault;
+  }
+  .navbar-link {
+    color: @colDefault;
+    &:hover {
+      color: @colHighlight;
+    }
+  }
+}
+
+@media (max-width: 767px) {
+  .navbar-default .navbar-nav .open .dropdown-menu {
+    > li > a {
+      color: @colDefault;
+      &:hover, &:focus {
+        color: @colHighlight;
+      }
+    }
+    > .active {
+      > a, > a:hover, > a:focus {
+        color: @colHighlight;
+        background-color: @bgHighlight;
+      }
+    }
+  }
+}
+
+// ======================================================================= //
+// **************************** NAVBAR - FIM ***************************** //
+// ======================================================================= //
+
+//TODO: descomentar se necessário ou remover até 19/09/16
+//hidden {
+//  display: none;
+//}
+//
+//.hide {
+//  display: none;
+//}
+
+* {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+html,
+body {
+  height: 100%;
+  padding: 0;
+  margin: 0;
+  border: none;
+  background-color: @bgBody;
+}
+
+.clear {
+  .clearfix();
+}
+
+.menu-principal {
+  margin: 0;
+  border: 0;
+  border-radius: 0;
+
+  .navbar-brand {
+    padding: 10px 15px;
+
+    img {
+      max-height: 100%;
+    }
+  }
+
+  .navbar-collapse {
+    border: none;
+  }
+
+  i {
+    min-width: 25px;
+    text-align: center;
+  }
+}
+
+body {
+
+  & > main {
+    min-height: ~"calc(100% - 100px)";
+    padding-top: 15px;
+    padding-bottom: 15px;
+  }
+}
+
+textarea {
+  .resizable(none);
+}
+
+h1, h2, h3, h4, h5, h6 {
+  &.titulo {
+    margin: 5px 0 20px;
+  }
+}
+
+fieldset {
+  margin-bottom: 10px;
+}
+
+.input-group-addon {
+  cursor: pointer;
+}
+
+.table-hover {
+
+  tbody {
+
+    tr {
+      cursor: pointer;
+    }
+  }
+}
+
+.truncate {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+}
+
+.footer-default {
+  height: 50px;
+  background-color: @bgDefault;
+  color: @colDefault;
+  padding: 15px 0 0;
+}
+
+.modal-header {
+
+  h1, h2, h3, h4, h5, h6 {
+    text-transform: uppercase;
+    text-align: center;
+  }
+}
+
+#modal-consulta {
+
+  .nome-pac {
+    margin-bottom: 0;
+  }
+
+  .typeahead.dropdown-menu {
+
+    a {
+      .truncate;
+    }
+  }
+
+  dl{
+    margin: 5px 0;
+  }
+
+  .dl-horizontal {
+
+    dt {
+      width: 80px;
+    }
+
+    dd {
+      margin-left: 95px;
+    }
+  }
+}

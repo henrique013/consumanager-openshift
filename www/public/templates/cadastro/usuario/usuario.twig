@@ -1,0 +1,61 @@
+<div id="modal-usuario" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-sm" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h3 class="modal-title"><strong>{{ usuario ? 'editar' : 'novo' }}</strong> usuário</h3>
+            </div>
+            <div class="modal-body">
+
+                <form class="usuario">
+
+                    <fieldset>
+                        <legend>
+                            <i class="fa fa-ticket" aria-hidden="true"></i> Credenciais
+                        </legend>
+                        <div class="form-group">
+                            <label for="usr_nome" class="control-label">Nome</label>
+                            <input required type="text" class="form-control" name="nome" id="usr_nome" value="{{ usuario.nome }}">
+                        </div>
+                        <div class="form-group">
+                            <label for="usr_email" class="control-label">E-mail</label>
+                            <input required type="email" class="form-control" name="email" id="usr_email" value="{{ usuario.email }}">
+                        </div>
+                        <div class="form-group">
+                            <label for="usr_senha" class="control-label">Senha</label>
+                            <input required type="password" class="form-control" name="senha" id="usr_senha">
+                        </div>
+                        <div class="form-group">
+                            <label for="usr_senha2" class="control-label">Repita sua senha</label>
+                            <input required type="password" class="form-control" name="senha2" id="usr_senha2">
+                        </div>
+                    </fieldset>
+
+                </form>
+
+            </div>
+            <div class="modal-footer">
+
+                {% if usuario %}
+
+                    <button class="remover btn btn-danger pull-left" data-action="/cadastro/usuario/{{ usuario.id }}">
+                        <i class="fa fa-trash-o" aria-hidden="true"></i> Remover
+                    </button>
+                    <button class="atualizar btn btn-primary" data-action="/cadastro/usuario/{{ usuario.id }}">
+                        <i class="fa fa-pencil-square-o" aria-hidden="true"></i> Salvar
+                    </button>
+
+                {% else %}
+
+                    <button class="novo btn btn-success" data-action="/cadastro/usuario">
+                        <i class="fa fa-floppy-o" aria-hidden="true"></i> Salvar
+                    </button>
+
+                {% endif %}
+
+            </div>
+        </div>
+    </div>
+</div>

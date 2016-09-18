@@ -1,5 +1,12 @@
 $(function () {
 
+    $('body')
+        .on('hidden.bs.modal', '#modal-sucesso', function () {
+            location.reload();
+        })
+    ;
+
+
     $('.input-group.date')
         .datetimepicker({
             locale: 'pt-br',
@@ -16,4 +23,13 @@ $(function () {
             window.location.href = '/agenda/' + dt + '/consultorio/' + $('#ipt-consultorio-id').val();
         })
     ;
+
+
+    $('.panel-footer .btn').on('click', function (e) {
+        e.preventDefault();
+        var target = $(this).attr('href');
+        $.get(target, function (html) {
+            $(html).modal('show');
+        });
+    });
 });
