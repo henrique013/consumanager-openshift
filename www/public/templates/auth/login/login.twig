@@ -15,11 +15,11 @@
 <body>
 
 <div class="row">
-    <div class="{{ login_fail ? 'fail' : '' }} box col-xs-offset-1 col-xs-10 col-sm-offset-3 col-sm-6 col-md-offset-4 col-md-4">
+    <div class="box col-xs-offset-1 col-xs-10 col-sm-offset-3 col-sm-6 col-md-offset-4 col-md-4">
 
         <img src="/templates/auth/login/logo_una.png" alt="Logo UNA">
 
-        <form id="form-login" action="/auth/login" method="POST">
+        <form id="form-login">
             <div class="form-group col-xs-12">
                 <label for="ipt-user">E-mail</label>
                 <input type="email" class="form-control" name="user" id="ipt-user">
@@ -47,6 +47,7 @@
 
 <script src="/bower/jquery/dist/jquery.js"></script>
 <script src="/bower/bootstrap/dist/js/bootstrap.js"></script>
+<script src="/templates/auth/login/login.js"></script>
 
 </body>
 </html>

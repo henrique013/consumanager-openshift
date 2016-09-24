@@ -12,5 +12,10 @@ return [
             'password' => getenv("OPENSHIFT_MYSQL_DB_PASSWORD"),
             'dbname' => 'clinica',
         ],
+
+
+        'JWT' => [
+            'secret' => getenv("JWT_SECRET"),
+        ],
     ],
 ];

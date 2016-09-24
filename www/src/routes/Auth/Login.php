@@ -11,6 +11,8 @@ namespace App\Route\Auth;
 use App\Util\Handle;
 use App\Util\Handle\GET;
 use App\Util\Handle\POST;
+use Lcobucci\JWT\Builder;
+use Lcobucci\JWT\Signer\Hmac\Sha256;
 use Slim\Http\Request;
 use Slim\Http\Response;
 
@@ -25,10 +27,9 @@ class Login extends Handle
     {
         /** @var \Twig_Environment $twig */
 
+
         $twig = $this->ci->get('twig_template');
-
         $view = $twig->render('auth/login/login.twig');
-
         $response->write($view);
 
         return $response;
@@ -63,26 +64,22 @@ class Login extends Handle
 
         if ($row)
         {
-            session_regenerate_id(true);
+            $settings = $this->ci->get('settings');
+            $signer = new Sha256();
+            $token = (new Builder())
+                ->setIssuedAt(time())
+                ->set('uid', (int)$row['ID'])
+                ->sign($signer, $settings['JWT']['secret'])
+                ->getToken();
 
-            $_SESSION = [
-                'ultimo_acesso' => time(),
-                'usuario' => [
-                    'id' => (int)$row['ID']
-                ],
-            ];
-
-            return $response->withRedirect('/agenda');
+            setcookie('AUTH_TOKEN', (string)$token, null, '/', null, false, true);
         }
         else
         {
-            $context['login_fail'] = true;
-
-            $twig = $this->ci->get('twig_template');
-            $view = $twig->render('auth/login/login.twig', $context);
-            $response->write($view);
-
-            return $response;
+            $response = $response->withStatus(401);
         }
+
+
+        return $response;
     }
 }

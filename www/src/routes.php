@@ -4,7 +4,6 @@
 
 // AUTH
 
-$app->get('[/]', 'App\Route\Auth\Login:get');
 $app->get('/auth/login', 'App\Route\Auth\Login:get');
 $app->post('/auth/login', 'App\Route\Auth\Login:post');
 

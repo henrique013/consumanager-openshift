@@ -21,7 +21,7 @@ class Logout extends Handle
 
     public function get(Request $request, Response $response)
     {
-        $_SESSION = [];
+        setcookie('AUTH_TOKEN', null, -1, '/');
 
         $response = $response->withRedirect('/auth/login');
 

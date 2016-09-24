@@ -38,3 +38,24 @@ $container['PDO'] =
 
         return $conn;
     };
+
+
+$container['jwt_token'] =
+    function ()
+    {
+        if (!isset($_COOKIE['AUTH_TOKEN']) || !$_COOKIE['AUTH_TOKEN'])
+        {
+            return false;
+        }
+
+        try
+        {
+            $token = (new Lcobucci\JWT\Parser())->parse($_COOKIE['AUTH_TOKEN']);
+        }
+        catch (Exception $e)
+        {
+            $token = false;
+        }
+
+        return $token;
+    };

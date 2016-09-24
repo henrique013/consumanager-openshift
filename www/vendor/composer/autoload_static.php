@@ -27,6 +27,10 @@ class ComposerStaticInit95d8dac42a027984e633f702170c7cc0
         array (
             'Psr\\Http\\Message\\' => 17,
         ),
+        'L' => 
+        array (
+            'Lcobucci\\JWT\\' => 13,
+        ),
         'I' => 
         array (
             'Interop\\Container\\' => 18,
@@ -63,6 +67,10 @@ class ComposerStaticInit95d8dac42a027984e633f702170c7cc0
         'Psr\\Http\\Message\\' => 
         array (
             0 => __DIR__ . '/..' . '/psr/http-message/src',
+        ),
+        'Lcobucci\\JWT\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/lcobucci/jwt/src',
         ),
         'Interop\\Container\\' => 
         array (

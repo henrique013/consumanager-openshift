@@ -11,5 +11,6 @@ if (in_array(getenv("MY_ENV"), [false, 'development']))
         'OPENSHIFT_MYSQL_DB_HOST',
         'OPENSHIFT_MYSQL_DB_USERNAME',
         'OPENSHIFT_MYSQL_DB_PASSWORD',
+        'JWT_SECRET',
     ]);
 }
