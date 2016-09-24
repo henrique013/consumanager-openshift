@@ -27,7 +27,7 @@ $(function () {
 
     $('.panel-footer .btn').on('click', function (e) {
         e.preventDefault();
-        var target = $(this).attr('href');
+        var target = $(this).data('target');
         $.get(target, function (html) {
             $(html).modal('show');
         });

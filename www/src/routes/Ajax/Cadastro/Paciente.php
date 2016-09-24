@@ -6,7 +6,7 @@
  * Time: 20:41
  */
 
-namespace App\Route\Cadastro;
+namespace App\Route\Ajax\Cadastro;
 
 
 use App\Util\Handle;
@@ -91,9 +91,9 @@ class Paciente extends Handle
         }
 
 
-        $twig = $this->ci->get('twig');
-        $view = $twig->render('cadastro/paciente/paciente.twig', $context);
-        $response->getBody()->write($view);
+        $twig = $this->ci->get('twig_template');
+        $view = $twig->render('ajax/cadastro/paciente/paciente.twig', $context);
+        $response->write($view);
 
 
         return $response;

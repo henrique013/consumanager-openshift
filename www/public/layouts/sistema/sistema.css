@@ -1,3 +1,17 @@
+.truncate {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+}
+.clear:before,
+.clear:after {
+  content: " ";
+  display: table;
+}
+.clear:after {
+  clear: both;
+}
 .navbar-default {
   background-color: #311b92;
   border-color: #4841ac;
@@ -79,14 +93,6 @@ body {
   border: none;
   background-color: #ffffff;
 }
-.clear:before,
-.clear:after {
-  content: " ";
-  display: table;
-}
-.clear:after {
-  clear: both;
-}
 .menu-principal {
   margin: 0;
   border: 0;
@@ -128,14 +134,15 @@ fieldset {
 .input-group-addon {
   cursor: pointer;
 }
-.table-hover tbody tr {
-  cursor: pointer;
-}
-.truncate {
+.table th,
+.table td {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
   max-width: 100%;
+}
+.table-hover tbody tr {
+  cursor: pointer;
 }
 .footer-default {
   height: 50px;
@@ -169,11 +176,4 @@ fieldset {
 }
 #modal-consulta .dl-horizontal dd {
   margin-left: 95px;
-}
-.table th,
-.table td {
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  max-width: 100%;
 }

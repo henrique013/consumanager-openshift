@@ -77,9 +77,9 @@ class Consultas extends Handle
         $context['consultas'] = $stmt->fetchAll();
 
 
-        $twig = $this->ci->get('twig');
+        $twig = $this->ci->get('twig_template');
         $view = $twig->render('busca/consultas/consultas.twig', $context);
-        $response->getBody()->write($view);
+        $response->write($view);
 
 
         return $response;

@@ -1,66 +1,54 @@
-{% extends "layouts/sistema/sistema.twig" %}
-
-
-{% block head %}
-    <link href="/templates/busca/pacientes/pacientes.css" rel="stylesheet">
-{% endblock %}
-
-
-{% block footer %}
-    <script src="/templates/busca/pacientes/pacientes.js"></script>
-{% endblock %}
-
-
-{% block content %}
-    <div class="row">
-        <div class="col-xs-12">
-            <h2 class="titulo text-uppercase text-center">
-                <strong>buscar</strong> pacientes
-            </h2>
-        </div>
+<div class="row">
+    <div class="col-xs-12">
+        <h2 class="titulo text-uppercase text-center">
+            <strong>buscar</strong> pacientes
+        </h2>
     </div>
-    <div class="row">
-        <div class="col-xs-12 col-sm-8 col-sm-offset-2">
-            <div class="row">
-                <form class="buscas" action="/busca/pacientes">
-                    <div id="crt-nome" class="form-group col-xs-12 col-md-offset-3 col-md-6">
-                        <div class='input-group'>
-                            <input required name="nome" type="text" class="form-control" id="ipt-pac-nome" title="" placeholder="NOME DO PACIENTE">
-                            <span class="input-group-addon btn-busca">
-                                <i class="fa fa-search" aria-hidden="true"></i>
-                            </span>
-                        </div>
+</div>
+
+<div class="row">
+    <div class="col-xs-12 col-sm-8 col-sm-offset-2">
+        <div class="row">
+            <form class="buscas" action="/busca/pacientes">
+                <div id="crt-nome" class="form-group col-xs-12 col-md-offset-3 col-md-6">
+                    <div class='input-group'>
+                        <input required name="nome" type="text" class="form-control" id="ipt-pac-nome" title="" placeholder="NOME DO PACIENTE">
+                        <span class="input-group-addon btn-busca">
+                            <i class="fa fa-search" aria-hidden="true"></i>
+                        </span>
                     </div>
-                </form>
-            </div>
-            <div class="row">
-                <div class="col-xs-12">
-                    <table class="table table-bordered table-hover">
-                        <thead>
-                        <tr>
-                            <th>Prontuário</th>
-                            <th>Nome</th>
-                            <th class="hidden-xs">Dt. Nascimento</th>
-                            <th class="hidden-xs">Telefone</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-
-                        {% for paciente in pacientes %}
-
-                            <tr data-url="/cadastro/paciente/{{ paciente.id }}">
-                                <td>{{ paciente.id }}</td>
-                                <td>{{ paciente.nome }}</td>
-                                <td class="hidden-xs">{{ paciente.dt_nascimento }}</td>
-                                <td class="hidden-xs">{{ paciente.telefone }}</td>
-                            </tr>
-
-                        {% endfor %}
-
-                        </tbody>
-                    </table>
                 </div>
+            </form>
+        </div>
+        <div class="row">
+            <div class="col-xs-12">
+                <table class="table table-bordered table-hover">
+                    <thead>
+                    <tr>
+                        <th>Prontuário</th>
+                        <th>Nome</th>
+                        <th class="hidden-xs">Dt. Nascimento</th>
+                        <th class="hidden-xs">Telefone</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+
+                    {% for paciente in pacientes %}
+
+                        <tr data-url="/ajax/cadastro/paciente/{{ paciente.id }}">
+                            <td>{{ paciente.id }}</td>
+                            <td>{{ paciente.nome }}</td>
+                            <td class="hidden-xs">{{ paciente.dt_nascimento }}</td>
+                            <td class="hidden-xs">{{ paciente.telefone }}</td>
+                        </tr>
+
+                    {% endfor %}
+
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>
-{% endblock %}
+</div>
+
+<script src="/templates/busca/pacientes/pacientes.js"></script>

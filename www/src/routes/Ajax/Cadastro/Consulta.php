@@ -6,10 +6,10 @@
  * Time: 20:41
  */
 
-namespace App\Route\Cadastro;
+namespace App\Route\Ajax\Cadastro;
 
 
-use App\Route\Cadastro\Consulta\Pacientes;
+use App\Route\Ajax\Cadastro\Consulta\Pacientes;
 use App\Util\Handle;
 use App\Util\Handle\DELETE;
 use App\Util\Handle\GET;
@@ -115,9 +115,9 @@ class Consulta extends Handle
         $context['horario'] = $horario;
 
 
-        $twig = $this->ci->get('twig');
-        $view = $twig->render('cadastro/consulta/consulta.twig', $context);
-        $response->getBody()->write($view);
+        $twig = $this->ci->get('twig_template');
+        $view = $twig->render('ajax/cadastro/consulta/consulta.twig', $context);
+        $response->write($view);
 
 
         return $response;

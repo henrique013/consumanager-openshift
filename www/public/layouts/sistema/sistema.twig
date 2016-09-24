@@ -2,18 +2,33 @@
 <html lang="pt-br">
 <head>
 
+    {# As 3 meta tags abaixo *devem* vir em primeiro lugar dentro do `head`; qualquer outro conteúdo deve vir *após* essas tags #}
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    {# As 3 meta tags acima *devem* vir em primeiro lugar dentro do `head`; qualquer outro conteúdo deve vir *após* essas tags #}
 
     <title>ConsuManager</title>
 
+    {# libs #}
     <link href="/bower/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="/bower/font-awesome/css/font-awesome.min.css" rel="stylesheet">
     <link href="/bower/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css" rel="stylesheet">
+    {# css layout #}
+    <link href="/layouts/sistema/sistema.css" rel="stylesheet">
 
-    {% block head %}{% endblock %}
+    {# libs #}
+    <script src="/bower/jquery/dist/jquery.min.js"></script>
+    <script src="/bower/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="/bower/underscore/underscore-min.js"></script>
+    <script src="/bower/bottlejs/dist/bottle.min.js"></script>
+    <script src="/bower/moment/min/moment-with-locales.min.js"></script>
+    <script src="/bower/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js"></script>
+    <script src="/bower/jquery-mask-plugin/dist/jquery.mask.min.js"></script>
+    <script src="/bower/bs-typeahead/js/bootstrap-typeahead.min.js"></script>
+    {# util #}
+    <script src="/util/container.js"></script>
+    {# js layout #}
+    <script src="/layouts/sistema/sistema.js"></script>
 
 </head>
 <body>
@@ -27,8 +42,8 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="#">
-                <img alt="Brand" src="/templates/layouts/sistema/img/logo-una-branco.png">
+            <a class="navbar-brand" href="/agenda">
+                <img alt="Brand" src="/layouts/sistema/logo-una-branco.png">
             </a>
         </div>
         <div class="collapse navbar-collapse" id="nav-busca">
@@ -66,12 +81,12 @@
                     </a>
                     <ul class="dropdown-menu cadastro">
                         <li>
-                            <a href="/cadastro/paciente">
+                            <a href="" data-target="/ajax/cadastro/paciente">
                                 <i class="fa fa-user"></i> Paciente
                             </a>
                         </li>
                         <li>
-                            <a href="/cadastro/usuario">
+                            <a href="" data-target="/ajax/cadastro/usuario">
                                 <i class="fa fa-user-plus"></i> Usuário
                             </a>
                         </li>
@@ -89,7 +104,7 @@
 
 
 <main class="container-fluid">
-    {% block content %}{% endblock %}
+    {{ template|raw }}
 </main>
 
 <footer class="footer-default text-center">
@@ -151,22 +166,6 @@
         </div>
     </div>
 </div>
-
-
-<script src="/bower/jquery/dist/jquery.min.js"></script>
-<script src="/bower/bootstrap/dist/js/bootstrap.min.js"></script>
-<script src="/bower/underscore/underscore-min.js"></script>
-<script src="/bower/bottlejs/dist/bottle.min.js"></script>
-<script src="/bower/moment/min/moment-with-locales.min.js"></script>
-<script src="/bower/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js"></script>
-<script src="/bower/jquery-mask-plugin/dist/jquery.mask.min.js"></script>
-<script src="/bower/bs-typeahead/js/bootstrap-typeahead.min.js"></script>
-<script src="/templates/layouts/sistema/container.js"></script>
-<script src="/templates/layouts/sistema/sistema.js"></script>
-
-
-{% block footer %}{% endblock %}
-
 
 </body>
 </html>

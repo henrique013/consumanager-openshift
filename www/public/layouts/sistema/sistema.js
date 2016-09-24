@@ -41,7 +41,7 @@ $(function () {
             $modal.find('#ipt-pac-nome').typeahead({
                 items: 10,
                 ajax: {
-                    url: '/cadastro/consulta/pacientes',
+                    url: '/ajax/cadastro/consulta/pacientes',
                     timeout: 300,
                     triggerLength: 1,
                     method: "get",
@@ -155,7 +155,7 @@ $(function () {
 
     $('.dropdown-menu.cadastro').on('click', 'a', function (e) {
         e.preventDefault();
-        var target = $(this).attr('href');
+        var target = $(this).data('target');
         $.get(target, function (html) {
             $(html).modal('show');
         });

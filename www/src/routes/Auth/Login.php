@@ -25,11 +25,11 @@ class Login extends Handle
     {
         /** @var \Twig_Environment $twig */
 
-        $twig = $this->ci->get('twig');
+        $twig = $this->ci->get('twig_template');
 
         $view = $twig->render('auth/login/login.twig');
 
-        $response->getBody()->write($view);
+        $response->write($view);
 
         return $response;
     }
@@ -78,9 +78,9 @@ class Login extends Handle
         {
             $context['login_fail'] = true;
 
-            $twig = $this->ci->get('twig');
+            $twig = $this->ci->get('twig_template');
             $view = $twig->render('auth/login/login.twig', $context);
-            $response->getBody()->write($view);
+            $response->write($view);
 
             return $response;
         }

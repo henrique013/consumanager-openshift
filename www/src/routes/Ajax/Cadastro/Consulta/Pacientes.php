@@ -6,7 +6,7 @@
  * Time: 20:41
  */
 
-namespace App\Route\Cadastro\Consulta;
+namespace App\Route\Ajax\Cadastro\Consulta;
 
 
 use App\Util\Handle;

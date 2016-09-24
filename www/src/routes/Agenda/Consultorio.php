@@ -86,9 +86,9 @@ class Consultorio extends Handle
         }
 
 
-        $twig = $this->ci->get('twig');
+        $twig = $this->ci->get('twig_template');
         $view = $twig->render('agenda/consultorio/consultorio.twig', $context);
-        $response->getBody()->write($view);
+        $response->write($view);
 
 
         return $response;

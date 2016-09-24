@@ -1,5 +1,5 @@
-@import "../../../../public/bower/bootstrap/less/mixins/resize";
-@import "../../../../public/bower/bootstrap/less/mixins/clearfix";
+@import "../../../public/bower/bootstrap/less/mixins/resize";
+@import "../../util/mixins-not";
 
 // ======================================================================= //
 // **************************** NAVBAR - INI ***************************** //
@@ -115,15 +115,6 @@
 // **************************** NAVBAR - FIM ***************************** //
 // ======================================================================= //
 
-//TODO: descomentar se necessário ou remover até 19/09/16
-//hidden {
-//  display: none;
-//}
-//
-//.hide {
-//  display: none;
-//}
-
 * {
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
@@ -137,10 +128,6 @@ body {
   margin: 0;
   border: none;
   background-color: @bgBody;
-}
-
-.clear {
-  .clearfix();
 }
 
 .menu-principal {
@@ -193,6 +180,13 @@ fieldset {
   cursor: pointer;
 }
 
+.table {
+
+  th, td {
+    .truncate;
+  }
+}
+
 .table-hover {
 
   tbody {
@@ -201,13 +195,6 @@ fieldset {
       cursor: pointer;
     }
   }
-}
-
-.truncate {
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  max-width: 100%;
 }
 
 .footer-default {
@@ -238,7 +225,7 @@ fieldset {
     }
   }
 
-  dl{
+  dl {
     margin: 5px 0;
   }
 

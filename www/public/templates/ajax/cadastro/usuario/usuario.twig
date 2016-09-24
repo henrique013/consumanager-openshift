@@ -40,16 +40,16 @@
 
                 {% if usuario %}
 
-                    <button class="remover btn btn-danger pull-left" data-action="/cadastro/usuario/{{ usuario.id }}">
+                    <button class="remover btn btn-danger pull-left" data-action="/ajax/cadastro/usuario/{{ usuario.id }}">
                         <i class="fa fa-trash-o" aria-hidden="true"></i> Remover
                     </button>
-                    <button class="atualizar btn btn-primary" data-action="/cadastro/usuario/{{ usuario.id }}">
+                    <button class="atualizar btn btn-primary" data-action="/ajax/cadastro/usuario/{{ usuario.id }}">
                         <i class="fa fa-pencil-square-o" aria-hidden="true"></i> Salvar
                     </button>
 
                 {% else %}
 
-                    <button class="novo btn btn-success" data-action="/cadastro/usuario">
+                    <button class="novo btn btn-success" data-action="/ajax/cadastro/usuario">
                         <i class="fa fa-floppy-o" aria-hidden="true"></i> Salvar
                     </button>
 

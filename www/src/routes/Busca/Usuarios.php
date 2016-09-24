@@ -65,9 +65,9 @@ class Usuarios extends Handle
         $context['usuarios'] = $stmt->fetchAll();
 
 
-        $twig = $this->ci->get('twig');
+        $twig = $this->ci->get('twig_template');
         $view = $twig->render('busca/usuarios/usuarios.twig', $context);
-        $response->getBody()->write($view);
+        $response->write($view);
 
 
         return $response;
