@@ -30,26 +30,25 @@ class Pacientes extends Handle
 
         $sql = "
             SELECT
-                p.ID
-                ,p.NOME
-                ,p.CIDADE
-                ,p.BAIRRO
-                ,p.LOGRADOURO
-                ,p.COMPLEMENTO
-                ,p.NUM_RESIDENCIA
-                ,p.TELEFONE
-                ,p.TELEFONE_2
-                ,uf.SIGLA AS UF_SIGLA
-            FROM TB_PACIENTE p
-            JOIN TB_UF uf ON(uf.ID = p.ID_UF)
+                p.id
+                ,p.nome
+                ,p.cidade
+                ,p.bairro
+                ,p.logradouro
+                ,p.num_residencia
+                ,p.telefone
+                ,p.telefone_2
+                ,uf.sigla AS uf_sigla
+            FROM tb_paciente p
+            JOIN tb_uf uf ON(uf.id = p.id_uf)
             WHERE
-                p.NOME LIKE :NOME
+                p.nome ILIKE :nome
             ORDER BY
-                p.NOME
+                p.nome
         ";
         $conn = $this->ci->get('PDO');
         $stmt = $conn->prepare($sql);
-        $stmt->bindValue('NOME', "%{$pNome}%");
+        $stmt->bindValue('nome', "%{$pNome}%");
         $stmt->execute();
 
 
@@ -57,15 +56,15 @@ class Pacientes extends Handle
         while ($row = $stmt->fetch())
         {
             $dados = [
-                'id' => (int)$row['ID'],
-                'nome' => $row['NOME'],
-                'endereco' => self::mascaraEndereco($row['LOGRADOURO'], $row['NUM_RESIDENCIA'], $row['BAIRRO'], $row['CIDADE'], $row['UF_SIGLA']),
-                'telefones' => self::mascaraTelefones($row['TELEFONE'], $row['TELEFONE_2']),
+                'id' => (int)$row['id'],
+                'nome' => $row['nome'],
+                'endereco' => self::mascaraEndereco($row['logradouro'], $row['num_residencia'], $row['bairro'], $row['cidade'], $row['uf_sigla']),
+                'telefones' => self::mascaraTelefones($row['telefone'], $row['telefone_2']),
             ];
 
             $p = [
                 'id' => json_encode($dados),
-                'name' => $row['NOME']
+                'name' => $row['nome']
             ];
 
             $json[] = $p;

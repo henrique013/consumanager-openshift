@@ -34,28 +34,28 @@ class Usuarios extends Handle
         {
             $sql = "
                 SELECT
-                    u.ID AS id
-                    ,u.NOME AS nome
-                    ,u.EMAIL AS email
-                FROM TB_USUARIO u
+                    u.id
+                    ,u.nome
+                    ,u.email
+                FROM tb_usuario u
                 WHERE
-                    u.NOME LIKE :NOME
+                    u.nome ILIKE :nome
                 ORDER BY
-                    u.NOME
+                    u.nome
             ";
             $stmt = $conn->prepare($sql);
-            $stmt->bindValue('NOME', "%{$pNome}%");
+            $stmt->bindValue('nome', "%{$pNome}%");
         }
         else
         {
             $sql = "
                 SELECT
-                    u.ID AS id
-                    ,u.NOME AS nome
-                    ,u.EMAIL AS email
-                FROM TB_USUARIO u
+                    u.id
+                    ,u.nome
+                    ,u.email
+                FROM tb_usuario u
                 ORDER BY
-                    u.NOME
+                    u.nome
             ";
             $stmt = $conn->prepare($sql);
         }

@@ -34,40 +34,40 @@ class Consultas extends Handle
         {
             $sql = "
                 SELECT
-                    ct.DT_CONSULTA AS data
-                    ,TIME_FORMAT(h.HORAS, '%H:%i') AS horas
-                    ,co.ID AS co_id
-                    ,co.NOME AS co_nome
-                    ,p.NOME AS pac_nome
-                FROM TB_CONSULTA ct
-                JOIN TB_PACIENTE p ON (p.ID = ct.ID_PACIENTE)
-                JOIN TB_HORARIO h ON (h.ID = ct.ID_HORARIO)
-                JOIN TB_CONSULTORIO co ON (co.ID = h.ID_CONSULTORIO)
+                    ct.dt_consulta AS data
+                    ,to_char(h.horas, 'HH24:MI') AS horas
+                    ,co.id AS co_id
+                    ,co.nome AS co_nome
+                    ,p.nome AS pac_nome
+                FROM tb_consulta ct
+                JOIN tb_paciente p ON (p.id = ct.id_paciente)
+                JOIN tb_horario h ON (h.id = ct.id_horario)
+                JOIN tb_consultorio co ON (co.id = h.id_consultorio)
                 WHERE
-                    p.NOME LIKE :NOME
+                    p.nome ILIKE :nome
                 ORDER BY
-                    ct.DT_CONSULTA DESC
-                    ,h.HORAS
+                    ct.dt_consulta DESC
+                    ,h.horas
             ";
             $stmt = $conn->prepare($sql);
-            $stmt->bindValue('NOME', "%{$pNome}%");
+            $stmt->bindValue('nome', "%{$pNome}%");
         }
         else
         {
             $sql = "
                 SELECT
-                    ct.DT_CONSULTA AS data
-                    ,TIME_FORMAT(h.HORAS, '%H:%i') AS horas
-                    ,co.ID AS co_id
-                    ,co.NOME AS co_nome
-                    ,p.NOME AS pac_nome
-                FROM TB_CONSULTA ct
-                JOIN TB_PACIENTE p ON (p.ID = ct.ID_PACIENTE)
-                JOIN TB_HORARIO h ON (h.ID = ct.ID_HORARIO)
-                JOIN TB_CONSULTORIO co ON (co.ID = h.ID_CONSULTORIO)
+                    ct.dt_consulta AS data
+                    ,to_char(h.horas, 'HH24:MI') AS horas
+                    ,co.id AS co_id
+                    ,co.nome AS co_nome
+                    ,p.nome AS pac_nome
+                FROM tb_consulta ct
+                JOIN tb_paciente p ON (p.id = ct.id_paciente)
+                JOIN tb_horario h ON (h.id = ct.id_horario)
+                JOIN tb_consultorio co ON (co.id = h.id_consultorio)
                 ORDER BY
-                    ct.DT_CONSULTA DESC
-                    ,h.HORAS
+                    ct.dt_consulta DESC
+                    ,h.horas
             ";
             $stmt = $conn->prepare($sql);
         }

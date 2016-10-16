@@ -41,16 +41,16 @@ class Usuario extends Handle
         {
             $sql = "
                 SELECT
-                  u.ID AS id
-                  ,u.NOME AS nome
-                  ,u.EMAIL AS email
-                FROM TB_USUARIO u
+                  u.id
+                  ,u.nome
+                  ,u.email
+                FROM tb_usuario u
                 WHERE
-                  u.ID = :ID
+                  u.id = :id
             ";
             $conn = $this->ci->get('PDO');
             $stmt = $conn->prepare($sql);
-            $stmt->bindValue('ID', $usrID);
+            $stmt->bindValue('id', $usrID);
             $stmt->execute();
 
 
@@ -82,17 +82,24 @@ class Usuario extends Handle
 
 
         $sql = "
-            INSERT INTO TB_USUARIO
-            SET
-                NOME = :NOME
-                ,EMAIL = :EMAIL
-                ,HASH_SENHA = :HASH_SENHA
+            INSERT INTO tb_usuario
+            (
+              nome
+              ,email
+              ,hash_senha
+            )
+            VALUES
+            (
+              :nome
+              ,:email
+              ,:hash_senha
+            )
         ";
         $conn = $this->ci->get('PDO');
         $stmt = $conn->prepare($sql);
-        $stmt->bindValue('NOME', $p['nome']);
-        $stmt->bindValue('EMAIL', $p['email']);
-        $stmt->bindValue('HASH_SENHA', $p['senha']);
+        $stmt->bindValue('nome', $p['nome']);
+        $stmt->bindValue('email', $p['email']);
+        $stmt->bindValue('hash_senha', $p['senha']);
         $stmt->execute();
 
 
@@ -109,11 +116,11 @@ class Usuario extends Handle
 
 
         $sql = "
-            DELETE FROM TB_USUARIO WHERE ID = :ID
+            DELETE FROM tb_usuario WHERE id = :id
         ";
         $conn = $this->ci->get('PDO');
         $stmt = $conn->prepare($sql);
-        $stmt->bindValue('ID', $uID);
+        $stmt->bindValue('id', $uID);
         $stmt->execute();
 
 
@@ -132,20 +139,20 @@ class Usuario extends Handle
 
 
         $sql = '
-            UPDATE TB_USUARIO
+            UPDATE tb_usuario
             SET
-                NOME = :NOME
-                ,EMAIL = :EMAIL
+                nome = :nome
+                ,email = :email
                 ,HASH_SENHA = :HASH_SENHA
             WHERE
-                ID = :ID
+                id = :id
         ';
         $conn = $this->ci->get('PDO');
         $stmt = $conn->prepare($sql);
-        $stmt->bindValue('NOME', $p['nome']);
-        $stmt->bindValue('EMAIL', $p['email']);
+        $stmt->bindValue('nome', $p['nome']);
+        $stmt->bindValue('email', $p['email']);
         $stmt->bindValue('HASH_SENHA', $p['senha']);
-        $stmt->bindValue('ID', $id);
+        $stmt->bindValue('id', $id);
         $stmt->execute();
 
 

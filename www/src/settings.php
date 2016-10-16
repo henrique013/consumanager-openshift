@@ -7,9 +7,9 @@ return [
 
 
         'PDO' => [
-            'host' => getenv("OPENSHIFT_MYSQL_DB_HOST"),
-            'user' => getenv("OPENSHIFT_MYSQL_DB_USERNAME"),
-            'password' => getenv("OPENSHIFT_MYSQL_DB_PASSWORD"),
+            'host' => getenv("OPENSHIFT_POSTGRESQL_DB_HOST"),
+            'user' => getenv("OPENSHIFT_POSTGRESQL_DB_USERNAME"),
+            'password' => getenv("OPENSHIFT_POSTGRESQL_DB_PASSWORD"),
             'dbname' => 'clinica',
         ],
 

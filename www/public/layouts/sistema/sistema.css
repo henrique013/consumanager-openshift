@@ -120,6 +120,9 @@ textarea {
   resize: none;
   overflow: auto;
 }
+a {
+  cursor: pointer;
+}
 h1.titulo,
 h2.titulo,
 h3.titulo,

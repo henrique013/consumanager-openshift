@@ -48,16 +48,16 @@ class Login extends Handle
 
         $sql = "
             SELECT
-                u.ID
-            FROM TB_USUARIO u
+                u.id
+            FROM tb_usuario u
             WHERE
-                u.EMAIL = :EMAIL
-                AND u.HASH_SENHA = :HASH_SENHA
+                u.email = :email
+                AND u.hash_senha = :hash_senha
         ";
         $conn = $this->ci->get('PDO');
         $stmt = $conn->prepare($sql);
-        $stmt->bindValue('EMAIL', $user);
-        $stmt->bindValue('HASH_SENHA', $pass);
+        $stmt->bindValue('email', $user);
+        $stmt->bindValue('hash_senha', $pass);
         $stmt->execute();
         $row = $stmt->fetch();
 
@@ -68,7 +68,7 @@ class Login extends Handle
             $signer = new Sha256();
             $token = (new Builder())
                 ->setIssuedAt(time())
-                ->set('uid', (int)$row['ID'])
+                ->set('uid', (int)$row['id'])
                 ->sign($signer, $settings['JWT']['secret'])
                 ->getToken();
 

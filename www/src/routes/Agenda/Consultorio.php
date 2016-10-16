@@ -33,15 +33,15 @@ class Consultorio extends Handle
 
         $sql = "
             SELECT
-              c.ID AS id
-              ,c.NOME AS nome
-            FROM TB_CONSULTORIO c
+              c.id AS id
+              ,c.nome AS nome
+            FROM tb_consultorio c
             WHERE
-              c.ID = :ID
+              c.id = :id
         ";
         $conn = $this->ci->get('PDO');
         $stmt = $conn->prepare($sql);
-        $stmt->bindValue('ID', $coID);
+        $stmt->bindValue('id', $coID);
         $stmt->execute();
 
 
@@ -56,30 +56,30 @@ class Consultorio extends Handle
 
         $sql = "
             SELECT
-              time_format(h.HORAS, '%H:%i') AS HR_HORAS
-              ,ct.RESPONSAVEL AS CT_RESPONSAVEL
-              ,p.NOME AS P_NOME
-            FROM TB_CONSULTORIO c
-            JOIN TB_HORARIO h ON (h.ID_CONSULTORIO = c.ID)
-            LEFT JOIN TB_CONSULTA ct ON (ct.ID_HORARIO = h.ID AND ct.DT_CONSULTA = :DT_CONSULTA)
-            LEFT JOIN TB_PACIENTE p ON (p.ID = ct.ID_PACIENTE)
+              to_char(h.horas, 'HH24:MI') AS hr_horas
+              ,ct.responsavel AS ct_responsavel
+              ,p.nome AS p_nome
+            FROM tb_consultorio c
+            JOIN tb_horario h ON (h.id_consultorio = c.id)
+            LEFT JOIN tb_consulta ct ON (ct.id_horario = h.id AND ct.dt_consulta = :dt_consulta)
+            LEFT JOIN tb_paciente p ON (p.id = ct.id_paciente)
             WHERE
-              c.ID = :CO_ID
+              c.id = :co_id
             ORDER BY
-              h.HORAS
+              h.horas
         ";
         $stmt = $conn->prepare($sql);
-        $stmt->bindValue('DT_CONSULTA', $data);
-        $stmt->bindValue('CO_ID', $coID);
+        $stmt->bindValue('dt_consulta', $data);
+        $stmt->bindValue('co_id', $coID);
         $stmt->execute();
 
 
         while ($row = $stmt->fetch())
         {
             $hr = [
-                'horas' => $row['HR_HORAS'],
-                'consulta_responsavel' => $row['CT_RESPONSAVEL'],
-                'paciente_nome' => $row['P_NOME'],
+                'horas' => $row['hr_horas'],
+                'consulta_responsavel' => $row['ct_responsavel'],
+                'paciente_nome' => $row['p_nome'],
             ];
 
             $context['horarios'][] = $hr;

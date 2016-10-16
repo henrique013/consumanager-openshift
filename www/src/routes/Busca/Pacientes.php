@@ -34,30 +34,30 @@ class Pacientes extends Handle
         {
             $sql = "
                 SELECT
-                    p.ID AS id
-                    ,p.NOME AS nome
-                    ,p.TELEFONE AS telefone
-                    ,DATE_FORMAT(p.DT_NASC, '%d/%m/%Y') AS dt_nascimento
-                FROM TB_PACIENTE p
+                    p.id AS id
+                    ,p.nome AS nome
+                    ,p.telefone AS telefone
+                    ,to_char(p.dt_nasc, 'DD/MM/YYYY') AS dt_nascimento
+                FROM tb_paciente p
                 WHERE
-                    p.NOME LIKE :NOME
+                    p.nome ILIKE :nome
                 ORDER BY
-                    p.NOME
+                    p.nome
             ";
             $stmt = $conn->prepare($sql);
-            $stmt->bindValue('NOME', "%{$pNome}%");
+            $stmt->bindValue('nome', "%{$pNome}%");
         }
         else
         {
             $sql = "
                 SELECT
-                    p.ID AS id
-                    ,p.NOME AS nome
-                    ,p.TELEFONE AS telefone
-                    ,DATE_FORMAT(p.DT_NASC, '%d/%m/%Y') AS dt_nascimento
-                FROM TB_PACIENTE p
+                    p.id AS id
+                    ,p.nome AS nome
+                    ,p.telefone AS telefone
+                    ,to_char(p.dt_nasc, 'DD/MM/YYYY') AS dt_nascimento
+                FROM tb_paciente p
                 ORDER BY
-                    p.NOME
+                    p.nome
             ";
             $stmt = $conn->prepare($sql);
         }

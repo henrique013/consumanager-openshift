@@ -40,70 +40,69 @@ class Consulta extends Handle
         $horario = str_replace('-', ':', $request->getAttribute('hr'));
 
 
-        $sql = "SELECT ID AS id, NOME AS nome FROM TB_TIPO_CONSULTA ORDER BY NOME";
+        $sql = "SELECT id, nome FROM tb_tipo_consulta ORDER BY nome";
         $conn = $this->ci->get('PDO');
         $stmt = $conn->prepare($sql);
         $stmt->execute();
         $context['tipos'] = $stmt->fetchAll();
 
 
-        $sql = "SELECT ID AS id, NOME AS nome FROM TB_STATUS_CONSULTA ORDER BY NOME";
+        $sql = "SELECT id, nome FROM tb_status_consulta ORDER BY nome";
         $stmt = $conn->prepare($sql);
         $stmt->execute();
         $context['status'] = $stmt->fetchAll();
 
 
-        $sql = "SELECT ID AS id, NOME AS nome FROM TB_CONSULTORIO WHERE ID = :ID";
+        $sql = "SELECT id, nome FROM tb_consultorio WHERE id = :id";
         $stmt = $conn->prepare($sql);
-        $stmt->bindValue('ID', $coID);
+        $stmt->bindValue('id', $coID);
         $stmt->execute();
         $context['consultorio'] = $stmt->fetch();
 
 
         $sql = "
             SELECT
-              ct.ID AS CT_ID
-              ,ct.ID_STATUS_CONSULTA AS CT_STATUS_ID
-              ,ct.ID_TIPO_CONSULTA AS CT_TIPO_ID
-              ,ct.RESPONSAVEL AS CT_RESPONSAVEL
-              ,p.ID AS P_ID
-              ,p.NOME AS P_NOME
-              ,p.CIDADE AS P_CIDADE
-              ,p.BAIRRO AS P_BAIRRO
-              ,p.LOGRADOURO AS P_LOGRADOURO
-              ,p.COMPLEMENTO AS P_COMPLEMENTO
-              ,p.NUM_RESIDENCIA AS P_NUM_RESIDENCIA
-              ,p.TELEFONE AS P_TELEFONE
-              ,p.TELEFONE_2 AS P_TELEFONE_2
-              ,uf.SIGLA AS P_UF_SIGLA
-            FROM TB_CONSULTA ct
-            JOIN TB_HORARIO h ON (h.ID = ct.ID_HORARIO)
-            JOIN TB_PACIENTE p ON (p.ID = ct.ID_PACIENTE)
-            JOIN TB_UF uf ON (uf.ID = p.ID_UF)
+              ct.id AS ct_id
+              ,ct.id_status_consulta AS ct_status_id
+              ,ct.id_tipo_consulta AS ct_tipo_id
+              ,ct.responsavel AS ct_responsavel
+              ,p.id AS p_id
+              ,p.nome AS p_nome
+              ,p.cidade AS p_cidade
+              ,p.bairro AS p_bairro
+              ,p.logradouro AS p_logradouro
+              ,p.num_residencia AS p_num_residencia
+              ,p.telefone AS p_telefone
+              ,p.telefone_2 AS p_telefone_2
+              ,uf.sigla AS p_uf_sigla
+            FROM tb_consulta ct
+            JOIN tb_horario h ON (h.id = ct.id_horario)
+            JOIN tb_paciente p ON (p.id = ct.id_paciente)
+            JOIN tb_uf uf ON (uf.id = p.ID_UF)
             WHERE
-              h.HORAS = :HORAS
-              AND h.ID_CONSULTORIO = :ID_CONSULTORIO
-              AND ct.DT_CONSULTA = :DT_CONSULTA
+              h.horas = :horas
+              AND h.id_consultorio = :id_consultorio
+              AND ct.dt_consulta = :dt_consulta
         ";
         $stmt = $conn->prepare($sql);
-        $stmt->bindValue('HORAS', $horario);
-        $stmt->bindValue('DT_CONSULTA', $data);
-        $stmt->bindValue('ID_CONSULTORIO', $coID);
+        $stmt->bindValue('horas', $horario);
+        $stmt->bindValue('dt_consulta', $data);
+        $stmt->bindValue('id_consultorio', $coID);
         $stmt->execute();
 
 
         if ($row = $stmt->fetch())
         {
             $c = [
-                'id' => $row['CT_ID'],
-                'status_id' => $row['CT_STATUS_ID'],
-                'tipo_id' => $row['CT_TIPO_ID'],
-                'responsavel' => $row['CT_RESPONSAVEL'],
+                'id' => $row['ct_id'],
+                'status_id' => $row['ct_status_id'],
+                'tipo_id' => $row['ct_tipo_id'],
+                'responsavel' => $row['ct_responsavel'],
                 'paciente' => [
-                    'id' => $row['P_ID'],
-                    'nome' => $row['P_NOME'],
-                    'endereco' => Pacientes::mascaraEndereco($row['P_LOGRADOURO'], $row['P_NUM_RESIDENCIA'], $row['P_BAIRRO'], $row['P_CIDADE'], $row['P_UF_SIGLA']),
-                    'telefones' => Pacientes::mascaraTelefones($row['P_TELEFONE'], $row['P_TELEFONE_2']),
+                    'id' => $row['p_id'],
+                    'nome' => $row['p_nome'],
+                    'endereco' => Pacientes::mascaraEndereco($row['p_logradouro'], $row['p_num_residencia'], $row['p_bairro'], $row['p_cidade'], $row['p_uf_sigla']),
+                    'telefones' => Pacientes::mascaraTelefones($row['p_telefone'], $row['p_telefone_2']),
                 ]
             ];
 
@@ -131,10 +130,10 @@ class Consulta extends Handle
         $id = $request->getAttribute('id');
 
 
-        $sql = "DELETE FROM TB_CONSULTA WHERE ID = :ID";
+        $sql = "DELETE FROM tb_consulta WHERE id = :id";
         $conn = $this->ci->get('PDO');
         $stmt = $conn->prepare($sql);
-        $stmt->bindValue('ID', $id);
+        $stmt->bindValue('id', $id);
         $stmt->execute();
 
 
@@ -151,23 +150,33 @@ class Consulta extends Handle
 
 
         $sql = "
-            INSERT INTO TB_CONSULTA
-            SET
-                ID_STATUS_CONSULTA = :ID_STATUS_CONSULTA
-                ,ID_TIPO_CONSULTA = :ID_TIPO_CONSULTA
-                ,ID_PACIENTE = :ID_PACIENTE
-                ,ID_HORARIO = :ID_HORARIO
-                ,DT_CONSULTA = :DT_CONSULTA
-                ,RESPONSAVEL = :RESPONSAVEL
+            INSERT INTO tb_consulta
+            (
+              id_status_consulta
+              ,id_tipo_consulta
+              ,id_paciente
+              ,id_horario
+              ,dt_consulta
+              ,responsavel
+            )
+            VALUES
+            (
+              :id_status_consulta
+              ,:id_tipo_consulta
+              ,:id_paciente
+              ,:id_horario
+              ,:dt_consulta
+              ,:responsavel
+            )
         ";
         $conn = $this->ci->get('PDO');
         $stmt = $conn->prepare($sql);
-        $stmt->bindValue('ID_STATUS_CONSULTA', $p['status']);
-        $stmt->bindValue('ID_TIPO_CONSULTA', $p['tipo']);
-        $stmt->bindValue('ID_PACIENTE', $p['paciente']);
-        $stmt->bindValue('ID_HORARIO', $p['horario']);
-        $stmt->bindValue('DT_CONSULTA', $p['data']);
-        $stmt->bindValue('RESPONSAVEL', $p['responsavel']);
+        $stmt->bindValue('id_status_consulta', $p['status']);
+        $stmt->bindValue('id_tipo_consulta', $p['tipo']);
+        $stmt->bindValue('id_paciente', $p['paciente']);
+        $stmt->bindValue('id_horario', $p['horario']);
+        $stmt->bindValue('dt_consulta', $p['data']);
+        $stmt->bindValue('responsavel', $p['responsavel']);
         $stmt->execute();
 
 
@@ -185,26 +194,26 @@ class Consulta extends Handle
 
 
         $sql = "
-            UPDATE TB_CONSULTA
+            UPDATE tb_consulta
             SET
-                ID_STATUS_CONSULTA = :ID_STATUS_CONSULTA
-                ,ID_TIPO_CONSULTA = :ID_TIPO_CONSULTA
-                ,ID_PACIENTE = :ID_PACIENTE
-                ,ID_HORARIO = :ID_HORARIO
-                ,DT_CONSULTA = :DT_CONSULTA
-                ,RESPONSAVEL = :RESPONSAVEL
+                id_status_consulta = :id_status_consulta
+                ,id_tipo_consulta = :id_tipo_consulta
+                ,id_paciente = :id_paciente
+                ,id_horario = :id_horario
+                ,dt_consulta = :dt_consulta
+                ,responsavel = :responsavel
             WHERE
-                ID = :ID
+                id = :id
         ";
         $conn = $this->ci->get('PDO');
         $stmt = $conn->prepare($sql);
-        $stmt->bindValue('ID_STATUS_CONSULTA', $p['status']);
-        $stmt->bindValue('ID_TIPO_CONSULTA', $p['tipo']);
-        $stmt->bindValue('ID_PACIENTE', $p['paciente']);
-        $stmt->bindValue('ID_HORARIO', $p['horario']);
-        $stmt->bindValue('DT_CONSULTA', $p['data']);
-        $stmt->bindValue('RESPONSAVEL', $p['responsavel']);
-        $stmt->bindValue('ID', $id);
+        $stmt->bindValue('id_status_consulta', $p['status']);
+        $stmt->bindValue('id_tipo_consulta', $p['tipo']);
+        $stmt->bindValue('id_paciente', $p['paciente']);
+        $stmt->bindValue('id_horario', $p['horario']);
+        $stmt->bindValue('dt_consulta', $p['data']);
+        $stmt->bindValue('responsavel', $p['responsavel']);
+        $stmt->bindValue('id', $id);
         $stmt->execute();
 
 
@@ -237,11 +246,11 @@ class Consulta extends Handle
             return false;
         }
 
-        $sql = "SELECT ID FROM TB_HORARIO WHERE HORAS = :HORAS AND ID_CONSULTORIO = :ID_CONSULTORIO";
+        $sql = "SELECT id FROM tb_horario WHERE horas = :horas AND id_consultorio = :id_consultorio";
         $conn = $this->ci->get('PDO');
         $stmt = $conn->prepare($sql);
-        $stmt->bindValue('HORAS', $horario . ':00');
-        $stmt->bindValue('ID_CONSULTORIO', $consultorio);
+        $stmt->bindValue('horas', $horario . ':00');
+        $stmt->bindValue('id_consultorio', $consultorio);
         $stmt->execute();
 
         $row = $stmt->fetch();
@@ -251,7 +260,7 @@ class Consulta extends Handle
         }
 
         $params['consultorio'] = $consultorio;
-        $params['horario'] = $row['ID'];
+        $params['horario'] = $row['id'];
         $params['data'] = $data;
         $params['paciente'] = $paciente;
         $params['tipo'] = $tipo;

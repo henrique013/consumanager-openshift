@@ -37,14 +37,14 @@ class Paciente extends Handle
         $context = [];
 
 
-        $sql = "SELECT ID AS id, NOME AS nome FROM TB_TIPO_PACIENTE ORDER BY NOME";
+        $sql = "SELECT id, nome FROM tb_tipo_paciente ORDER BY nome";
         $conn = $this->ci->get('PDO');
         $stmt = $conn->prepare($sql);
         $stmt->execute();
         $context['tipos'] = $stmt->fetchAll();
 
 
-        $sql = "SELECT ID AS id, NOME AS nome FROM TB_UF ORDER BY NOME";
+        $sql = "SELECT id, nome FROM tb_uf ORDER BY nome";
         $stmt = $conn->prepare($sql);
         $stmt->execute();
         $context['estados'] = $stmt->fetchAll();
@@ -54,31 +54,31 @@ class Paciente extends Handle
         {
             $sql = "
                 SELECT
-                    p.ID AS id
-                    ,p.NOME AS nome
-                    ,DATE_FORMAT(p.DT_NASC, '%d/%m/%Y') AS dt_nascimento
-                    ,p.RESPONSAVEL AS responsavel
-                    ,p.MOTIVO AS motivo
-                    ,p.ENCAMINHAMENTO AS encaminhamento
-                    ,p.CIDADE AS cidade
-                    ,p.BAIRRO AS bairro
-                    ,p.LOGRADOURO AS logradouro
-                    ,p.COMPLEMENTO AS complemento
-                    ,p.NUM_RESIDENCIA AS num_residencia
-                    ,p.TELEFONE AS telefone
-                    ,p.TELEFONE_2 AS telefone_2
-                    ,tp.ID AS tipo_id
-                    ,uf.ID AS uf_id
-                FROM TB_PACIENTE p
-                JOIN TB_UF uf ON(uf.ID = p.ID_UF)
-                JOIN TB_TIPO_PACIENTE tp ON(tp.ID = p.ID_TIPO_PACIENTE)
+                    p.id
+                    ,p.nome
+                    ,to_char(p.dt_nasc, 'DD/MM/YYYY') AS dt_nascimento
+                    ,p.responsavel
+                    ,p.motivo
+                    ,p.encaminhamento
+                    ,p.cidade
+                    ,p.bairro
+                    ,p.logradouro
+                    ,p.complemento
+                    ,p.num_residencia
+                    ,p.telefone
+                    ,p.telefone_2
+                    ,tp.id AS tipo_id
+                    ,uf.id AS uf_id
+                FROM tb_paciente p
+                JOIN tb_uf uf ON(uf.id = p.id_uf)
+                JOIN tb_tipo_paciente tp ON(tp.id = p.id_tipo_paciente)
                 WHERE
-                    p.ID = :ID
+                    p.id = :id
                 ORDER BY
-                    p.NOME
+                    p.nome
             ";
             $stmt = $conn->prepare($sql);
-            $stmt->bindValue('ID', $pacID);
+            $stmt->bindValue('id', $pacID);
             $stmt->execute();
 
 
@@ -107,10 +107,10 @@ class Paciente extends Handle
         $id = $request->getAttribute('id');
 
 
-        $sql = "DELETE FROM TB_PACIENTE WHERE ID = :ID";
+        $sql = "DELETE FROM tb_paciente WHERE id = :id";
         $conn = $this->ci->get('PDO');
         $stmt = $conn->prepare($sql);
-        $stmt->bindValue('ID', $id);
+        $stmt->bindValue('id', $id);
         $stmt->execute();
 
 
@@ -127,39 +127,57 @@ class Paciente extends Handle
 
 
         $sql = "
-            INSERT INTO TB_PACIENTE
-            SET
-                ID_TIPO_PACIENTE = :ID_TIPO_PACIENTE
-                ,NOME = :NOME
-                ,DT_NASC = :DT_NASC
-                ,MOTIVO = :MOTIVO
-                ,RESPONSAVEL = :RESPONSAVEL
-                ,TELEFONE = :TELEFONE
-                ,TELEFONE_2 = :TELEFONE_2
-                ,ID_UF = :ID_UF
-                ,CIDADE = :CIDADE
-                ,BAIRRO = :BAIRRO
-                ,LOGRADOURO = :LOGRADOURO
-                ,NUM_RESIDENCIA = :NUM_RESIDENCIA
-                ,COMPLEMENTO = :COMPLEMENTO
-                ,ENCAMINHAMENTO = :ENCAMINHAMENTO
+            INSERT INTO tb_paciente
+            (
+                id_tipo_paciente
+                ,nome
+                ,dt_nasc
+                ,motivo
+                ,responsavel
+                ,telefone
+                ,telefone_2
+                ,id_uf
+                ,cidade
+                ,bairro
+                ,logradouro
+                ,num_residencia
+                ,complemento
+                ,encaminhamento
+            )
+            VALUES
+            (
+                :id_tipo_paciente
+                ,:nome
+                ,:dt_nasc
+                ,:motivo
+                ,:responsavel
+                ,:telefone
+                ,:telefone_2
+                ,:id_uf
+                ,:cidade
+                ,:bairro
+                ,:logradouro
+                ,:num_residencia
+                ,:complemento
+                ,:encaminhamento
+            )
         ";
         $conn = $this->ci->get('PDO');
         $stmt = $conn->prepare($sql);
-        $stmt->bindValue('ID_TIPO_PACIENTE', $p['tipo']);
-        $stmt->bindValue('NOME', $p['nome']);
-        $stmt->bindValue('DT_NASC', $p['dt_nascimento']);
-        $stmt->bindValue('MOTIVO', $p['motivo']);
-        $stmt->bindValue('RESPONSAVEL', $p['responsavel']);
-        $stmt->bindValue('TELEFONE', $p['tel']);
-        $stmt->bindValue('TELEFONE_2', $p['tel2']);
-        $stmt->bindValue('ID_UF', $p['uf']);
-        $stmt->bindValue('CIDADE', $p['cidade']);
-        $stmt->bindValue('BAIRRO', $p['bairro']);
-        $stmt->bindValue('LOGRADOURO', $p['logradouro']);
-        $stmt->bindValue('NUM_RESIDENCIA', $p['numero']);
-        $stmt->bindValue('COMPLEMENTO', $p['complemento']);
-        $stmt->bindValue('ENCAMINHAMENTO', $p['encaminhamento']);
+        $stmt->bindValue('id_tipo_paciente', $p['tipo']);
+        $stmt->bindValue('nome', $p['nome']);
+        $stmt->bindValue('dt_nasc', $p['dt_nascimento']);
+        $stmt->bindValue('motivo', $p['motivo']);
+        $stmt->bindValue('responsavel', $p['responsavel']);
+        $stmt->bindValue('telefone', $p['tel']);
+        $stmt->bindValue('telefone_2', $p['tel2']);
+        $stmt->bindValue('id_uf', $p['uf']);
+        $stmt->bindValue('cidade', $p['cidade']);
+        $stmt->bindValue('bairro', $p['bairro']);
+        $stmt->bindValue('logradouro', $p['logradouro']);
+        $stmt->bindValue('num_residencia', $p['numero']);
+        $stmt->bindValue('complemento', $p['complemento']);
+        $stmt->bindValue('encaminhamento', $p['encaminhamento']);
         $stmt->execute();
 
 
@@ -177,42 +195,42 @@ class Paciente extends Handle
 
 
         $sql = "
-            UPDATE TB_PACIENTE
+            UPDATE tb_paciente
             SET
-                ID_TIPO_PACIENTE = :ID_TIPO_PACIENTE
-                ,NOME = :NOME
-                ,DT_NASC = :DT_NASC
-                ,MOTIVO = :MOTIVO
-                ,RESPONSAVEL = :RESPONSAVEL
-                ,TELEFONE = :TELEFONE
-                ,TELEFONE_2 = :TELEFONE_2
-                ,ID_UF = :ID_UF
-                ,CIDADE = :CIDADE
-                ,BAIRRO = :BAIRRO
-                ,LOGRADOURO = :LOGRADOURO
-                ,NUM_RESIDENCIA = :NUM_RESIDENCIA
-                ,COMPLEMENTO = :COMPLEMENTO
-                ,ENCAMINHAMENTO = :ENCAMINHAMENTO
+                id_tipo_paciente = :id_tipo_paciente
+                ,nome = :nome
+                ,dt_nasc = :dt_nasc
+                ,motivo = :motivo
+                ,responsavel = :responsavel
+                ,telefone = :telefone
+                ,telefone_2 = :telefone_2
+                ,id_uf = :id_uf
+                ,cidade = :cidade
+                ,bairro = :bairro
+                ,logradouro = :logradouro
+                ,num_residencia = :num_residencia
+                ,complemento = :complemento
+                ,encaminhamento = :encaminhamento
             WHERE
-                ID = :ID
+                id = :id
         ";
         $conn = $this->ci->get('PDO');
         $stmt = $conn->prepare($sql);
-        $stmt->bindValue('ID_TIPO_PACIENTE', $p['tipo']);
-        $stmt->bindValue('NOME', $p['nome']);
-        $stmt->bindValue('DT_NASC', $p['dt_nascimento']);
-        $stmt->bindValue('MOTIVO', $p['motivo']);
-        $stmt->bindValue('RESPONSAVEL', $p['responsavel']);
-        $stmt->bindValue('TELEFONE', $p['tel']);
-        $stmt->bindValue('TELEFONE_2', $p['tel2']);
-        $stmt->bindValue('ID_UF', $p['uf']);
-        $stmt->bindValue('CIDADE', $p['cidade']);
-        $stmt->bindValue('BAIRRO', $p['bairro']);
-        $stmt->bindValue('LOGRADOURO', $p['logradouro']);
-        $stmt->bindValue('NUM_RESIDENCIA', $p['numero']);
-        $stmt->bindValue('COMPLEMENTO', $p['complemento']);
-        $stmt->bindValue('ENCAMINHAMENTO', $p['encaminhamento']);
-        $stmt->bindValue('ID', $id);
+        $stmt->bindValue('id_tipo_paciente', $p['tipo']);
+        $stmt->bindValue('nome', $p['nome']);
+        $stmt->bindValue('dt_nasc', $p['dt_nascimento']);
+        $stmt->bindValue('motivo', $p['motivo']);
+        $stmt->bindValue('responsavel', $p['responsavel']);
+        $stmt->bindValue('telefone', $p['tel']);
+        $stmt->bindValue('telefone_2', $p['tel2']);
+        $stmt->bindValue('id_uf', $p['uf']);
+        $stmt->bindValue('cidade', $p['cidade']);
+        $stmt->bindValue('bairro', $p['bairro']);
+        $stmt->bindValue('logradouro', $p['logradouro']);
+        $stmt->bindValue('num_residencia', $p['numero']);
+        $stmt->bindValue('complemento', $p['complemento']);
+        $stmt->bindValue('encaminhamento', $p['encaminhamento']);
+        $stmt->bindValue('id', $id);
         $stmt->execute();
 
 

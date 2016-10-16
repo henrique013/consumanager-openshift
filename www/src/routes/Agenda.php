@@ -32,20 +32,20 @@ class Agenda extends Handle
 
         $sql = "
             SELECT
-              c.ID AS CO_ID
-              ,c.NOME AS CO_NOME
-              ,SUM(IF(ct.ID IS NULL, 1, 0)) AS HR_LIVRES
-              ,SUM(IF(ct.ID IS NOT NULL, 1, 0)) AS HR_OCUPADOS
-              ,COUNT(h.ID) AS HR_TOTAL
-            FROM TB_CONSULTORIO c
-            JOIN TB_HORARIO h ON (h.ID_CONSULTORIO = c.ID)
-            LEFT JOIN TB_CONSULTA ct ON (ct.ID_HORARIO = h.ID AND ct.DT_CONSULTA = :DT_CONSULTA)
+               c.id AS co_id
+              ,c.nome AS co_nome
+              ,COUNT(h.id) AS hr_total
+              ,SUM(CASE WHEN ct.id IS NULL THEN 1 ELSE 0 END) AS hr_livres
+              ,SUM(CASE WHEN ct.id IS NOT NULL THEN 1 ELSE 0 END) AS hr_ocupados
+            FROM tb_consultorio c
+              JOIN tb_horario h ON (h.id_consultorio = c.id)
+              LEFT JOIN tb_consulta ct ON (ct.id_horario = h.id AND ct.dt_consulta = :dt_consulta)
             GROUP BY
-              c.ID
+              c.id
         ";
         $conn = $this->ci->get('PDO');
         $stmt = $conn->prepare($sql);
-        $stmt->bindValue('DT_CONSULTA', $data);
+        $stmt->bindValue('dt_consulta', $data);
         $stmt->execute();
 
 
@@ -54,13 +54,13 @@ class Agenda extends Handle
         {
             $resumo = [
                 'consultorio' => [
-                    'id' => $row['CO_ID'],
-                    'nome' => $row['CO_NOME']
+                    'id' => $row['co_id'],
+                    'nome' => $row['co_nome']
                 ],
                 'ocupacao_horarios' => [
-                    'livres' => $row['HR_LIVRES'],
-                    'ocupados' => $row['HR_OCUPADOS'],
-                    'total' => $row['HR_TOTAL']
+                    'livres' => $row['hr_livres'],
+                    'ocupados' => $row['hr_ocupados'],
+                    'total' => $row['hr_total']
                 ],
             ];
 
