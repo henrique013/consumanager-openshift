@@ -32,12 +32,25 @@ $(function () {
                 showTodayButton: true
             });
         })
+        .on('shown.bs.modal', '#modal-resp-consulta', function () {
+
+            // inicializa o modal de responsável consulta
+
+            var $modal = $(this);
+
+            $modal.find('#ipt-resp-telefone').mask(bottle.container.mask_telefone, {
+                clearIfNotMatch: true
+            });
+        })
         .on('shown.bs.modal', '#modal-consulta', function () {
 
             // inicializa o modal de consulta
 
+
             var $modal = $(this);
 
+
+            // campo auto-complete de PACIENTE
             $modal.find('#ipt-pac-nome').typeahead({
                 items: 10,
                 ajax: {
@@ -60,6 +73,32 @@ $(function () {
                     $('.pac-nome').text(pac.nome);
                     $('.pac-endereco').text(pac.endereco);
                     $('.pac-telefones').text(pac.telefones);
+                }
+            });
+
+
+            // campo auto-complete de ALUNO RESPONSÁVEL
+            $modal.find('#ipt-resp-nome').typeahead({
+                items: 10,
+                ajax: {
+                    url: '/ajax/cadastro/consulta/responsaveis',
+                    timeout: 300,
+                    triggerLength: 1,
+                    method: "get",
+                    preDispatch: function (query) {
+                        return {
+                            nome: query
+                        }
+                    }
+                },
+                onSelect: function (item) {
+
+                    var resp = JSON.parse(item.value);
+
+                    $('#ipt-resp-id').val(resp.id);
+
+                    $('.resp-nome').text(resp.nome);
+                    $('.resp-telefones').text(resp.telefones);
                 }
             });
         })

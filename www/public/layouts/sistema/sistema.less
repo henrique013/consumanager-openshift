@@ -1,4 +1,5 @@
 @import "../../../public/bower/bootstrap/less/mixins/resize";
+@import "../../../public/bower/bootstrap/less/variables";
 @import "../../util/mixins-not";
 
 // ======================================================================= //
@@ -239,8 +240,11 @@ fieldset {
       width: 80px;
     }
 
-    dd {
-      margin-left: 95px;
+    @media (min-width: @screen-sm-min) {
+
+      dd {
+        margin-left: 95px;
+      }
     }
   }
 }

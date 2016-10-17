@@ -177,6 +177,8 @@ fieldset {
 #modal-consulta .dl-horizontal dt {
   width: 80px;
 }
-#modal-consulta .dl-horizontal dd {
-  margin-left: 95px;
+@media (min-width: 768px) {
+  #modal-consulta .dl-horizontal dd {
+    margin-left: 95px;
+  }
 }

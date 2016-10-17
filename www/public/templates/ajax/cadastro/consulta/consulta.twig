@@ -15,6 +15,7 @@
                     <input type="hidden" name="horario" id="ipt-con-horario" value="{{ horario }}">
                     <input type="hidden" name="data" id="ipt-con-data" value="{{ data|date('Y-m-d') }}">
                     <input type="hidden" name="paciente" id="ipt-pac-id" value="{{ consulta.paciente.id }}">
+                    <input type="hidden" name="responsavel" id="ipt-resp-id" value="{{ consulta.responsavel.id }}">
 
                     <fieldset>
                         <legend>
@@ -33,6 +34,25 @@
                                 <dd class="pac-endereco">{{ consulta.paciente.endereco }}</dd>
                                 <dt>Telefone(s)</dt>
                                 <dd class="pac-telefones">{{ consulta.paciente.telefones }}</dd>
+                            </dl>
+                        </div>
+                    </fieldset>
+
+                    <fieldset>
+                        <legend>
+                            <i class="fa fa-user-md" aria-hidden="true"></i> Aluno Responsável
+                        </legend>
+                        <div class="nome-resp form-group col-xs-12 col-sm-8 col-sm-offset-2">
+                            <div class="form-group">
+                                <input required type="text" id="ipt-resp-nome" class="typeahead form-control" autocomplete="off" placeholder="NOME DO ALUNO RESPONSÁVEL" value="{{ consulta.responsavel.nome }}">
+                            </div>
+                        </div>
+                        <div class="form-group col-xs-12">
+                            <dl class="dl-horizontal">
+                                <dt>Nome</dt>
+                                <dd class="resp-nome">{{ consulta.responsavel.nome }}</dd>
+                                <dt>Telefone(s)</dt>
+                                <dd class="resp-telefones">{{ consulta.responsavel.telefones }}</dd>
                             </dl>
                         </div>
                     </fieldset>
@@ -74,10 +94,6 @@
                                 {% endfor %}
 
                             </select>
-                        </div>
-                        <div class="form-group col-xs-12 col-sm-6">
-                            <label for="ipt-con-aluno" class="control-label">Nome Aluno(a)</label>
-                            <input required name="responsavel" id="ipt-con-aluno" type="text" class="form-control" value="{{ consulta.responsavel }}">
                         </div>
                     </fieldset>
 

@@ -65,7 +65,9 @@ class Consulta extends Handle
               ct.id AS ct_id
               ,ct.id_status_consulta AS ct_status_id
               ,ct.id_tipo_consulta AS ct_tipo_id
-              ,ct.responsavel AS ct_responsavel
+              ,rc.id AS rc_id
+              ,rc.nome AS rc_nome
+              ,rc.telefone AS rc_telefone
               ,p.id AS p_id
               ,p.nome AS p_nome
               ,p.cidade AS p_cidade
@@ -77,8 +79,9 @@ class Consulta extends Handle
               ,uf.sigla AS p_uf_sigla
             FROM tb_consulta ct
             JOIN tb_horario h ON (h.id = ct.id_horario)
+            JOIN tb_resp_consulta rc ON (rc.id = ct.id_resp_consulta)
             JOIN tb_paciente p ON (p.id = ct.id_paciente)
-            JOIN tb_uf uf ON (uf.id = p.ID_UF)
+            JOIN tb_uf uf ON (uf.id = p.id_uf)
             WHERE
               h.horas = :horas
               AND h.id_consultorio = :id_consultorio
@@ -97,7 +100,11 @@ class Consulta extends Handle
                 'id' => $row['ct_id'],
                 'status_id' => $row['ct_status_id'],
                 'tipo_id' => $row['ct_tipo_id'],
-                'responsavel' => $row['ct_responsavel'],
+                'responsavel' => [
+                    'id' => $row['rc_id'],
+                    'nome' => $row['rc_nome'],
+                    'telefones' => $row['rc_telefone'],
+                ],
                 'paciente' => [
                     'id' => $row['p_id'],
                     'nome' => $row['p_nome'],
@@ -156,8 +163,8 @@ class Consulta extends Handle
               ,id_tipo_consulta
               ,id_paciente
               ,id_horario
+              ,id_resp_consulta
               ,dt_consulta
-              ,responsavel
             )
             VALUES
             (
@@ -165,8 +172,8 @@ class Consulta extends Handle
               ,:id_tipo_consulta
               ,:id_paciente
               ,:id_horario
+              ,:id_resp_consulta
               ,:dt_consulta
-              ,:responsavel
             )
         ";
         $conn = $this->ci->get('PDO');
@@ -175,8 +182,8 @@ class Consulta extends Handle
         $stmt->bindValue('id_tipo_consulta', $p['tipo']);
         $stmt->bindValue('id_paciente', $p['paciente']);
         $stmt->bindValue('id_horario', $p['horario']);
+        $stmt->bindValue('id_resp_consulta', $p['responsavel']);
         $stmt->bindValue('dt_consulta', $p['data']);
-        $stmt->bindValue('responsavel', $p['responsavel']);
         $stmt->execute();
 
 
@@ -200,8 +207,8 @@ class Consulta extends Handle
                 ,id_tipo_consulta = :id_tipo_consulta
                 ,id_paciente = :id_paciente
                 ,id_horario = :id_horario
+                ,id_resp_consulta = :id_resp_consulta
                 ,dt_consulta = :dt_consulta
-                ,responsavel = :responsavel
             WHERE
                 id = :id
         ";
@@ -211,8 +218,8 @@ class Consulta extends Handle
         $stmt->bindValue('id_tipo_consulta', $p['tipo']);
         $stmt->bindValue('id_paciente', $p['paciente']);
         $stmt->bindValue('id_horario', $p['horario']);
+        $stmt->bindValue('id_resp_consulta', $p['responsavel']);
         $stmt->bindValue('dt_consulta', $p['data']);
-        $stmt->bindValue('responsavel', $p['responsavel']);
         $stmt->bindValue('id', $id);
         $stmt->execute();
 
@@ -239,7 +246,7 @@ class Consulta extends Handle
         $v[] = v::intVal()->validate($paciente);
         $v[] = v::intVal()->validate($tipo);
         $v[] = v::intVal()->validate($status);
-        $v[] = v::notEmpty()->validate($responsavel);
+        $v[] = v::intVal()->validate($responsavel);
 
         if (in_array(false, $v))
         {

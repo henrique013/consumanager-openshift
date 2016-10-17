@@ -42,4 +42,11 @@ $app->post('/ajax/cadastro/consulta', 'App\Route\Ajax\Cadastro\Consulta:post');
 $app->put('/ajax/cadastro/consulta/{id:\d+}', 'App\Route\Ajax\Cadastro\Consulta:put');
 $app->delete('/ajax/cadastro/consulta/{id:\d+}', 'App\Route\Ajax\Cadastro\Consulta:delete');
 
+$app->get('/ajax/cadastro/consulta/responsavel[/{id:\d+}]', 'App\Route\Ajax\Cadastro\Consulta\Responsavel:get');
+$app->post('/ajax/cadastro/consulta/responsavel', 'App\Route\Ajax\Cadastro\Consulta\Responsavel:post');
+$app->put('/ajax/cadastro/consulta/responsavel/{id:\d+}', 'App\Route\Ajax\Cadastro\Consulta\Responsavel:put');
+$app->delete('/ajax/cadastro/consulta/responsavel/{id:\d+}', 'App\Route\Ajax\Cadastro\Consulta\Responsavel:delete');
+
 $app->get('/ajax/cadastro/consulta/pacientes', 'App\Route\Ajax\Cadastro\Consulta\Pacientes:get');
+
+$app->get('/ajax/cadastro/consulta/responsaveis', 'App\Route\Ajax\Cadastro\Consulta\Responsaveis:get');

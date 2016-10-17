@@ -57,11 +57,12 @@ class Consultorio extends Handle
         $sql = "
             SELECT
               to_char(h.horas, 'HH24:MI') AS hr_horas
-              ,ct.responsavel AS ct_responsavel
+              ,rc.nome AS rc_nome
               ,p.nome AS p_nome
             FROM tb_consultorio c
             JOIN tb_horario h ON (h.id_consultorio = c.id)
             LEFT JOIN tb_consulta ct ON (ct.id_horario = h.id AND ct.dt_consulta = :dt_consulta)
+            LEFT JOIN tb_resp_consulta rc ON (rc.id = ct.id_resp_consulta)
             LEFT JOIN tb_paciente p ON (p.id = ct.id_paciente)
             WHERE
               c.id = :co_id
@@ -78,7 +79,7 @@ class Consultorio extends Handle
         {
             $hr = [
                 'horas' => $row['hr_horas'],
-                'consulta_responsavel' => $row['ct_responsavel'],
+                'consulta_responsavel' => $row['rc_nome'],
                 'paciente_nome' => $row['p_nome'],
             ];
 
