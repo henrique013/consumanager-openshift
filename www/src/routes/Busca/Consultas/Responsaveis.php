@@ -2,11 +2,11 @@
 /**
  * Created by PhpStorm.
  * User: henrique
- * Date: 23/08/16
- * Time: 20:41
+ * Date: 16/10/16
+ * Time: 00:40
  */
 
-namespace App\Route\Busca;
+namespace App\Route\Busca\Consultas;
 
 
 use App\Util\Handle;
@@ -15,7 +15,7 @@ use Slim\Http\Request;
 use Slim\Http\Response;
 
 
-class Pacientes extends Handle
+class Responsaveis extends Handle
 {
     use GET;
 
@@ -34,15 +34,14 @@ class Pacientes extends Handle
         {
             $sql = "
                 SELECT
-                    p.id AS id
-                    ,p.nome AS nome
-                    ,p.telefone AS telefone
-                    ,to_char(p.dt_nasc, 'DD/MM/YYYY') AS dt_nascimento
-                FROM tb_paciente p
+                    rc.id
+                    ,rc.nome
+                    ,rc.telefone
+                FROM tb_resp_consulta rc
                 WHERE
-                    p.nome ILIKE :nome
+                    rc.nome ILIKE :nome
                 ORDER BY
-                    p.nome
+                    rc.nome
             ";
             $stmt = $conn->prepare($sql);
             $stmt->bindValue('nome', "%{$pNome}%");
@@ -51,25 +50,24 @@ class Pacientes extends Handle
         {
             $sql = "
                 SELECT
-                    p.id AS id
-                    ,p.nome AS nome
-                    ,p.telefone AS telefone
-                    ,to_char(p.dt_nasc, 'DD/MM/YYYY') AS dt_nascimento
-                FROM tb_paciente p
+                    rc.id
+                    ,rc.nome
+                    ,rc.telefone
+                FROM tb_resp_consulta rc
                 ORDER BY
-                    p.nome
+                    rc.nome
             ";
             $stmt = $conn->prepare($sql);
         }
 
 
         $stmt->execute();
-        $context['pacientes'] = $stmt->fetchAll();
+        $context['responsaveis'] = $stmt->fetchAll();
         $context['busca'] = $pNome;
 
 
         $twig = $this->ci->get('twig_template');
-        $view = $twig->render('busca/pacientes/pacientes.twig', $context);
+        $view = $twig->render('busca/consultas/responsaveis/responsaveis.twig', $context);
         $response->write($view);
 
 

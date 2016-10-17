@@ -1,7 +1,7 @@
 <div class="row">
     <div class="col-xs-12">
         <h2 class="titulo text-uppercase text-center">
-            <strong>buscar</strong> pacientes
+            <strong>buscar</strong> alunos
         </h2>
     </div>
 </div>
@@ -9,10 +9,10 @@
 <div class="row">
     <div class="col-xs-12 col-sm-8 col-sm-offset-2">
         <div class="row">
-            <form class="buscas" action="/busca/pacientes">
+            <form class="buscas" action="/busca/consultas/responsaveis">
                 <div id="crt-nome" class="form-group col-xs-12 col-md-offset-3 col-md-6">
                     <div class='input-group'>
-                        <input name="nome" type="text" class="form-control" id="ipt-pac-nome" title="" value="{{ busca }}" placeholder="NOME DO PACIENTE">
+                        <input name="nome" type="text" class="form-control" id="ipt-pac-nome" title="" value="{{ busca }}" placeholder="NOME DO ALUNO">
                         <span class="input-group-addon btn-busca">
                             <i class="fa fa-search" aria-hidden="true"></i>
                         </span>
@@ -25,21 +25,17 @@
                 <table class="table table-bordered table-hover">
                     <thead>
                     <tr>
-                        <th>Prontuário</th>
                         <th>Nome</th>
-                        <th class="hidden-xs">Dt. Nascimento</th>
-                        <th class="hidden-xs">Telefone</th>
+                        <th>Telefone</th>
                     </tr>
                     </thead>
                     <tbody>
 
-                    {% for paciente in pacientes %}
+                    {% for responsavel in responsaveis %}
 
-                        <tr data-url="/ajax/cadastro/paciente/{{ paciente.id }}">
-                            <td>{{ paciente.id }}</td>
-                            <td>{{ paciente.nome }}</td>
-                            <td class="hidden-xs">{{ paciente.dt_nascimento }}</td>
-                            <td class="hidden-xs">{{ paciente.telefone }}</td>
+                        <tr data-url="/ajax/cadastro/consulta/responsavel/{{ responsavel.id }}">
+                            <td>{{ responsavel.nome }}</td>
+                            <td>{{ responsavel.telefone }}</td>
                         </tr>
 
                     {% endfor %}
@@ -51,4 +47,4 @@
     </div>
 </div>
 
-<script src="/templates/busca/pacientes/pacientes.js"></script>
+<script src="/templates/busca/consultas/responsaveis/responsaveis.js"></script>

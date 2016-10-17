@@ -24,6 +24,8 @@ $app->get('/busca/usuarios', 'App\Route\Busca\Usuarios:get');
 
 $app->get('/busca/consultas', 'App\Route\Busca\Consultas:get');
 
+$app->get('/busca/consultas/responsaveis', 'App\Route\Busca\Consultas\Responsaveis:get');
+
 
 // AJAX
 

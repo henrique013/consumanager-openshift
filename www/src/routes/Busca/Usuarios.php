@@ -63,6 +63,7 @@ class Usuarios extends Handle
 
         $stmt->execute();
         $context['usuarios'] = $stmt->fetchAll();
+        $context['busca'] = $pNome;
 
 
         $twig = $this->ci->get('twig_template');
