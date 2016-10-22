@@ -26,6 +26,7 @@ $(function () {
 
 
     bottle.value('modals', {
+        // remove os modais do DOM e guarda eles nas variáveis abaixo:
         "sucesso": $('#modal-sucesso').remove(),
         "atencao": $('#modal-atencao').remove(),
         "erro": $('#modal-erro').remove()
@@ -38,8 +39,71 @@ $(function () {
 
     bottle.service('mask_telefone', function () {
 
-        return function (val) {
-            return val.replace(/\D/g, '').length === 11 ? '(00) 00000-0000' : '(00) 0000-00009';
+        return function ($input) {
+
+            $input.on('blur', function () {
+
+                var tel = $input.val();
+
+                // se o valor do input não bater com o padrão ele é limpo
+                if (/^(\(\d\d\)\s)?\d{4,5}-\d{4}$/.test(tel) === false)
+                {
+                    tel = '';
+                }
+
+                $input.val(tel);
+            });
+
+
+            $input.on('keyup', function (e) {
+
+                // se a tecla precionada foi um backspace ou delete
+                if ([8, 46].indexOf(e.keyCode) >= 0)
+                {
+                    $input.keypress();
+                }
+            });
+
+
+            $input.on('keypress', function (e) {
+
+                var tel = $input.val() + e.key;
+
+                // retira a máscara e deixa somente os números
+                tel = tel.replace(/\D/g, '').substr(0, 11);
+
+
+                var len = tel.length;
+                var p1, p2, p3;
+
+
+                if (len > 4 && len <= 9)
+                {
+                    // Máscaras:
+                    // 99999-9999
+                    //  9999-9999
+
+                    p1 = tel.substr(0, len - 4);
+                    p2 = tel.substr(len - 4, len);
+                    tel = p1 + '-' + p2;
+                }
+                else if (len >= 10)
+                {
+                    // Máscaras:
+                    // (31) 99999-9999
+                    //  (31) 9999-9999
+
+                    p1 = tel.substr(0, 2);
+                    p2 = tel.substr(2, len - 6);
+                    p3 = tel.substr(len - 4, len);
+                    tel = '(' + p1 + ') ' + p2 + '-' + p3;
+                }
+
+
+                $input.val(tel);
+
+                return false;
+            });
         };
     });
 

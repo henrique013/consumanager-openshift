@@ -55,6 +55,7 @@ class Paciente extends Handle
             $sql = "
                 SELECT
                     p.id
+                    ,p.num_prontuario
                     ,p.nome
                     ,to_char(p.dt_nasc, 'DD/MM/YYYY') AS dt_nascimento
                     ,p.responsavel
@@ -80,15 +81,32 @@ class Paciente extends Handle
             $stmt = $conn->prepare($sql);
             $stmt->bindValue('id', $pacID);
             $stmt->execute();
-
-
             $row = $stmt->fetch();
-            if (!$row)
-            {
-                return $response->withRedirect('/cadastro/paciente');
-            }
-            $context['paciente'] = $row;
         }
+        else
+        {
+            // sugestão de número de prontuário
+            $sql = "
+              SELECT
+                np.numero AS num_prontuario
+              FROM tb_num_prontuario np
+              WHERE
+                np.numero NOT IN(SELECT p.num_prontuario FROM tb_paciente p)
+              ORDER BY
+                np.numero
+              LIMIT 1
+            ";
+            $stmt = $conn->prepare($sql);
+            $stmt->execute();
+            $row = $stmt->fetch();
+        }
+
+
+        if (!$row)
+        {
+            return $response->withRedirect('/cadastro/paciente');
+        }
+        $context['paciente'] = $row;
 
 
         $twig = $this->ci->get('twig_template');
@@ -129,7 +147,8 @@ class Paciente extends Handle
         $sql = "
             INSERT INTO tb_paciente
             (
-                id_tipo_paciente
+                num_prontuario
+                ,id_tipo_paciente
                 ,nome
                 ,dt_nasc
                 ,motivo
@@ -146,7 +165,8 @@ class Paciente extends Handle
             )
             VALUES
             (
-                :id_tipo_paciente
+                :num_prontuario
+                ,:id_tipo_paciente
                 ,:nome
                 ,:dt_nasc
                 ,:motivo
@@ -164,6 +184,7 @@ class Paciente extends Handle
         ";
         $conn = $this->ci->get('PDO');
         $stmt = $conn->prepare($sql);
+        $stmt->bindValue('num_prontuario', $p['prontuario']);
         $stmt->bindValue('id_tipo_paciente', $p['tipo']);
         $stmt->bindValue('nome', $p['nome']);
         $stmt->bindValue('dt_nasc', $p['dt_nascimento']);
@@ -198,6 +219,7 @@ class Paciente extends Handle
             UPDATE tb_paciente
             SET
                 id_tipo_paciente = :id_tipo_paciente
+                ,num_prontuario = :num_prontuario
                 ,nome = :nome
                 ,dt_nasc = :dt_nasc
                 ,motivo = :motivo
@@ -216,6 +238,7 @@ class Paciente extends Handle
         ";
         $conn = $this->ci->get('PDO');
         $stmt = $conn->prepare($sql);
+        $stmt->bindValue('num_prontuario', $p['prontuario']);
         $stmt->bindValue('id_tipo_paciente', $p['tipo']);
         $stmt->bindValue('nome', $p['nome']);
         $stmt->bindValue('dt_nasc', $p['dt_nascimento']);
@@ -240,6 +263,7 @@ class Paciente extends Handle
 
     private function prepareParams(Request $request)
     {
+        $prontuario = $request->getParsedBodyParam('num_prontuario');
         $bairro = $request->getParsedBodyParam('bairro');
         $cidade = $request->getParsedBodyParam('cidade');
         $complemento = $request->getParsedBodyParam('complemento');
@@ -251,10 +275,11 @@ class Paciente extends Handle
         $numero = $request->getParsedBodyParam('num_residencia');
         $responsavel = $request->getParsedBodyParam('responsavel');
         $tel = $request->getParsedBodyParam('tel');
-        $tel2 = $request->getParsedBodyParam('tel2');
+        $tel2 = $request->getParsedBodyParam('tel2') ?: null;
         $tipo = $request->getParsedBodyParam('tipo');
         $uf = $request->getParsedBodyParam('uf');
 
+        $v[] = v::intVal()->validate($prontuario);
         $v[] = v::notEmpty()->validate($bairro);
         $v[] = v::notEmpty()->validate($cidade);
         $v[] = v::date('d/m/Y')->validate($dt_nascimento);
@@ -262,8 +287,8 @@ class Paciente extends Handle
         $v[] = v::notEmpty()->validate($motivo);
         $v[] = v::notEmpty()->validate($nome);
         $v[] = v::intVal()->validate($numero);
-        $v[] = (bool)preg_match("/^\(\d\d\) \d{4,5}-\d{4}$/", $tel);
-        $v[] = ($tel2 === '' || preg_match("/^\(\d\d\) \d{4,5}-\d{4}$/", $tel2));
+        $v[] = (bool)preg_match("/^(\(\d\d\)\s)?\d{4,5}-\d{4}$/", $tel);
+        $v[] = (is_null($tel2) || preg_match("/^(\(\d\d\)\s)?\d{4,5}-\d{4}$/", $tel2));
         $v[] = v::intVal()->validate($tipo);
         $v[] = v::intVal()->validate($uf);
 
@@ -272,6 +297,7 @@ class Paciente extends Handle
             return false;
         }
 
+        $params['prontuario'] = $prontuario;
         $params['bairro'] = $bairro;
         $params['cidade'] = $cidade;
         $params['complemento'] = $complemento;

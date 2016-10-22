@@ -7,6 +7,7 @@ $(function () {
 
             var $modal = $(this);
 
+
             $modal.find('#ipt-pac-nascimento').mask('00/00/0000', {
                 clearIfNotMatch: true,
                 onKeyPress: function (val, event, field) {
@@ -15,13 +16,10 @@ $(function () {
                 }
             });
 
-            $modal.find('#ipt-pac-telefone').mask(bottle.container.mask_telefone, {
-                clearIfNotMatch: true
-            });
 
-            $modal.find('#ipt-pac-telefone2').mask(bottle.container.mask_telefone, {
-                clearIfNotMatch: true
-            });
+            bottle.container.mask_telefone($modal.find('#ipt-pac-telefone'));
+            bottle.container.mask_telefone($modal.find('#ipt-pac-telefone2'));
+
 
             $modal.find('.input-group.date').datetimepicker({
                 locale: 'pt-br',
@@ -38,9 +36,7 @@ $(function () {
 
             var $modal = $(this);
 
-            $modal.find('#ipt-resp-telefone').mask(bottle.container.mask_telefone, {
-                clearIfNotMatch: true
-            });
+            bottle.container.mask_telefone($modal.find('#ipt-resp-telefone'));
         })
         .on('shown.bs.modal', '#modal-consulta', function () {
 

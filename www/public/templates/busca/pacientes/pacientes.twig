@@ -25,7 +25,7 @@
                 <table class="table table-bordered table-hover">
                     <thead>
                     <tr>
-                        <th>Prontuário</th>
+                        <th>N° de Prontuário</th>
                         <th>Nome</th>
                         <th class="hidden-xs">Dt. Nascimento</th>
                         <th class="hidden-xs">Telefone</th>
@@ -36,10 +36,10 @@
                     {% for paciente in pacientes %}
 
                         <tr data-url="/ajax/cadastro/paciente/{{ paciente.id }}">
-                            <td>{{ paciente.id }}</td>
+                            <td>{{ paciente.num_prontuario }}</td>
                             <td>{{ paciente.nome }}</td>
-                            <td class="hidden-xs">{{ paciente.dt_nascimento }}</td>
-                            <td class="hidden-xs">{{ paciente.telefone }}</td>
+                            <td>{{ paciente.dt_nascimento }}</td>
+                            <td>{{ paciente.telefone }}</td>
                         </tr>
 
                     {% endfor %}

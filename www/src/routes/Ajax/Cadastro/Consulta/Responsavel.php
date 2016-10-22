@@ -162,7 +162,7 @@ class Responsavel extends Handle
         $tel = $request->getParsedBodyParam('tel');
 
         $v[] = v::notEmpty()->validate($nome);
-        $v[] = (bool)preg_match("/^\(\d\d\) \d{4,5}-\d{4}$/", $tel);
+        $v[] = (bool)preg_match("/^(\(\d\d\)\s)?\d{4,5}-\d{4}$/", $tel);
 
         if (in_array(false, $v))
         {

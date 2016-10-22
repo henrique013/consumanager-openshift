@@ -42,14 +42,14 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="/agenda">
+            <a class="navbar-brand" href="/agenda/{{ data|date('Y-m-d') }}">
                 <img alt="Brand" src="/layouts/sistema/logo-una-branco.png">
             </a>
         </div>
         <div class="collapse navbar-collapse" id="nav-busca">
             <ul class="nav navbar-nav navbar-right">
                 <li>
-                    <a href="/agenda">
+                    <a href="/agenda/{{ data|date('Y-m-d') }}">
                         Agenda <i class="fa fa-book"></i>
                     </a>
                 </li>

@@ -5,7 +5,7 @@
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
-                <h3 class="modal-title"><strong>{{ paciente ? 'editar' : 'novo' }}</strong> paciente</h3>
+                <h3 class="modal-title"><strong>{{ paciente.id ? 'editar' : 'novo' }}</strong> paciente</h3>
             </div>
             <div class="modal-body">
 
@@ -16,14 +16,10 @@
                             <i class="fa fa-list-ul" aria-hidden="true"></i> Prontuário
                         </legend>
 
-                        {% if paciente %}
-
-                            <div class="form-group col-xs-12 col-sm-4">
-                                <label for="ipt-pac-prontuario" class="control-label">N° de Prontuário</label>
-                                <input value="{{ paciente.id }}" type="text" class="form-control" id="ipt-pac-prontuario" readonly>
-                            </div>
-
-                        {% endif %}
+                        <div class="form-group col-xs-12 col-sm-4">
+                            <label for="ipt-pac-prontuario" class="control-label">N° de Prontuário</label>
+                            <input value="{{ paciente.num_prontuario }}" name="num_prontuario" type="text" class="form-control" id="ipt-pac-prontuario" required {{ paciente.id ? 'readonly' : '' }}>
+                        </div>
 
                         <div class="form-group col-xs-12 col-sm-4">
                             <label for="ipt-pac-nome" class="control-label">Nome</label>
@@ -32,9 +28,9 @@
                         <div class="form-group col-xs-12 col-sm-4">
                             <label for="ipt-pac-nascimento" class="control-label">Data de Nascimento</label>
                             <div class='input-group date'>
-                            <span class="input-group-addon">
-                                <i class="fa fa-calendar" aria-hidden="true"></i>
-                            </span>
+                                <span class="input-group-addon">
+                                    <i class="fa fa-calendar" aria-hidden="true"></i>
+                                </span>
                                 <input required name="dt_nascimento" value="{{ paciente.dt_nascimento }}" type="text" class="form-control" id="ipt-pac-nascimento">
                             </div>
                         </div>
@@ -121,7 +117,7 @@
             </div>
             <div class="modal-footer">
 
-                {% if paciente %}
+                {% if paciente.id %}
 
                     <button class="remover btn btn-danger pull-left" data-action="/ajax/cadastro/paciente/{{ paciente.id }}">
                         <i class="fa fa-trash-o" aria-hidden="true"></i> Remover

@@ -34,9 +34,10 @@ class Pacientes extends Handle
         {
             $sql = "
                 SELECT
-                    p.id AS id
-                    ,p.nome AS nome
-                    ,p.telefone AS telefone
+                    p.id
+                    ,p.num_prontuario
+                    ,p.nome
+                    ,p.telefone
                     ,to_char(p.dt_nasc, 'DD/MM/YYYY') AS dt_nascimento
                 FROM tb_paciente p
                 WHERE
@@ -51,9 +52,10 @@ class Pacientes extends Handle
         {
             $sql = "
                 SELECT
-                    p.id AS id
-                    ,p.nome AS nome
-                    ,p.telefone AS telefone
+                    p.id
+                    ,p.num_prontuario
+                    ,p.nome
+                    ,p.telefone
                     ,to_char(p.dt_nasc, 'DD/MM/YYYY') AS dt_nascimento
                 FROM tb_paciente p
                 ORDER BY
