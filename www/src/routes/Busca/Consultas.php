@@ -11,6 +11,7 @@ namespace App\Route\Busca;
 
 use App\Util\Handle;
 use App\Util\Handle\GET;
+use Respect\Validation\Validator as v;
 use Slim\Http\Request;
 use Slim\Http\Response;
 
@@ -22,11 +23,13 @@ class Consultas extends Handle
 
     const TP_BUSCA_ALUNO = 1;
     const TP_BUSCA_PACIENTE = 2;
+    const TP_BUSCA_PRONTUARIO = 3;
 
 
     private $tp_buscas = [
         self::TP_BUSCA_ALUNO => 'Aluno',
         self::TP_BUSCA_PACIENTE => 'Paciente',
+        self::TP_BUSCA_PRONTUARIO => 'Prontuário',
     ];
 
 
@@ -36,23 +39,24 @@ class Consultas extends Handle
 
 
         $tpBusca = (int)$request->getParam('tp_busca', self::TP_BUSCA_PACIENTE);
-        $pNome = $request->getParam('nome');
+        $pValor = $request->getParam('valor');
+        $consultas = [];
 
 
-        if ($pNome)
+        if ($pValor)
         {
             switch ($tpBusca)
             {
                 case self::TP_BUSCA_ALUNO:
-                    $consultas = $this->getByAluno($pNome);
+                    $consultas = $this->getByAluno($pValor);
                     break;
 
                 case self::TP_BUSCA_PACIENTE:
-                    $consultas = $this->getByPaciente($pNome);
+                    $consultas = $this->getByPaciente($pValor);
                     break;
 
-                default:
-                    $consultas = [];
+                case self::TP_BUSCA_PRONTUARIO:
+                    $consultas = $this->getByProntuario($pValor);
                     break;
             }
         }
@@ -65,7 +69,7 @@ class Consultas extends Handle
         $context['consultas'] = $consultas;
         $context['tp_buscas'] = $this->tp_buscas;
         $context['tp_busca'] = $tpBusca;
-        $context['busca'] = $pNome;
+        $context['busca'] = $pValor;
 
 
         $twig = $this->ci->get('twig_template');
@@ -90,6 +94,7 @@ class Consultas extends Handle
                 ,co.nome AS co_nome
                 ,rc.nome AS resp_nome
                 ,p.nome AS pac_nome
+                ,p.num_prontuario AS pac_prontuario
             FROM tb_consulta ct
             JOIN tb_resp_consulta rc ON (rc.id = ct.id_resp_consulta)
             JOIN tb_paciente p ON (p.id = ct.id_paciente)
@@ -125,6 +130,7 @@ class Consultas extends Handle
                 ,co.nome AS co_nome
                 ,rc.nome AS resp_nome
                 ,p.nome AS pac_nome
+                ,p.num_prontuario AS pac_prontuario
             FROM tb_consulta ct
             JOIN tb_resp_consulta rc ON (rc.id = ct.id_resp_consulta)
             JOIN tb_paciente p ON (p.id = ct.id_paciente)
@@ -147,6 +153,48 @@ class Consultas extends Handle
     }
 
 
+    private function getByProntuario($num_prontuario)
+    {
+        /** @var \PDO $conn */
+
+
+        if (v::intVal()->validate($num_prontuario) === false)
+        {
+            return [];
+        }
+
+
+        $sql = "
+            SELECT
+                ct.dt_consulta AS data
+                ,to_char(h.horas, 'HH24:MI') AS horas
+                ,co.id AS co_id
+                ,co.nome AS co_nome
+                ,rc.nome AS resp_nome
+                ,p.nome AS pac_nome
+                ,p.num_prontuario AS pac_prontuario
+            FROM tb_consulta ct
+            JOIN tb_resp_consulta rc ON (rc.id = ct.id_resp_consulta)
+            JOIN tb_paciente p ON (p.id = ct.id_paciente)
+            JOIN tb_horario h ON (h.id = ct.id_horario)
+            JOIN tb_consultorio co ON (co.id = h.id_consultorio)
+            WHERE
+                p.num_prontuario = :num_prontuario
+            ORDER BY
+                ct.dt_consulta DESC
+                ,h.horas
+        ";
+        $conn = $this->ci->get('PDO');
+        $stmt = $conn->prepare($sql);
+        $stmt->bindValue('num_prontuario', $num_prontuario);
+        $stmt->execute();
+        $ret = $stmt->fetchAll();
+
+
+        return $ret;
+    }
+
+
     private function getAll()
     {
         /** @var \PDO $conn */
@@ -160,6 +208,7 @@ class Consultas extends Handle
                 ,co.nome AS co_nome
                 ,rc.nome AS resp_nome
                 ,p.nome AS pac_nome
+                ,p.num_prontuario AS pac_prontuario
             FROM tb_consulta ct
             JOIN tb_resp_consulta rc ON (rc.id = ct.id_resp_consulta)
             JOIN tb_paciente p ON (p.id = ct.id_paciente)

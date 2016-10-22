@@ -12,9 +12,9 @@
     <div class="col-xs-12 col-sm-8 col-sm-offset-2">
         <div class="row">
             <form class="buscas" action="/busca/consultas">
-                <div id="crt-nome" class="form-group col-xs-12 col-md-offset-2 col-md-8">
+                <div class="form-group col-xs-12 col-md-offset-2 col-md-8">
                     <div class="form-group col-xs-12 col-sm-4">
-                        <select required name="tp_busca" id="ipt-tp-busca" class="form-control" title="Tipo Consulta">
+                        <select required name="tp_busca" id="ipt-tp-busca" class="form-control" title="Tipo de Busca">
 
                             {% for id, label in tp_buscas %}
 
@@ -26,7 +26,7 @@
                     </div>
                     <div class="form-group col-xs-12 col-sm-8">
                         <div class='input-group'>
-                            <input name="nome" type="text" class="form-control" id="ipt-pac-nome" title="" value="{{ busca }}" placeholder="NOME">
+                            <input name="valor" type="text" class="form-control" value="{{ busca }}" placeholder="BUSCA">
                             <span class="input-group-addon btn-busca">
                                 <i class="fa fa-search" aria-hidden="true"></i>
                             </span>
@@ -41,6 +41,7 @@
                     <thead>
                     <tr>
                         <th>Paciente</th>
+                        <th>N° de Prontuário</th>
                         <th>Aluno</th>
                         <th>Data</th>
                         <th>Hora</th>
@@ -53,6 +54,7 @@
 
                         <tr data-url="/ajax/cadastro/consulta/consultorio/{{ consulta.co_id }}/{{ consulta.data|date('Y-m-d') }}/{{ consulta.horas|replace({':' : '-'}) }}">
                             <td>{{ consulta.pac_nome }}</td>
+                            <td>{{ consulta.pac_prontuario }}</td>
                             <td>{{ consulta.resp_nome }}</td>
                             <td>{{ consulta.data|date('d/m/Y') }}</td>
                             <td>{{ consulta.horas }}</td>

@@ -71,8 +71,8 @@ class Paciente extends Handle
                     ,tp.id AS tipo_id
                     ,uf.id AS uf_id
                 FROM tb_paciente p
-                JOIN tb_uf uf ON(uf.id = p.id_uf)
                 JOIN tb_tipo_paciente tp ON(tp.id = p.id_tipo_paciente)
+                LEFT JOIN tb_uf uf ON(uf.id = p.id_uf)
                 WHERE
                     p.id = :id
                 ORDER BY
@@ -264,44 +264,48 @@ class Paciente extends Handle
     private function prepareParams(Request $request)
     {
         $prontuario = $request->getParsedBodyParam('num_prontuario');
-        $bairro = $request->getParsedBodyParam('bairro');
-        $cidade = $request->getParsedBodyParam('cidade');
-        $complemento = $request->getParsedBodyParam('complemento');
-        $dt_nascimento = $request->getParsedBodyParam('dt_nascimento');
-        $encaminhamento = $request->getParsedBodyParam('encaminhamento');
-        $logradouro = $request->getParsedBodyParam('logradouro');
-        $motivo = $request->getParsedBodyParam('motivo');
         $nome = $request->getParsedBodyParam('nome');
-        $numero = $request->getParsedBodyParam('num_residencia');
-        $responsavel = $request->getParsedBodyParam('responsavel');
         $tel = $request->getParsedBodyParam('tel');
-        $tel2 = $request->getParsedBodyParam('tel2') ?: null;
         $tipo = $request->getParsedBodyParam('tipo');
-        $uf = $request->getParsedBodyParam('uf');
+        $dt_nascimento = $request->getParsedBodyParam('dt_nascimento') ?: null;
+        $motivo = $request->getParsedBodyParam('motivo') ?: null;
+        $cidade = $request->getParsedBodyParam('cidade') ?: null;
+        $bairro = $request->getParsedBodyParam('bairro') ?: null;
+        $logradouro = $request->getParsedBodyParam('logradouro') ?: null;
+        $numero = $request->getParsedBodyParam('num_residencia') ?: null;
+        $complemento = $request->getParsedBodyParam('complemento') ?: null;
+        $encaminhamento = $request->getParsedBodyParam('encaminhamento') ?: null;
+        $responsavel = $request->getParsedBodyParam('responsavel') ?: null;
+        $tel2 = $request->getParsedBodyParam('tel2') ?: null;
+        $uf = $request->getParsedBodyParam('uf') ?: null;
 
+        // obrigatórios
         $v[] = v::intVal()->validate($prontuario);
-        $v[] = v::notEmpty()->validate($bairro);
-        $v[] = v::notEmpty()->validate($cidade);
-        $v[] = v::date('d/m/Y')->validate($dt_nascimento);
-        $v[] = v::notEmpty()->validate($logradouro);
-        $v[] = v::notEmpty()->validate($motivo);
         $v[] = v::notEmpty()->validate($nome);
-        $v[] = v::intVal()->validate($numero);
-        $v[] = (bool)preg_match("/^(\(\d\d\)\s)?\d{4,5}-\d{4}$/", $tel);
-        $v[] = (is_null($tel2) || preg_match("/^(\(\d\d\)\s)?\d{4,5}-\d{4}$/", $tel2));
+        $v[] = v::regex("/^(\(\d\d\)\s)?\d{4,5}-\d{4}$/")->validate($tel);
         $v[] = v::intVal()->validate($tipo);
-        $v[] = v::intVal()->validate($uf);
+
+        // opcionais
+        $v[] = v::optional(v::date('d/m/Y'))->validate($dt_nascimento);
+        $v[] = v::optional(v::intVal())->validate($numero);
+        $v[] = v::optional(v::regex("/^(\(\d\d\)\s)?\d{4,5}-\d{4}$/"))->validate($tel2);
+        $v[] = v::optional(v::intVal())->validate($uf);
 
         if (in_array(false, $v))
         {
             return false;
         }
 
+        if ($dt_nascimento)
+        {
+            $dt_nascimento = implode('-', array_reverse(explode('/', $dt_nascimento)));
+        }
+
         $params['prontuario'] = $prontuario;
         $params['bairro'] = $bairro;
         $params['cidade'] = $cidade;
         $params['complemento'] = $complemento;
-        $params['dt_nascimento'] = implode('-', array_reverse(explode('/', $dt_nascimento)));
+        $params['dt_nascimento'] = $dt_nascimento;
         $params['encaminhamento'] = $encaminhamento;
         $params['logradouro'] = $logradouro;
         $params['motivo'] = $motivo;

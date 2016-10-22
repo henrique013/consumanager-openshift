@@ -81,7 +81,7 @@ class Consulta extends Handle
             JOIN tb_horario h ON (h.id = ct.id_horario)
             JOIN tb_resp_consulta rc ON (rc.id = ct.id_resp_consulta)
             JOIN tb_paciente p ON (p.id = ct.id_paciente)
-            JOIN tb_uf uf ON (uf.id = p.id_uf)
+            LEFT JOIN tb_uf uf ON (uf.id = p.id_uf)
             WHERE
               h.horas = :horas
               AND h.id_consultorio = :id_consultorio

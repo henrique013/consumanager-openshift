@@ -40,7 +40,7 @@ class Pacientes extends Handle
                 ,p.telefone_2
                 ,uf.sigla AS uf_sigla
             FROM tb_paciente p
-            JOIN tb_uf uf ON(uf.id = p.id_uf)
+            LEFT JOIN tb_uf uf ON(uf.id = p.id_uf)
             WHERE
                 p.nome ILIKE :nome
             ORDER BY

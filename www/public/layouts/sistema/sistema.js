@@ -52,7 +52,7 @@ $(function () {
                 ajax: {
                     url: '/ajax/cadastro/consulta/pacientes',
                     timeout: 300,
-                    triggerLength: 1,
+                    triggerLength: 3,
                     method: "get",
                     preDispatch: function (query) {
                         return {
@@ -79,7 +79,7 @@ $(function () {
                 ajax: {
                     url: '/ajax/cadastro/consulta/responsaveis',
                     timeout: 300,
-                    triggerLength: 1,
+                    triggerLength: 3,
                     method: "get",
                     preDispatch: function (query) {
                         return {

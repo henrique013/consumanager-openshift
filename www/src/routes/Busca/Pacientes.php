@@ -38,8 +38,9 @@ class Pacientes extends Handle
                     ,p.num_prontuario
                     ,p.nome
                     ,p.telefone
-                    ,to_char(p.dt_nasc, 'DD/MM/YYYY') AS dt_nascimento
+                    ,tp.nome AS tipo
                 FROM tb_paciente p
+                JOIN tb_tipo_paciente tp ON(tp.id = p.id_tipo_paciente)
                 WHERE
                     p.nome ILIKE :nome
                 ORDER BY
@@ -56,8 +57,9 @@ class Pacientes extends Handle
                     ,p.num_prontuario
                     ,p.nome
                     ,p.telefone
-                    ,to_char(p.dt_nasc, 'DD/MM/YYYY') AS dt_nascimento
+                    ,tp.nome AS tipo
                 FROM tb_paciente p
+                JOIN tb_tipo_paciente tp ON(tp.id = p.id_tipo_paciente)
                 ORDER BY
                     p.nome
             ";
