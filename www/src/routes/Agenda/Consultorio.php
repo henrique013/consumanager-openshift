@@ -56,9 +56,10 @@ class Consultorio extends Handle
 
         $sql = "
             SELECT
-              to_char(h.horas, 'HH24:MI') AS hr_horas
-              ,rc.nome AS rc_nome
-              ,p.nome AS p_nome
+              to_char(h.horas, 'HH24:MI') AS horas
+              ,rc.nome AS consulta_responsavel
+              ,p.nome AS paciente_nome
+              ,p.num_prontuario AS paciente_prontuario
             FROM tb_consultorio c
             JOIN tb_horario h ON (h.id_consultorio = c.id)
             LEFT JOIN tb_consulta ct ON (ct.id_horario = h.id AND ct.dt_consulta = :dt_consulta)
@@ -75,16 +76,7 @@ class Consultorio extends Handle
         $stmt->execute();
 
 
-        while ($row = $stmt->fetch())
-        {
-            $hr = [
-                'horas' => $row['hr_horas'],
-                'consulta_responsavel' => $row['rc_nome'],
-                'paciente_nome' => $row['p_nome'],
-            ];
-
-            $context['horarios'][] = $hr;
-        }
+        $context['horarios'] = $stmt->fetchAll();
 
 
         $twig = $this->ci->get('twig_template');

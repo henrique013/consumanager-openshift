@@ -42,6 +42,8 @@ class Agenda extends Handle
               LEFT JOIN tb_consulta ct ON (ct.id_horario = h.id AND ct.dt_consulta = :dt_consulta)
             GROUP BY
               c.id
+            ORDER BY
+              c.nome
         ";
         $conn = $this->ci->get('PDO');
         $stmt = $conn->prepare($sql);

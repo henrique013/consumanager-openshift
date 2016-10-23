@@ -35,12 +35,14 @@
 
                 {% if hr.paciente_nome %}
 
-                    <div class="panel-body">
+                    <div class="panel-body truncate">
                         <dl>
+                            <dt>N° de Prontuário</dt>
+                            <dd>{{ hr.paciente_prontuario }}</dd>
                             <dt>Paciente</dt>
-                            <dd>{{ hr.paciente_nome }}</dd>
+                            <dd class="truncate">{{ hr.paciente_nome }}</dd>
                             <dt>Aluno(a)</dt>
-                            <dd>{{ hr.consulta_responsavel }}</dd>
+                            <dd class="truncate">{{ hr.consulta_responsavel }}</dd>
                         </dl>
                     </div>
                     <div class="panel-footer">
