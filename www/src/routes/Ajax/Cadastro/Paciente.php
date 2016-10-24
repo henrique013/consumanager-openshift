@@ -265,7 +265,6 @@ class Paciente extends Handle
     {
         $prontuario = $request->getParsedBodyParam('num_prontuario');
         $nome = $request->getParsedBodyParam('nome');
-        $tel = $request->getParsedBodyParam('tel');
         $tipo = $request->getParsedBodyParam('tipo');
         $dt_nascimento = $request->getParsedBodyParam('dt_nascimento') ?: null;
         $motivo = $request->getParsedBodyParam('motivo') ?: null;
@@ -276,18 +275,19 @@ class Paciente extends Handle
         $complemento = $request->getParsedBodyParam('complemento') ?: null;
         $encaminhamento = $request->getParsedBodyParam('encaminhamento') ?: null;
         $responsavel = $request->getParsedBodyParam('responsavel') ?: null;
+        $tel = $request->getParsedBodyParam('tel') ?: null;
         $tel2 = $request->getParsedBodyParam('tel2') ?: null;
         $uf = $request->getParsedBodyParam('uf') ?: null;
 
         // obrigatórios
         $v[] = v::intVal()->validate($prontuario);
         $v[] = v::notEmpty()->validate($nome);
-        $v[] = v::regex("/^(\(\d\d\)\s)?\d{4,5}-\d{4}$/")->validate($tel);
         $v[] = v::intVal()->validate($tipo);
 
         // opcionais
         $v[] = v::optional(v::date('d/m/Y'))->validate($dt_nascimento);
         $v[] = v::optional(v::intVal())->validate($numero);
+        $v[] = v::optional(v::regex("/^(\(\d\d\)\s)?\d{4,5}-\d{4}$/"))->validate($tel);
         $v[] = v::optional(v::regex("/^(\(\d\d\)\s)?\d{4,5}-\d{4}$/"))->validate($tel2);
         $v[] = v::optional(v::intVal())->validate($uf);
 
