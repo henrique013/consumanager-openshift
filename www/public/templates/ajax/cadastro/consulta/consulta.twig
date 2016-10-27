@@ -22,17 +22,13 @@
                             <i class="fa fa-user" aria-hidden="true"></i> Paciente
                         </legend>
                         <div class="nome-pac form-group col-xs-12 col-sm-8 col-sm-offset-2">
-                            <div class="form-group">
-                                <input required type="text" id="ipt-pac-nome" class="typeahead form-control" autocomplete="off" placeholder="NOME DO PACIENTE" value="{{ consulta.paciente.nome }}">
-                            </div>
+                            <input required type="text" id="ipt-pac-nome" class="typeahead form-control" autocomplete="off" placeholder="NOME DO PACIENTE" value="{{ consulta.paciente.nome }}">
                         </div>
                         <div class="form-group col-xs-12">
                             <dl class="dl-horizontal">
-                                <dt>Nome</dt>
-                                <dd class="pac-nome">{{ consulta.paciente.nome }}</dd>
-                                <dt>Endereço</dt>
-                                <dd class="pac-endereco">{{ consulta.paciente.endereco }}</dd>
-                                <dt>Telefone(s)</dt>
+                                <dt>Prontuário:</dt>
+                                <dd class="pac-prontuario">{{ consulta.paciente.prontuario }}</dd>
+                                <dt>Telefone(s):</dt>
                                 <dd class="pac-telefones">{{ consulta.paciente.telefones }}</dd>
                             </dl>
                         </div>
@@ -43,15 +39,11 @@
                             <i class="fa fa-user-md" aria-hidden="true"></i> Aluno Responsável
                         </legend>
                         <div class="nome-resp form-group col-xs-12 col-sm-8 col-sm-offset-2">
-                            <div class="form-group">
-                                <input required type="text" id="ipt-resp-nome" class="typeahead form-control" autocomplete="off" placeholder="NOME DO ALUNO RESPONSÁVEL" value="{{ consulta.responsavel.nome }}">
-                            </div>
+                            <input required type="text" id="ipt-resp-nome" class="typeahead form-control" autocomplete="off" placeholder="NOME DO ALUNO RESPONSÁVEL" value="{{ consulta.responsavel.nome }}">
                         </div>
                         <div class="form-group col-xs-12">
                             <dl class="dl-horizontal">
-                                <dt>Nome</dt>
-                                <dd class="resp-nome">{{ consulta.responsavel.nome }}</dd>
-                                <dt>Telefone(s)</dt>
+                                <dt>Telefone(s):</dt>
                                 <dd class="resp-telefones">{{ consulta.responsavel.telefones }}</dd>
                             </dl>
                         </div>

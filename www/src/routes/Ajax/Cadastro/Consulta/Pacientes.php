@@ -32,15 +32,10 @@ class Pacientes extends Handle
             SELECT
                 p.id
                 ,p.nome
-                ,p.cidade
-                ,p.bairro
-                ,p.logradouro
-                ,p.num_residencia
+                ,p.num_prontuario
                 ,p.telefone
                 ,p.telefone_2
-                ,uf.sigla AS uf_sigla
             FROM tb_paciente p
-            LEFT JOIN tb_uf uf ON(uf.id = p.id_uf)
             WHERE
                 p.nome ILIKE :nome
             ORDER BY
@@ -58,7 +53,7 @@ class Pacientes extends Handle
             $dados = [
                 'id' => (int)$row['id'],
                 'nome' => $row['nome'],
-                'endereco' => self::mascaraEndereco($row['logradouro'], $row['num_residencia'], $row['bairro'], $row['cidade'], $row['uf_sigla']),
+                'prontuario' => $row['num_prontuario'],
                 'telefones' => self::mascaraTelefones($row['telefone'], $row['telefone_2']),
             ];
 
@@ -78,14 +73,8 @@ class Pacientes extends Handle
     }
 
 
-    public static function mascaraEndereco($logradouro, $num_residencia, $bairro, $cidade, $uf_sigla)
-    {
-        return "{$logradouro} n° {$num_residencia}, {$bairro}, {$cidade} - {$uf_sigla}";
-    }
-
-
     public static function mascaraTelefones($telefone, $telefone2)
     {
-        return ($telefone2) ? "{$telefone} | {$telefone2}" : $telefone;
+        return $telefone2 ? "{$telefone} | {$telefone2}" : $telefone ?: 'NÃO INFORMADO';
     }
 }

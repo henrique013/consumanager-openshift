@@ -47,56 +47,71 @@ $(function () {
 
 
             // campo auto-complete de PACIENTE
-            $modal.find('#ipt-pac-nome').typeahead({
-                items: 10,
-                ajax: {
-                    url: '/ajax/cadastro/consulta/pacientes',
-                    timeout: 300,
-                    triggerLength: 3,
-                    method: "get",
-                    preDispatch: function (query) {
-                        return {
-                            nome: query
+            $modal.find('#ipt-pac-nome')
+                .on('keyup', function () {
+
+                    $('#ipt-pac-id').val('');
+                    $('.pac-prontuario').text('');
+                    $('.pac-telefones').text('');
+                })
+                .typeahead({
+                    items: 10,
+                    ajax: {
+                        url: '/ajax/cadastro/consulta/pacientes',
+                        timeout: 300,
+                        triggerLength: 3,
+                        method: "get",
+                        preDispatch: function (query) {
+                            return {
+                                nome: query
+                            }
                         }
+                    },
+                    onSelect: function (item) {
+
+                        var pac = JSON.parse(item.value);
+
+                        $('#ipt-pac-id').val(pac.id);
+
+                        $('.pac-prontuario').text(pac.prontuario);
+                        $('.pac-telefones').text(pac.telefones);
                     }
-                },
-                onSelect: function (item) {
-
-                    var pac = JSON.parse(item.value);
-
-                    $('#ipt-pac-id').val(pac.id);
-
-                    $('.pac-nome').text(pac.nome);
-                    $('.pac-endereco').text(pac.endereco);
-                    $('.pac-telefones').text(pac.telefones);
-                }
-            });
+                })
+            ;
 
 
             // campo auto-complete de ALUNO RESPONSÁVEL
-            $modal.find('#ipt-resp-nome').typeahead({
-                items: 10,
-                ajax: {
-                    url: '/ajax/cadastro/consulta/responsaveis',
-                    timeout: 300,
-                    triggerLength: 3,
-                    method: "get",
-                    preDispatch: function (query) {
-                        return {
-                            nome: query
+            $modal.find('#ipt-resp-nome')
+                .on('keyup', function () {
+
+                    $('#ipt-resp-id').val('');
+                    $('.resp-nome').text('');
+                    $('.resp-telefones').text('');
+                })
+                .typeahead({
+                    items: 10,
+                    ajax: {
+                        url: '/ajax/cadastro/consulta/responsaveis',
+                        timeout: 300,
+                        triggerLength: 3,
+                        method: "get",
+                        preDispatch: function (query) {
+                            return {
+                                nome: query
+                            }
                         }
+                    },
+                    onSelect: function (item) {
+
+                        var resp = JSON.parse(item.value);
+
+                        $('#ipt-resp-id').val(resp.id);
+
+                        $('.resp-nome').text(resp.nome);
+                        $('.resp-telefones').text(resp.telefones);
                     }
-                },
-                onSelect: function (item) {
-
-                    var resp = JSON.parse(item.value);
-
-                    $('#ipt-resp-id').val(resp.id);
-
-                    $('.resp-nome').text(resp.nome);
-                    $('.resp-telefones').text(resp.telefones);
-                }
-            });
+                })
+            ;
         })
         .on('hidden.bs.modal', '.modal', function () {
 
@@ -113,6 +128,11 @@ $(function () {
             if (!$form.find('#ipt-pac-id').val())
             {
                 $form.find('#ipt-pac-nome').val('');
+            }
+
+            if (!$form.find('#ipt-resp-id').val())
+            {
+                $form.find('#ipt-resp-nome').val('');
             }
         })
         .on('click', '#modal-usuario .novo, #modal-usuario .atualizar', function () {

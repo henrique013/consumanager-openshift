@@ -162,9 +162,6 @@ fieldset {
   text-transform: uppercase;
   text-align: center;
 }
-#modal-consulta .nome-pac {
-  margin-bottom: 0;
-}
 #modal-consulta .typeahead.dropdown-menu a {
   white-space: nowrap;
   overflow: hidden;

@@ -70,18 +70,13 @@ class Consulta extends Handle
               ,rc.telefone AS rc_telefone
               ,p.id AS p_id
               ,p.nome AS p_nome
-              ,p.cidade AS p_cidade
-              ,p.bairro AS p_bairro
-              ,p.logradouro AS p_logradouro
-              ,p.num_residencia AS p_num_residencia
+              ,p.num_prontuario AS p_prontuario
               ,p.telefone AS p_telefone
               ,p.telefone_2 AS p_telefone_2
-              ,uf.sigla AS p_uf_sigla
             FROM tb_consulta ct
             JOIN tb_horario h ON (h.id = ct.id_horario)
             JOIN tb_resp_consulta rc ON (rc.id = ct.id_resp_consulta)
             JOIN tb_paciente p ON (p.id = ct.id_paciente)
-            LEFT JOIN tb_uf uf ON (uf.id = p.id_uf)
             WHERE
               h.horas = :horas
               AND h.id_consultorio = :id_consultorio
@@ -107,8 +102,8 @@ class Consulta extends Handle
                 ],
                 'paciente' => [
                     'id' => $row['p_id'],
+                    'prontuario' => $row['p_prontuario'],
                     'nome' => $row['p_nome'],
-                    'endereco' => Pacientes::mascaraEndereco($row['p_logradouro'], $row['p_num_residencia'], $row['p_bairro'], $row['p_cidade'], $row['p_uf_sigla']),
                     'telefones' => Pacientes::mascaraTelefones($row['p_telefone'], $row['p_telefone_2']),
                 ]
             ];
