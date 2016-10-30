@@ -27,6 +27,7 @@
                     <tr>
                         <th>Nome</th>
                         <th>Telefone</th>
+                        <th>Supervisor</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -36,6 +37,7 @@
                         <tr data-url="/ajax/cadastro/consulta/responsavel/{{ responsavel.id }}">
                             <td>{{ responsavel.nome }}</td>
                             <td>{{ responsavel.telefone }}</td>
+                            <td>{{ responsavel.supervisor }}</td>
                         </tr>
 
                     {% endfor %}

@@ -43,7 +43,7 @@ class Consultas extends Handle
         $consultas = [];
 
 
-        if ($pValor)
+        if (is_string($pValor))
         {
             switch ($tpBusca)
             {
@@ -59,10 +59,6 @@ class Consultas extends Handle
                     $consultas = $this->getByProntuario($pValor);
                     break;
             }
-        }
-        else
-        {
-            $consultas = $this->getAll();
         }
 
 
@@ -179,47 +175,14 @@ class Consultas extends Handle
             JOIN tb_horario h ON (h.id = ct.id_horario)
             JOIN tb_consultorio co ON (co.id = h.id_consultorio)
             WHERE
-                p.num_prontuario = :num_prontuario
+                cast(p.num_prontuario AS TEXT) LIKE :num_prontuario
             ORDER BY
                 ct.dt_consulta DESC
                 ,h.horas
         ";
         $conn = $this->ci->get('PDO');
         $stmt = $conn->prepare($sql);
-        $stmt->bindValue('num_prontuario', $num_prontuario);
-        $stmt->execute();
-        $ret = $stmt->fetchAll();
-
-
-        return $ret;
-    }
-
-
-    private function getAll()
-    {
-        /** @var \PDO $conn */
-
-
-        $sql = "
-            SELECT
-                ct.dt_consulta AS data
-                ,to_char(h.horas, 'HH24:MI') AS horas
-                ,co.id AS co_id
-                ,co.nome AS co_nome
-                ,rc.nome AS resp_nome
-                ,p.nome AS pac_nome
-                ,p.num_prontuario AS pac_prontuario
-            FROM tb_consulta ct
-            JOIN tb_resp_consulta rc ON (rc.id = ct.id_resp_consulta)
-            JOIN tb_paciente p ON (p.id = ct.id_paciente)
-            JOIN tb_horario h ON (h.id = ct.id_horario)
-            JOIN tb_consultorio co ON (co.id = h.id_consultorio)
-            ORDER BY
-                ct.dt_consulta DESC
-                ,h.horas
-        ";
-        $conn = $this->ci->get('PDO');
-        $stmt = $conn->prepare($sql);
+        $stmt->bindValue('num_prontuario', "%{$num_prontuario}%");
         $stmt->execute();
         $ret = $stmt->fetchAll();
 

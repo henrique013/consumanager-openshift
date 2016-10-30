@@ -18,13 +18,13 @@ $app->get('/agenda/{data:\d\d\d\d-\d\d-\d\d}/consultorio/{co_id:\d+}', 'App\Rout
 
 // BUSCA
 
-$app->get('/busca/pacientes', 'App\Route\Busca\Pacientes:get');
+$app->get('/busca/pacientes[/{page:\d+}]', 'App\Route\Busca\Pacientes:get');
 
-$app->get('/busca/usuarios', 'App\Route\Busca\Usuarios:get');
+$app->get('/busca/usuarios[/{page:\d+}]', 'App\Route\Busca\Usuarios:get');
 
-$app->get('/busca/consultas', 'App\Route\Busca\Consultas:get');
+$app->get('/busca/consultas[/{page:\d+}]', 'App\Route\Busca\Consultas:get');
 
-$app->get('/busca/consultas/responsaveis', 'App\Route\Busca\Consultas\Responsaveis:get');
+$app->get('/busca/consultas/responsaveis[/{page:\d+}]', 'App\Route\Busca\Consultas\Responsaveis:get');
 
 
 // AJAX

@@ -44,6 +44,7 @@ class Responsavel extends Handle
                   rc.id
                   ,rc.nome
                   ,rc.telefone
+                  ,rc.supervisor
                 FROM tb_resp_consulta rc
                 WHERE
                   rc.id = :id
@@ -87,17 +88,20 @@ class Responsavel extends Handle
             (
               nome
               ,telefone
+              ,supervisor
             )
             VALUES
             (
               :nome
               ,:telefone
+              ,:supervisor
             )
         ";
         $conn = $this->ci->get('PDO');
         $stmt = $conn->prepare($sql);
         $stmt->bindValue('nome', $p['nome']);
         $stmt->bindValue('telefone', $p['telefone']);
+        $stmt->bindValue('supervisor', $p['supervisor']);
         $stmt->execute();
 
 
@@ -141,6 +145,7 @@ class Responsavel extends Handle
             SET
                 nome = :nome
                 ,telefone = :telefone
+                ,supervisor = :supervisor
             WHERE
                 id = :id
         ';
@@ -148,6 +153,7 @@ class Responsavel extends Handle
         $stmt = $conn->prepare($sql);
         $stmt->bindValue('nome', $p['nome']);
         $stmt->bindValue('telefone', $p['telefone']);
+        $stmt->bindValue('supervisor', $p['supervisor']);
         $stmt->bindValue('id', $id);
         $stmt->execute();
 
@@ -160,6 +166,7 @@ class Responsavel extends Handle
     {
         $nome = $request->getParsedBodyParam('nome');
         $tel = $request->getParsedBodyParam('tel');
+        $supervisor = $request->getParsedBodyParam('supervisor') ?: null;
 
         $v[] = v::notEmpty()->validate($nome);
         $v[] = (bool)preg_match("/^(\(\d\d\)\s)?\d{4,5}-\d{4}$/", $tel);
@@ -171,6 +178,7 @@ class Responsavel extends Handle
 
         $params['nome'] = $nome;
         $params['telefone'] = $tel;
+        $params['supervisor'] = $supervisor;
 
         return $params;
     }

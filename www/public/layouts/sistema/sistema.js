@@ -154,11 +154,17 @@ $(function () {
             // valida o formulário e faz um POST ou PUT
 
             var $btn = $(this);
-            var $form = $btn.closest('.modal').find('form');
+            var $modal = $btn.closest('.modal');
+            var $form = $modal.find('form');
             if (!bottle.container.valida_form($form))
             {
                 return false;
             }
+
+
+            // garante que o modal atual seja sobreposto por outro que seja aberto na sequência
+            $modal.css('z-index', 1039).prev().css('z-index', 1039);
+
 
             var action = $btn.data('action');
             var method = $btn.hasClass('novo') ? 'POST' : 'PUT';
@@ -171,9 +177,6 @@ $(function () {
                 },
                 error: function () {
                     bottle.container.modals['erro'].modal('show');
-                },
-                complete: function () {
-                    $btn.closest('.modal').modal('hide');
                 }
             });
         })
@@ -208,7 +211,7 @@ $(function () {
     ;
 
 
-    // ao clicar para abrir um modail de cadastro (pessoa, usuário, ...)
+    // ao clicar para abrir um modal de cadastro (pessoa, usuário, ...)
     $('.dropdown-menu.cadastro').on('click', 'a', function (e) {
         e.preventDefault();
         var target = $(this).data('target');

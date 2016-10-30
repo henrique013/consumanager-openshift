@@ -2,6 +2,7 @@ $(function () {
 
     $('body')
         .on('hidden.bs.modal', '#modal-sucesso', function () {
+
             location.reload();
         })
     ;

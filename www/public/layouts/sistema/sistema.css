@@ -12,6 +12,9 @@
 .clear:after {
   clear: both;
 }
+.hide {
+  display: none;
+}
 .navbar-default {
   background-color: #311b92;
   border-color: #4841ac;

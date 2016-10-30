@@ -23,46 +23,19 @@ class Usuarios extends Handle
     function get(Request $request, Response $response)
     {
         /** @var \Twig_Environment $twig */
-        /** @var \PDO $conn */
 
 
         $pNome = $request->getParam('nome');
-        $conn = $this->ci->get('PDO');
+        $usuarios = [];
 
 
-        if ($pNome)
+        if (is_string($pNome))
         {
-            $sql = "
-                SELECT
-                    u.id
-                    ,u.nome
-                    ,u.email
-                FROM tb_usuario u
-                WHERE
-                    u.nome ILIKE :nome
-                ORDER BY
-                    u.nome
-            ";
-            $stmt = $conn->prepare($sql);
-            $stmt->bindValue('nome', "%{$pNome}%");
-        }
-        else
-        {
-            $sql = "
-                SELECT
-                    u.id
-                    ,u.nome
-                    ,u.email
-                FROM tb_usuario u
-                ORDER BY
-                    u.nome
-            ";
-            $stmt = $conn->prepare($sql);
+            $usuarios = $this->getByNome($pNome);
         }
 
 
-        $stmt->execute();
-        $context['usuarios'] = $stmt->fetchAll();
+        $context['usuarios'] = $usuarios;
         $context['busca'] = $pNome;
 
 
@@ -72,5 +45,33 @@ class Usuarios extends Handle
 
 
         return $response;
+    }
+
+
+    private function getByNome($nome)
+    {
+        /** @var \PDO $conn */
+
+
+        $sql = "
+            SELECT
+                u.id
+                ,u.nome
+                ,u.email
+            FROM tb_usuario u
+            WHERE
+                u.id_tipo <> 1
+                AND u.nome ILIKE :nome
+            ORDER BY
+                u.nome
+        ";
+        $conn = $this->ci->get('PDO');
+        $stmt = $conn->prepare($sql);
+        $stmt->bindValue('nome', "%{$nome}%");
+        $stmt->execute();
+        $ret = $stmt->fetchAll();
+
+
+        return $ret;
     }
 }

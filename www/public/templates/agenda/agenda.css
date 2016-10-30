@@ -12,6 +12,9 @@
 .clear:after {
   clear: both;
 }
+.hide {
+  display: none;
+}
 .form-group.dt-selecionada {
   margin-bottom: 25px;
 }

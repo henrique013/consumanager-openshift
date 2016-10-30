@@ -10,12 +10,25 @@
     <div class="col-xs-12 col-sm-8 col-sm-offset-2">
         <div class="row">
             <form class="buscas" action="/busca/pacientes">
-                <div id="crt-nome" class="form-group col-xs-12 col-md-offset-3 col-md-6">
-                    <div class='input-group'>
-                        <input name="nome" type="text" class="form-control" id="ipt-pac-nome" title="" value="{{ busca }}" placeholder="NOME DO PACIENTE">
-                        <span class="input-group-addon btn-busca">
-                            <i class="fa fa-search" aria-hidden="true"></i>
-                        </span>
+                <div class="col-xs-12 col-md-offset-2 col-md-8">
+                    <div class="form-group col-xs-12 col-sm-4">
+                        <select required name="tp_busca" id="ipt-tp-busca" class="form-control" title="Tipo de Busca">
+
+                            {% for id, label in tp_buscas %}
+
+                                <option {{ id == tp_busca ? 'selected' : '' }} value="{{ id }}">{{ label }}</option>
+
+                            {% endfor %}
+
+                        </select>
+                    </div>
+                    <div class="form-group col-xs-12 col-sm-8">
+                        <div class='input-group'>
+                            <input name="valor" type="text" class="form-control" id="ipt-pac-nome" title="" value="{{ busca }}" placeholder="BUSCA">
+                            <span class="input-group-addon btn-busca">
+                                <i class="fa fa-search" aria-hidden="true"></i>
+                            </span>
+                        </div>
                     </div>
                 </div>
             </form>
@@ -27,8 +40,8 @@
                     <tr>
                         <th>N° de Prontuário</th>
                         <th>Nome</th>
-                        <th>Tipo</th>
                         <th>Telefone</th>
+                        <th>Telefone 2</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -38,8 +51,8 @@
                         <tr data-url="/ajax/cadastro/paciente/{{ paciente.id }}">
                             <td>{{ paciente.num_prontuario }}</td>
                             <td>{{ paciente.nome }}</td>
-                            <td>{{ paciente.tipo }}</td>
                             <td>{{ paciente.telefone }}</td>
+                            <td>{{ paciente.telefone_2 }}</td>
                         </tr>
 
                     {% endfor %}

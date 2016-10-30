@@ -23,46 +23,19 @@ class Responsaveis extends Handle
     function get(Request $request, Response $response)
     {
         /** @var \Twig_Environment $twig */
-        /** @var \PDO $conn */
 
 
         $pNome = $request->getParam('nome');
-        $conn = $this->ci->get('PDO');
+        $responsaveis = [];
 
 
-        if ($pNome)
+        if (is_string($pNome))
         {
-            $sql = "
-                SELECT
-                    rc.id
-                    ,rc.nome
-                    ,rc.telefone
-                FROM tb_resp_consulta rc
-                WHERE
-                    rc.nome ILIKE :nome
-                ORDER BY
-                    rc.nome
-            ";
-            $stmt = $conn->prepare($sql);
-            $stmt->bindValue('nome', "%{$pNome}%");
-        }
-        else
-        {
-            $sql = "
-                SELECT
-                    rc.id
-                    ,rc.nome
-                    ,rc.telefone
-                FROM tb_resp_consulta rc
-                ORDER BY
-                    rc.nome
-            ";
-            $stmt = $conn->prepare($sql);
+            $responsaveis = $this->getByNome($pNome);
         }
 
 
-        $stmt->execute();
-        $context['responsaveis'] = $stmt->fetchAll();
+        $context['responsaveis'] = $responsaveis;
         $context['busca'] = $pNome;
 
 
@@ -72,5 +45,33 @@ class Responsaveis extends Handle
 
 
         return $response;
+    }
+
+
+    private function getByNome($nome)
+    {
+        /** @var \PDO $conn */
+
+
+        $sql = "
+            SELECT
+                rc.id
+                ,rc.nome
+                ,rc.telefone
+                ,rc.supervisor
+            FROM tb_resp_consulta rc
+            WHERE
+                rc.nome ILIKE :nome
+            ORDER BY
+                rc.nome
+        ";
+        $conn = $this->ci->get('PDO');
+        $stmt = $conn->prepare($sql);
+        $stmt->bindValue('nome', "%{$nome}%");
+        $stmt->execute();
+        $ret = $stmt->fetchAll();
+
+
+        return $ret;
     }
 }
