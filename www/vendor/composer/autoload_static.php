@@ -8,6 +8,7 @@ class ComposerStaticInit95d8dac42a027984e633f702170c7cc0
 {
     public static $files = array (
         '253c157292f75eb38082b5acb06f3f01' => __DIR__ . '/..' . '/nikic/fast-route/src/functions.php',
+        '0e6d7bf4a5811bfa5cf40c5ccd6fae6a' => __DIR__ . '/..' . '/symfony/polyfill-mbstring/bootstrap.php',
     );
 
     public static $prefixLengthsPsr4 = array (
@@ -17,6 +18,7 @@ class ComposerStaticInit95d8dac42a027984e633f702170c7cc0
         ),
         'S' => 
         array (
+            'Symfony\\Polyfill\\Mbstring\\' => 26,
             'Slim\\' => 5,
         ),
         'R' => 
@@ -55,6 +57,10 @@ class ComposerStaticInit95d8dac42a027984e633f702170c7cc0
         'Whoops\\' => 
         array (
             0 => __DIR__ . '/..' . '/filp/whoops/src/Whoops',
+        ),
+        'Symfony\\Polyfill\\Mbstring\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/symfony/polyfill-mbstring',
         ),
         'Slim\\' => 
         array (

@@ -1,5 +1,10 @@
-<link href="/templates/busca/consultas/consultas.css" rel="stylesheet">
+{% extends "layouts/sistema/sistema.twig" %}
 
+{% block head %}
+    <link href="/templates/busca/consultas/consultas.css" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
 <div class="row">
     <div class="col-xs-12">
         <h2 class="titulo text-uppercase text-center">
@@ -7,7 +12,6 @@
         </h2>
     </div>
 </div>
-
 <div class="row">
     <div class="col-xs-12 col-sm-8 col-sm-offset-2">
         <div class="row">
@@ -69,5 +73,8 @@
         </div>
     </div>
 </div>
+{% endblock %}
 
-<script src="/templates/busca/consultas/consultas.js"></script>
+{% block scripts %}
+    <script src="/templates/busca/consultas/consultas.js"></script>
+{% endblock %}

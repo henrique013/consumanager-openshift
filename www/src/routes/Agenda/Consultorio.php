@@ -11,7 +11,6 @@ namespace App\Route\Agenda;
 
 use App\Util\Handle;
 use App\Util\Handle\GET;
-use DateTime;
 use Slim\Http\Request;
 use Slim\Http\Response;
 
@@ -50,8 +49,7 @@ class Consultorio extends Handle
         {
             return $response->withRedirect('/agenda');
         }
-        $context['consultorio'] = $row;
-        $context['data'] = new DateTime($data);
+        $this->context['consultorio'] = $row;
 
 
         $sql = "
@@ -76,11 +74,11 @@ class Consultorio extends Handle
         $stmt->execute();
 
 
-        $context['horarios'] = $stmt->fetchAll();
+        $this->context['horarios'] = $stmt->fetchAll();
 
 
-        $twig = $this->ci->get('twig_template');
-        $view = $twig->render('agenda/consultorio/consultorio.twig', $context);
+        $twig = $this->ci->get('twig');
+        $view = $twig->render('templates/agenda/consultorio/consultorio.twig', $this->context);
         $response->write($view);
 
 

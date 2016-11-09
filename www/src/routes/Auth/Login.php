@@ -28,8 +28,8 @@ class Login extends Handle
         /** @var \Twig_Environment $twig */
 
 
-        $twig = $this->ci->get('twig_template');
-        $view = $twig->render('auth/login/login.twig');
+        $twig = $this->ci->get('twig');
+        $view = $twig->render('templates/auth/login/login.twig', $this->context);
         $response->write($view);
 
         return $response;

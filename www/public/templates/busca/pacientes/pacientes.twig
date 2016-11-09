@@ -1,67 +1,74 @@
-<div class="row">
-    <div class="col-xs-12">
-        <h2 class="titulo text-uppercase text-center">
-            <strong>buscar</strong> pacientes
-        </h2>
+{% extends "layouts/sistema/sistema.twig" %}
+
+{% block content %}
+
+    <div class="row">
+        <div class="col-xs-12">
+            <h2 class="titulo text-uppercase text-center">
+                <strong>buscar</strong> pacientes
+            </h2>
+        </div>
     </div>
-</div>
+    <div class="row">
+        <div class="col-xs-12 col-sm-8 col-sm-offset-2">
+            <div class="row">
+                <form class="buscas" action="/busca/pacientes">
+                    <div class="col-xs-12 col-md-offset-2 col-md-8">
+                        <div class="form-group col-xs-12 col-sm-4">
+                            <select required name="tp_busca" id="ipt-tp-busca" class="form-control" title="Tipo de Busca">
 
-<div class="row">
-    <div class="col-xs-12 col-sm-8 col-sm-offset-2">
-        <div class="row">
-            <form class="buscas" action="/busca/pacientes">
-                <div class="col-xs-12 col-md-offset-2 col-md-8">
-                    <div class="form-group col-xs-12 col-sm-4">
-                        <select required name="tp_busca" id="ipt-tp-busca" class="form-control" title="Tipo de Busca">
+                                {% for id, label in tp_buscas %}
 
-                            {% for id, label in tp_buscas %}
+                                    <option {{ id == tp_busca ? 'selected' : '' }} value="{{ id }}">{{ label }}</option>
 
-                                <option {{ id == tp_busca ? 'selected' : '' }} value="{{ id }}">{{ label }}</option>
+                                {% endfor %}
 
-                            {% endfor %}
-
-                        </select>
-                    </div>
-                    <div class="form-group col-xs-12 col-sm-8">
-                        <div class='input-group'>
-                            <input name="valor" type="text" class="form-control" id="ipt-pac-nome" title="" value="{{ busca }}" placeholder="BUSCA">
+                            </select>
+                        </div>
+                        <div class="form-group col-xs-12 col-sm-8">
+                            <div class='input-group'>
+                                <input name="valor" type="text" class="form-control" id="ipt-pac-nome" title="" value="{{ busca }}" placeholder="BUSCA">
                             <span class="input-group-addon btn-busca">
                                 <i class="fa fa-search" aria-hidden="true"></i>
                             </span>
+                            </div>
                         </div>
                     </div>
-                </div>
-            </form>
-        </div>
-        <div class="row">
-            <div class="col-xs-12">
-                <table class="table table-bordered table-hover">
-                    <thead>
-                    <tr>
-                        <th>N° de Prontuário</th>
-                        <th>Nome</th>
-                        <th>Telefone</th>
-                        <th>Telefone 2</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-
-                    {% for paciente in pacientes %}
-
-                        <tr data-url="/ajax/cadastro/paciente/{{ paciente.id }}">
-                            <td>{{ paciente.num_prontuario }}</td>
-                            <td>{{ paciente.nome }}</td>
-                            <td>{{ paciente.telefone }}</td>
-                            <td>{{ paciente.telefone_2 }}</td>
+                </form>
+            </div>
+            <div class="row">
+                <div class="col-xs-12">
+                    <table class="table table-bordered table-hover">
+                        <thead>
+                        <tr>
+                            <th>N° de Prontuário</th>
+                            <th>Nome</th>
+                            <th>Telefone</th>
+                            <th>Telefone 2</th>
                         </tr>
+                        </thead>
+                        <tbody>
 
-                    {% endfor %}
+                        {% for paciente in pacientes %}
 
-                    </tbody>
-                </table>
+                            <tr data-url="/ajax/cadastro/paciente/{{ paciente.id }}">
+                                <td>{{ paciente.num_prontuario }}</td>
+                                <td>{{ paciente.nome }}</td>
+                                <td>{{ paciente.telefone }}</td>
+                                <td>{{ paciente.telefone_2 }}</td>
+                            </tr>
+
+                        {% endfor %}
+
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </div>
-</div>
 
-<script src="/templates/busca/pacientes/pacientes.js"></script>
+{% endblock %}
+
+{% block scripts %}
+    <script src="/templates/busca/pacientes/pacientes.js"></script>
+{% endblock %}

@@ -1,76 +1,83 @@
-<link href="/templates/agenda/consultorio/consultorio.css" rel="stylesheet">
+{% extends "layouts/sistema/sistema.twig" %}
 
-<div class="row">
-    <div class="col-xs-12">
-        <h2 class="titulo text-uppercase text-center truncate">
-            consultas
-            <small> - {{ consultorio.nome }}</small>
-        </h2>
+{% block head %}
+    <link href="/templates/agenda/consultorio/consultorio.css" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+
+    <div class="row">
+        <div class="col-xs-12">
+            <h2 class="titulo text-uppercase text-center truncate">
+                consultas
+                <small> - {{ consultorio.nome }}</small>
+            </h2>
+        </div>
     </div>
-</div>
-
-<div class="row">
-    <div class="col-xs-12 col-sm-offset-3 col-sm-6 col-md-offset-4 col-md-4">
-        <div class="form-group dt-selecionada">
-            <div class='input-group date'>
+    <div class="row">
+        <div class="col-xs-12 col-sm-offset-3 col-sm-6 col-md-offset-4 col-md-4">
+            <div class="form-group dt-selecionada">
+                <div class='input-group date'>
                     <span class="input-group-addon">
                         <i class="fa fa-calendar" aria-hidden="true"></i>
                     </span>
-                <input type='text' value="{{ data|date('d/m/Y') }}" class="form-control" title="Data"/>
+                    <input type='text' value="{{ data|date('d/m/Y') }}" class="form-control" title="Data"/>
+                </div>
             </div>
         </div>
     </div>
-</div>
+    <div class="row">
 
-<div class="row">
+        {% for hr in horarios %}
 
-    {% for hr in horarios %}
+            <div class="col-xs-12 col-sm-4 col-md-3">
+                <div class="panel panel-default">
 
-        <div class="col-xs-12 col-sm-4 col-md-3">
-            <div class="panel panel-default">
+                    <div class="panel-heading clearfix">
+                        <h3 class="panel-title pull-left truncate text-uppercase">{{ hr.horas }}</h3>
+                    </div>
 
-                <div class="panel-heading clearfix">
-                    <h3 class="panel-title pull-left truncate text-uppercase">{{ hr.horas }}</h3>
+                    {% if hr.paciente_nome %}
+
+                        <div class="panel-body truncate">
+                            <dl>
+                                <dt>N° de Prontuário</dt>
+                                <dd>{{ hr.paciente_prontuario }}</dd>
+                                <dt>Paciente</dt>
+                                <dd class="truncate">{{ hr.paciente_nome }}</dd>
+                                <dt>Aluno(a)</dt>
+                                <dd class="truncate">{{ hr.consulta_responsavel }}</dd>
+                            </dl>
+                        </div>
+                        <div class="panel-footer">
+                            <a class="btn btn-primary btn-sm pull-right text-uppercase" data-target="/ajax/cadastro/consulta/consultorio/{{ consultorio.id }}/{{ data|date('Y-m-d') }}/{{ hr.horas|replace({':' : '-'}) }}">
+                                <i class="fa fa-pencil" aria-hidden="true"></i> Editar
+                            </a>
+                            <div class="clear"></div>
+                        </div>
+
+                    {% else %}
+
+                        <div class="panel-body"></div>
+                        <div class="panel-footer">
+                            <a class="btn btn-default btn-sm pull-right text-uppercase" data-target="/ajax/cadastro/consulta/consultorio/{{ consultorio.id }}/{{ data|date('Y-m-d') }}/{{ hr.horas|replace({':' : '-'}) }}">
+                                <i class="fa fa-plus" aria-hidden="true"></i> Nova
+                            </a>
+                            <div class="clear"></div>
+                        </div>
+
+                    {% endif %}
+
                 </div>
-
-                {% if hr.paciente_nome %}
-
-                    <div class="panel-body truncate">
-                        <dl>
-                            <dt>N° de Prontuário</dt>
-                            <dd>{{ hr.paciente_prontuario }}</dd>
-                            <dt>Paciente</dt>
-                            <dd class="truncate">{{ hr.paciente_nome }}</dd>
-                            <dt>Aluno(a)</dt>
-                            <dd class="truncate">{{ hr.consulta_responsavel }}</dd>
-                        </dl>
-                    </div>
-                    <div class="panel-footer">
-                        <a class="btn btn-primary btn-sm pull-right text-uppercase" data-target="/ajax/cadastro/consulta/consultorio/{{ consultorio.id }}/{{ data|date('Y-m-d') }}/{{ hr.horas|replace({':' : '-'}) }}">
-                            <i class="fa fa-pencil" aria-hidden="true"></i> Editar
-                        </a>
-                        <div class="clear"></div>
-                    </div>
-
-                {% else %}
-
-                    <div class="panel-body"></div>
-                    <div class="panel-footer">
-                        <a class="btn btn-default btn-sm pull-right text-uppercase" data-target="/ajax/cadastro/consulta/consultorio/{{ consultorio.id }}/{{ data|date('Y-m-d') }}/{{ hr.horas|replace({':' : '-'}) }}">
-                            <i class="fa fa-plus" aria-hidden="true"></i> Nova
-                        </a>
-                        <div class="clear"></div>
-                    </div>
-
-                {% endif %}
-
             </div>
-        </div>
 
-    {% endfor %}
+        {% endfor %}
 
-</div>
+    </div>
+    <input id="ipt-consultorio-id" type="hidden" value="{{ consultorio.id }}">
 
-<input id="ipt-consultorio-id" type="hidden" value="{{ consultorio.id }}">
+{% endblock %}
 
-<script src="/templates/agenda/consultorio/consultorio.js"></script>
+{% block scripts %}
+    <script src="/templates/agenda/consultorio/consultorio.js"></script>
+{% endblock %}

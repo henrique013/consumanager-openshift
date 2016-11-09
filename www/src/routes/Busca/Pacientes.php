@@ -57,14 +57,14 @@ class Pacientes extends Handle
         }
 
 
-        $context['pacientes'] = $pacientes;
-        $context['busca'] = $pValor;
-        $context['tp_busca'] = $tpBusca;
-        $context['tp_buscas'] = $this->tp_buscas;
+        $this->context['pacientes'] = $pacientes;
+        $this->context['busca'] = $pValor;
+        $this->context['tp_busca'] = $tpBusca;
+        $this->context['tp_buscas'] = $this->tp_buscas;
 
 
-        $twig = $this->ci->get('twig_template');
-        $view = $twig->render('busca/pacientes/pacientes.twig', $context);
+        $twig = $this->ci->get('twig');
+        $view = $twig->render('templates/busca/pacientes/pacientes.twig', $this->context);
         $response->write($view);
 
 

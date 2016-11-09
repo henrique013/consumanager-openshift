@@ -11,7 +11,6 @@ namespace App\Route;
 
 use App\Util\Handle;
 use App\Util\Handle\GET;
-use DateTime;
 use Slim\Http\Request;
 use Slim\Http\Response;
 
@@ -51,7 +50,6 @@ class Agenda extends Handle
         $stmt->execute();
 
 
-        $context['data'] = new DateTime($data);
         while ($row = $stmt->fetch())
         {
             $resumo = [
@@ -66,12 +64,12 @@ class Agenda extends Handle
                 ],
             ];
 
-            $context['resumos'][] = $resumo;
+            $this->context['resumos'][] = $resumo;
         }
 
 
-        $twig = $this->ci->get('twig_template');
-        $view = $twig->render('agenda/agenda.twig', $context);
+        $twig = $this->ci->get('twig');
+        $view = $twig->render('templates/agenda/agenda.twig', $this->context);
         $response->write($view);
 
 

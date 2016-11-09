@@ -63,8 +63,8 @@ class Usuario extends Handle
         }
 
 
-        $twig = $this->ci->get('twig_template');
-        $view = $twig->render('ajax/cadastro/usuario/usuario.twig', $context);
+        $twig = $this->ci->get('twig');
+        $view = $twig->render('templates/ajax/cadastro/usuario/usuario.twig', $context);
         $response->write($view);
 
 

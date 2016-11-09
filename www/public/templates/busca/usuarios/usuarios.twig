@@ -1,50 +1,57 @@
-<div class="row">
-    <div class="col-xs-12">
-        <h2 class="titulo text-uppercase text-center">
-            <strong>buscar</strong> usuários
-        </h2>
-    </div>
-</div>
+{% extends "layouts/sistema/sistema.twig" %}
 
-<div class="row">
-    <div class="col-xs-12 col-sm-8 col-sm-offset-2">
-        <div class="row">
-            <form class="buscas" action="/busca/usuarios">
-                <div id="crt-nome" class="form-group col-xs-12 col-md-offset-3 col-md-6">
-                    <div class='input-group'>
-                        <input name="nome" type="text" class="form-control" id="ipt-pac-nome" title="" value="{{ busca }}" placeholder="NOME DO USUÁRIO">
+{% block content %}
+
+    <div class="row">
+        <div class="col-xs-12">
+            <h2 class="titulo text-uppercase text-center">
+                <strong>buscar</strong> usuários
+            </h2>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-12 col-sm-8 col-sm-offset-2">
+            <div class="row">
+                <form class="buscas" action="/busca/usuarios">
+                    <div id="crt-nome" class="form-group col-xs-12 col-md-offset-3 col-md-6">
+                        <div class='input-group'>
+                            <input name="nome" type="text" class="form-control" id="ipt-pac-nome" title="" value="{{ busca }}" placeholder="NOME DO USUÁRIO">
                         <span class="input-group-addon btn-busca">
                             <i class="fa fa-search" aria-hidden="true"></i>
                         </span>
+                        </div>
                     </div>
-                </div>
-            </form>
-        </div>
-        <div class="row">
-            <div class="col-xs-12">
-                <table class="table table-bordered table-hover">
-                    <thead>
-                    <tr>
-                        <th>Nome</th>
-                        <th>E-mail</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-
-                    {% for usuario in usuarios %}
-
-                        <tr data-url="/ajax/cadastro/usuario/{{ usuario.id }}">
-                            <td>{{ usuario.nome }}</td>
-                            <td>{{ usuario.email }}</td>
+                </form>
+            </div>
+            <div class="row">
+                <div class="col-xs-12">
+                    <table class="table table-bordered table-hover">
+                        <thead>
+                        <tr>
+                            <th>Nome</th>
+                            <th>E-mail</th>
                         </tr>
+                        </thead>
+                        <tbody>
 
-                    {% endfor %}
+                        {% for usuario in usuarios %}
 
-                    </tbody>
-                </table>
+                            <tr data-url="/ajax/cadastro/usuario/{{ usuario.id }}">
+                                <td>{{ usuario.nome }}</td>
+                                <td>{{ usuario.email }}</td>
+                            </tr>
+
+                        {% endfor %}
+
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </div>
-</div>
 
-<script src="/templates/busca/usuarios/usuarios.js"></script>
+{% endblock %}
+
+{% block scripts %}
+    <script src="/templates/busca/usuarios/usuarios.js"></script>
+{% endblock %}

@@ -35,12 +35,12 @@ class Usuarios extends Handle
         }
 
 
-        $context['usuarios'] = $usuarios;
-        $context['busca'] = $pNome;
+        $this->context['usuarios'] = $usuarios;
+        $this->context['busca'] = $pNome;
 
 
-        $twig = $this->ci->get('twig_template');
-        $view = $twig->render('busca/usuarios/usuarios.twig', $context);
+        $twig = $this->ci->get('twig');
+        $view = $twig->render('templates/busca/usuarios/usuarios.twig', $this->context);
         $response->write($view);
 
 

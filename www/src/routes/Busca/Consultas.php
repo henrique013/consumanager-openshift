@@ -62,14 +62,14 @@ class Consultas extends Handle
         }
 
 
-        $context['consultas'] = $consultas;
-        $context['tp_buscas'] = $this->tp_buscas;
-        $context['tp_busca'] = $tpBusca;
-        $context['busca'] = $pValor;
+        $this->context['consultas'] = $consultas;
+        $this->context['tp_buscas'] = $this->tp_buscas;
+        $this->context['tp_busca'] = $tpBusca;
+        $this->context['busca'] = $pValor;
 
 
-        $twig = $this->ci->get('twig_template');
-        $view = $twig->render('busca/consultas/consultas.twig', $context);
+        $twig = $this->ci->get('twig');
+        $view = $twig->render('templates/busca/consultas/consultas.twig', $this->context);
         $response->write($view);
 
 

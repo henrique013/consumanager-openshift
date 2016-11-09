@@ -5,21 +5,10 @@
 $container = $app->getContainer();
 
 
-$container['twig_template'] =
+$container['twig'] =
     function ()
     {
-        $loader = new Twig_Loader_Filesystem(__DIR__ . '/../public/templates');
-
-        $twig = new Twig_Environment($loader);
-
-        return $twig;
-    };
-
-
-$container['twig_layout'] =
-    function ()
-    {
-        $loader = new Twig_Loader_Filesystem(__DIR__ . '/../public/layouts');
+        $loader = new Twig_Loader_Filesystem(__DIR__ . '/../public');
 
         $twig = new Twig_Environment($loader);
 

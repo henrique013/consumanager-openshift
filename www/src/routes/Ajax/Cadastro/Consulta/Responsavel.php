@@ -65,8 +65,8 @@ class Responsavel extends Handle
         }
 
 
-        $twig = $this->ci->get('twig_template');
-        $view = $twig->render('ajax/cadastro/consulta/responsavel/responsavel.twig', $context);
+        $twig = $this->ci->get('twig');
+        $view = $twig->render('templates/ajax/cadastro/consulta/responsavel/responsavel.twig', $context);
         $response->write($view);
 
 

@@ -1,52 +1,59 @@
-<div class="row">
-    <div class="col-xs-12">
-        <h2 class="titulo text-uppercase text-center">
-            <strong>buscar</strong> alunos
-        </h2>
-    </div>
-</div>
+{% extends "layouts/sistema/sistema.twig" %}
 
-<div class="row">
-    <div class="col-xs-12 col-sm-8 col-sm-offset-2">
-        <div class="row">
-            <form class="buscas" action="/busca/consultas/responsaveis">
-                <div id="crt-nome" class="form-group col-xs-12 col-md-offset-3 col-md-6">
-                    <div class='input-group'>
-                        <input name="nome" type="text" class="form-control" id="ipt-pac-nome" title="" value="{{ busca }}" placeholder="NOME DO ALUNO">
+{% block content %}
+
+    <div class="row">
+        <div class="col-xs-12">
+            <h2 class="titulo text-uppercase text-center">
+                <strong>buscar</strong> alunos
+            </h2>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-12 col-sm-8 col-sm-offset-2">
+            <div class="row">
+                <form class="buscas" action="/busca/consultas/responsaveis">
+                    <div id="crt-nome" class="form-group col-xs-12 col-md-offset-3 col-md-6">
+                        <div class='input-group'>
+                            <input name="nome" type="text" class="form-control" id="ipt-pac-nome" title="" value="{{ busca }}" placeholder="NOME DO ALUNO">
                         <span class="input-group-addon btn-busca">
                             <i class="fa fa-search" aria-hidden="true"></i>
                         </span>
+                        </div>
                     </div>
-                </div>
-            </form>
-        </div>
-        <div class="row">
-            <div class="col-xs-12">
-                <table class="table table-bordered table-hover">
-                    <thead>
-                    <tr>
-                        <th>Nome</th>
-                        <th>Telefone</th>
-                        <th>Supervisor</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-
-                    {% for responsavel in responsaveis %}
-
-                        <tr data-url="/ajax/cadastro/consulta/responsavel/{{ responsavel.id }}">
-                            <td>{{ responsavel.nome }}</td>
-                            <td>{{ responsavel.telefone }}</td>
-                            <td>{{ responsavel.supervisor }}</td>
+                </form>
+            </div>
+            <div class="row">
+                <div class="col-xs-12">
+                    <table class="table table-bordered table-hover">
+                        <thead>
+                        <tr>
+                            <th>Nome</th>
+                            <th>Telefone</th>
+                            <th>Supervisor</th>
                         </tr>
+                        </thead>
+                        <tbody>
 
-                    {% endfor %}
+                        {% for responsavel in responsaveis %}
 
-                    </tbody>
-                </table>
+                            <tr data-url="/ajax/cadastro/consulta/responsavel/{{ responsavel.id }}">
+                                <td>{{ responsavel.nome }}</td>
+                                <td>{{ responsavel.telefone }}</td>
+                                <td>{{ responsavel.supervisor }}</td>
+                            </tr>
+
+                        {% endfor %}
+
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </div>
-</div>
 
-<script src="/templates/busca/consultas/responsaveis/responsaveis.js"></script>
+{% endblock %}
+
+{% block scripts %}
+    <script src="/templates/busca/consultas/responsaveis/responsaveis.js"></script>
+{% endblock %}

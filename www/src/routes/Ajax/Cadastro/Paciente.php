@@ -109,8 +109,8 @@ class Paciente extends Handle
         $context['paciente'] = $row;
 
 
-        $twig = $this->ci->get('twig_template');
-        $view = $twig->render('ajax/cadastro/paciente/paciente.twig', $context);
+        $twig = $this->ci->get('twig');
+        $view = $twig->render('templates/ajax/cadastro/paciente/paciente.twig', $context);
         $response->write($view);
 
 

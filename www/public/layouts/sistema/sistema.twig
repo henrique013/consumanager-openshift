@@ -9,26 +9,13 @@
 
     <title>ConsuManager</title>
 
-    {# libs #}
     <link href="/bower/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="/bower/font-awesome/css/font-awesome.min.css" rel="stylesheet">
     <link href="/bower/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css" rel="stylesheet">
     {# css layout #}
     <link href="/layouts/sistema/sistema.css" rel="stylesheet">
 
-    {# libs #}
-    <script src="/bower/jquery/dist/jquery.min.js"></script>
-    <script src="/bower/bootstrap/dist/js/bootstrap.min.js"></script>
-    <script src="/bower/underscore/underscore-min.js"></script>
-    <script src="/bower/bottlejs/dist/bottle.min.js"></script>
-    <script src="/bower/moment/min/moment-with-locales.min.js"></script>
-    <script src="/bower/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js"></script>
-    <script src="/bower/jquery-mask-plugin/dist/jquery.mask.min.js"></script>
-    <script src="/bower/bs-typeahead/js/bootstrap-typeahead.min.js"></script>
-    {# util #}
-    <script src="/util/container.js"></script>
-    {# js layout #}
-    <script src="/layouts/sistema/sistema.js"></script>
+    {% block head %}{% endblock %}
 
 </head>
 <body>
@@ -114,7 +101,7 @@
 
 
 <main class="container-fluid">
-    {{ template|raw }}
+    {% block content %}{% endblock %}
 </main>
 
 <footer class="footer-default text-center">
@@ -176,6 +163,24 @@
         </div>
     </div>
 </div>
+
+
+{# SCRIPTS #}
+
+<script src="/bower/jquery/dist/jquery.min.js"></script>
+<script src="/bower/bootstrap/dist/js/bootstrap.min.js"></script>
+<script src="/bower/underscore/underscore-min.js"></script>
+<script src="/bower/bottlejs/dist/bottle.min.js"></script>
+<script src="/bower/moment/min/moment-with-locales.min.js"></script>
+<script src="/bower/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js"></script>
+<script src="/bower/jquery-mask-plugin/dist/jquery.mask.min.js"></script>
+<script src="/bower/bs-typeahead/js/bootstrap-typeahead.min.js"></script>
+{# util #}
+<script src="/util/container.js"></script>
+{# js layout #}
+<script src="/layouts/sistema/sistema.js"></script>
+
+{% block scripts %}{% endblock %}
 
 </body>
 </html>

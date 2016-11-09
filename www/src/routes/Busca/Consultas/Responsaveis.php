@@ -35,12 +35,12 @@ class Responsaveis extends Handle
         }
 
 
-        $context['responsaveis'] = $responsaveis;
-        $context['busca'] = $pNome;
+        $this->context['responsaveis'] = $responsaveis;
+        $this->context['busca'] = $pNome;
 
 
-        $twig = $this->ci->get('twig_template');
-        $view = $twig->render('busca/consultas/responsaveis/responsaveis.twig', $context);
+        $twig = $this->ci->get('twig');
+        $view = $twig->render('templates/busca/consultas/responsaveis/responsaveis.twig', $this->context);
         $response->write($view);
 
 

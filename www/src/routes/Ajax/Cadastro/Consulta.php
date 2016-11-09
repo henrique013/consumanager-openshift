@@ -116,8 +116,8 @@ class Consulta extends Handle
         $context['horario'] = $horario;
 
 
-        $twig = $this->ci->get('twig_template');
-        $view = $twig->render('ajax/cadastro/consulta/consulta.twig', $context);
+        $twig = $this->ci->get('twig');
+        $view = $twig->render('templates/ajax/cadastro/consulta/consulta.twig', $context);
         $response->write($view);
 
 
